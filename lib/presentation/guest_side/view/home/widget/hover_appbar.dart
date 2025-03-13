@@ -7,8 +7,9 @@ import '../../../../../app/config/app_textstyle.dart';
 
 class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
   final HomeController controller = Get.find<HomeController>();
+  final String? portal;
 
-  HoverAppBar({super.key});
+  HoverAppBar({super.key, this.portal});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
                 // controller.onHover(false);
               },
               child: Text(
-                'Portal',
+                portal ?? "Portal",
                 style: AppTextStyle.h5poppinsRegular
                     .copyWith(color: AppColor.whiteColor),
               ),
