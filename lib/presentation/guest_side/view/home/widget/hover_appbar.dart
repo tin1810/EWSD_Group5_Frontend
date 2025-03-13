@@ -17,6 +17,7 @@ class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
           onExit: (_) => controller.onHover(false),
           child: AppBar(
             backgroundColor: AppColor.primaryColor,
+            centerTitle: false,
             title: MaterialButton(
               color: controller.backgroundColor.value,
               onPressed: () {
