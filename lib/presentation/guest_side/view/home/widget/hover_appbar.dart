@@ -24,7 +24,7 @@ class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
               child: Text(
                 'Portal',
-                style: AppTextStyle.appBarText
+                style: AppTextStyle.h5poppinsRegular
                     .copyWith(color: AppColor.whiteColor),
               ),
             ),
