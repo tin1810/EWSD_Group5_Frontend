@@ -9,7 +9,7 @@ class FirstRowSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 100),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,7 +28,7 @@ class FirstRowSection extends StatelessWidget {
                   width: 450,
                   fit: BoxFit.cover,
                   "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-              SizedBox(width: 20),
+              SizedBox(width: 60),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -36,14 +36,14 @@ class FirstRowSection extends StatelessWidget {
                   children: [
                     Text(
                       "Defined by Excellence and\nAchievement ",
-                      style: AppTextStyle.h1iterBold,
+                      style: AppTextStyle.h1iterBold.copyWith(fontSize: 27),
                       textAlign: TextAlign.start,
                     ),
                     SizedBox(height: 10),
                     Container(
-                      width: 60,
+                      width: 100,
                       height: 3,
-                      color: Colors.cyan,
+                      color: AppColor.hoverAppBarColor,
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -51,32 +51,36 @@ class FirstRowSection extends StatelessWidget {
                       style: AppTextStyle.h4iterRegular,
                       textAlign: TextAlign.justify,
                     ),
+                    SizedBox(height: 20),
                     MaterialButton(
                       onPressed: () {},
                       color: AppColor.whiteColor,
                       elevation: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.black)),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Find Your Faculty",
-                              style: AppTextStyle.h3iterRegular,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Find Your Faculty",
+                            style: AppTextStyle.h3iterRegular,
+                          ),
+                          CircleAvatar(
+                            backgroundColor: AppColor.greyLightColor,
+                            maxRadius: 15,
+                            child: Icon(
+                              Icons.arrow_forward_outlined,
+                              size: 20,
+                              color: AppColor.blackColor,
                             ),
-                            CircleAvatar(
-                              backgroundColor: AppColor.primaryColor,
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: AppColor.whiteColor,
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ),
+                    Divider(
+                      indent: 10,
+                      color: AppColor.blackColor.withOpacity(0.3),
+                    )
                     // Text("Find Your Faculty",
                     //     style: AppTextStyle.h3iterRegular),
                   ],

@@ -5,4 +5,9 @@ class AppColor {
   static Color primaryColor = AppColorExtension("00033D");
   static Color whiteColor = AppColorExtension("FFFFFF");
   static Color hoverAppBarColor = AppColorExtension("218474");
+  static Color greyLightColor = AppColorExtension("EEEEEE");
+  static Color blackColor = AppColorExtension("000000");
+  static Color dividerColor = AppColorExtension("89E9D9");
+  static Color blueColor = AppColorExtension("0159AA");
+  static Color greyBGColor = AppColorExtension("F8F9FA");
 }
