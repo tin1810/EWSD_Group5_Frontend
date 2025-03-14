@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 
@@ -12,4 +13,13 @@ class HomeController extends GetxController {
     backgroundColor.value =
         isHovered ? AppColor.hoverAppBarColor : AppColor.primaryColor;
   }
+
+  List<Map<String, dynamic>> socialIcons = [
+    {'icon': FontAwesomeIcons.facebook, 'url': 'https://facebook.com'},
+    {'icon': FontAwesomeIcons.snapchat, 'url': 'https://snapchat.com'},
+    {'icon': FontAwesomeIcons.instagram, 'url': 'https://instagram.com'},
+    {'icon': FontAwesomeIcons.youtube, 'url': 'https://youtube.com'},
+    {'icon': FontAwesomeIcons.xTwitter, 'url': 'https://twitter.com'},
+    {'icon': FontAwesomeIcons.linkedinIn, 'url': 'https://linkedin.com'},
+  ];
 }

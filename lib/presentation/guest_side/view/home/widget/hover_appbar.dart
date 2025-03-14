@@ -13,25 +13,29 @@ class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => MouseRegion(
+    return AppBar(
+      backgroundColor: AppColor.primaryColor,
+      centerTitle: false,
+      title: Obx(
+        () => MouseRegion(
           onEnter: (_) => controller.onHover(true),
           onExit: (_) => controller.onHover(false),
-          child: AppBar(
-            backgroundColor: AppColor.primaryColor,
-            centerTitle: false,
-            title: MaterialButton(
-              color: controller.backgroundColor.value,
-              onPressed: () {
-                // controller.onHover(false);
-              },
-              child: Text(
-                portal ?? "Portal",
-                style: AppTextStyle.h5poppinsRegular
-                    .copyWith(color: AppColor.whiteColor),
-              ),
+          child: MaterialButton(
+            minWidth: 100,
+            height: 80,
+            color: controller.backgroundColor.value,
+            onPressed: () {
+              // controller.onHover(false);
+            },
+            child: Text(
+              portal ?? "Portal",
+              style: AppTextStyle.h5poppinsRegular
+                  .copyWith(color: AppColor.whiteColor),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   @override

@@ -96,8 +96,9 @@ class BannerImageSection extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Welcome to University Greenwich',
-                    style: AppTextStyle.h1iterBold),
+                Text('Welcome to University of Greenwich',
+                    style: AppTextStyle.h1iterBold
+                        .copyWith(fontSize: 36, color: AppColor.blueColor)),
                 SizedBox(height: 20),
                 Text(
                     'We are an ambitious community of students and academics with no limits on where you come from\n and no limits on what you can do next. Our three campuses in London and Kent are where\n minds meet, ideas spark, and new adventures begin.',
