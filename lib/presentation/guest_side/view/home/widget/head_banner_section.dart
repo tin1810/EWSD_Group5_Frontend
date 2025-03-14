@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/header_section_title.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/submit/submit_page.dart';
 
 class HeadBannerSection extends StatelessWidget {
   final String? portal;
@@ -48,14 +51,29 @@ class HeadBannerSection extends StatelessWidget {
             children: [
               HeaderSectionTitle(
                 title: 'Home',
+                onTap: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    return StudentHomePage();
+                  }));
+                },
               ),
               SizedBox(width: 20),
               HeaderSectionTitle(
                 title: 'Submit Article',
+                onTap: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    return SubmitPage();
+                  }));
+                },
               ),
               SizedBox(width: 20),
               HeaderSectionTitle(
                 title: 'My Submissions',
+                onTap: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    return MySubmissionsPage();
+                  }));
+                },
               ),
             ],
           ),

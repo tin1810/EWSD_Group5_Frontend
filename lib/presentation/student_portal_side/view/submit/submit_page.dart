@@ -1,13 +1,25 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/contribute_title_widget.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/faculty_dropdown_widget.dart';
 
-class SubmitPage extends StatelessWidget {
+class SubmitPage extends StatefulWidget {
   const SubmitPage({super.key});
 
+  @override
+  State<SubmitPage> createState() => _SubmitPageState();
+}
+
+class _SubmitPageState extends State<SubmitPage> {
+  File? imageFile;
+  File? wordFile;
+  TextEditingController controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +101,7 @@ class SubmitPage extends StatelessWidget {
                   Image.network(
                     width: MediaQuery.sizeOf(context).width / 2.3,
                     fit: BoxFit.fitWidth,
-                    "https://media.istockphoto.com/id/107429764/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/woman-taking-vitamins-and-supplements.jpg?s=1024x1024&w=is&k=20&c=-IVuRL-VTpW5gtoXt9FFG-q3Sg8p_1KdJf8JXs6Hg0E=",
+                    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmV2aWV3fGVufDB8fDB8fHww",
                   ),
                 ],
               ),
@@ -104,7 +116,7 @@ class SubmitPage extends StatelessWidget {
                   Image.network(
                     width: MediaQuery.sizeOf(context).width / 2.3,
                     fit: BoxFit.fitWidth,
-                    "https://images.unsplash.com/photo-1585241936939-be4099591252?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGFydGljbGUlMjBwdWJsaXNoJTIwZGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
+                    "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHVibGljYXRpb258ZW58MHx8MHx8fDA%3D",
                   ),
                   SizedBox(width: 30),
                   SizedBox(
@@ -129,7 +141,7 @@ class SubmitPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 width: MediaQuery.sizeOf(context).width / 2,
                 decoration: BoxDecoration(
-                  color: Colors.black38,
+                  color: Colors.black54,
                 ),
                 child: Column(
                   children: [
@@ -142,16 +154,12 @@ class SubmitPage extends StatelessWidget {
                         style: AppTextStyle.h5iterBold
                             .copyWith(color: Colors.white)),
                     SizedBox(height: 20),
-                    TextFormField(
+                    TextField(
+                      key: Key("1"),
                       style: TextStyle(color: Colors.white),
                       maxLines: 1,
-                      controller: TextEditingController(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your article title';
-                        }
-                        return null;
-                      },
+                      controller: controller,
+                      focusNode: focusNode,
                       decoration: InputDecoration(
                         label: Text(
                           "Article Title",
@@ -159,22 +167,115 @@ class SubmitPage extends StatelessWidget {
                         ),
                         hintText: "Enter Your Article Title",
                         hintStyle: TextStyle(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: const BorderSide(color: Colors.black),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(13),
-                          borderSide: const BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(13),
-                          borderSide: const BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                       ),
                     ),
                     SizedBox(height: 20),
-
+                    Container(
+                      key: Key("2"),
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13),
+                        border: Border.all(
+                          color: Colors.black,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            (imageFile != null)
+                                ? (imageFile!.path.split("/")).last
+                                : "Add Article Cover Photo",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              var result = await FilePicker.platform.pickFiles(
+                                type: FileType.image,
+                                allowMultiple: false,
+                              );
+                              var platFormFile = result?.files.first;
+                              if (platFormFile != null) {
+                                setState(() {
+                                  imageFile = File(platFormFile.path ?? "");
+                                });
+                              }
+                            },
+                            child: Icon(
+                              Icons.image,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      key: Key("3"),
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13),
+                        border: Border.all(
+                          color: Colors.black,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            (wordFile != null)
+                                ? (wordFile!.path.split("/")).last
+                                : "Add Article File(WORD)",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              var result = await FilePicker.platform.pickFiles(
+                                type: FileType.any,
+                                allowMultiple: false,
+                              );
+                              var platFormFile = result?.files.first;
+                              if (platFormFile != null) {
+                                setState(() {
+                                  wordFile = File(platFormFile.path ?? "");
+                                });
+                              }
+                            },
+                            child: Icon(
+                              Icons.article_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    FacultyDropdownWidget(),
+                    SizedBox(height: 20),
+                    MaterialButton(
+                      color: AppColor.blueColor,
+                      onPressed: () {},
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

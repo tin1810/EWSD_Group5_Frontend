@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 
 class ContributeTitleWidget extends StatelessWidget {
+  final String title, des;
   const ContributeTitleWidget({
     super.key,
+    this.title = "Contribute Your Expertise",
+    this.des = "Share your insights and knowledge with our academic community",
   });
 
   @override
@@ -29,10 +32,10 @@ class ContributeTitleWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Contribute Your Expertise',
+          Text(title,
               style: AppTextStyle.h1iterBold.copyWith(color: Colors.white)),
           SizedBox(height: 20),
-          Text('Share your insights and knowledge with our academic community',
+          Text(des,
               textAlign: TextAlign.center,
               style: AppTextStyle.h5iterBold.copyWith(color: Colors.white)),
         ],

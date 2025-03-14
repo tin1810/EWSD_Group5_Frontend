@@ -110,7 +110,7 @@ class StudentHomeInformationWidget extends StatelessWidget {
                 Image.network(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   fit: BoxFit.fitWidth,
-                  "https://media.istockphoto.com/id/107429764/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/woman-taking-vitamins-and-supplements.jpg?s=1024x1024&w=is&k=20&c=-IVuRL-VTpW5gtoXt9FFG-q3Sg8p_1KdJf8JXs6Hg0E=",
+                  "https://plus.unsplash.com/premium_photo-1661255378914-d0934128d91d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXJ0aWNsZXxlbnwwfHwwfHx8MA%3D%3D",
                 ),
                 SizedBox(width: 30),
                 SizedBox(
@@ -140,7 +140,7 @@ class StudentHomeInformationWidget extends StatelessWidget {
                 Image.network(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   fit: BoxFit.fitWidth,
-                  "https://media.istockphoto.com/id/107429764/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/woman-taking-vitamins-and-supplements.jpg?s=1024x1024&w=is&k=20&c=-IVuRL-VTpW5gtoXt9FFG-q3Sg8p_1KdJf8JXs6Hg0E=",
+                  "https://images.unsplash.com/photo-1488372759477-a7f4aa078cb6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
                 ),
                 SizedBox(width: 30),
                 SizedBox(
@@ -170,7 +170,7 @@ class StudentHomeInformationWidget extends StatelessWidget {
                 Image.network(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   fit: BoxFit.fitWidth,
-                  "https://media.istockphoto.com/id/107429764/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/woman-taking-vitamins-and-supplements.jpg?s=1024x1024&w=is&k=20&c=-IVuRL-VTpW5gtoXt9FFG-q3Sg8p_1KdJf8JXs6Hg0E=",
+                  "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXJ0aWNsZXxlbnwwfHwwfHx8MA%3D%3D",
                 ),
                 SizedBox(width: 30),
                 SizedBox(
