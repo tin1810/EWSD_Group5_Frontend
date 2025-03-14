@@ -5,4 +5,5 @@ class AppGraphic {
   static const String teachinAwardImage = 'assets/images/teachingaward.png';
   static const String uniAllianceLogoImage =
       'assets/images/University-Alliance-Logo.png';
+  static const String loginBGImage = 'assets/images/loginBackgroundImage.jpg';
 }
