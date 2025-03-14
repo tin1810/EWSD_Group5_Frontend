@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
+import 'package:university_magazine_project/presentation/portal/view/login/login_page.dart';
 
 import '../../../../../app/config/app_textstyle.dart';
 
@@ -25,7 +26,7 @@ class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 80,
             color: controller.backgroundColor.value,
             onPressed: () {
-              // controller.onHover(false);
+              Get.to(LoginPage());
             },
             child: Text(
               portal ?? "Portal",
