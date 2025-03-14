@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_bindings.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 import 'package:university_magazine_project/presentation/portal/view/login/login_page.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: StudentHomePage(),
     );
   }
 }
