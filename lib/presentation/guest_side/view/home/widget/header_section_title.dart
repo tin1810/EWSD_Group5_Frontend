@@ -2,21 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 
-class HeaderSectionTitle extends StatelessWidget {
+class HeaderSectionTitle extends StatefulWidget {
   final String title;
-  const HeaderSectionTitle({
-    super.key,
-    required this.title,
-  });
+
+  const HeaderSectionTitle({super.key, required this.title});
+
+  @override
+  _HeaderSectionTitleState createState() => _HeaderSectionTitleState();
+}
+
+class _HeaderSectionTitleState extends State<HeaderSectionTitle> {
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-        onEnter: (_) => true,
-        onExit: (_) => false,
-        child: MaterialButton(
-            onPressed: () {},
-            color: AppColor.hoverAppBarColor,
-            child: Text(title, style: AppTextStyle.h4poppinsRegular)));
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: MaterialButton(
+        minWidth: 100,
+        height: 80,
+        onPressed: () {},
+        elevation: 0,
+        hoverElevation: 0.1,
+        hoverColor: AppColor.hoverAppBarColor,
+        color: AppColor.whiteColor,
+        child: Text(
+          widget.title,
+          style: AppTextStyle.h3iterRegular.copyWith(
+            color: isHovered ? AppColor.whiteColor : AppColor.blackColor,
+          ),
+        ),
+      ),
+    );
   }
 }

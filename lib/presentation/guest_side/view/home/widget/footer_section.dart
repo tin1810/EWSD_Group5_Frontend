@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
+import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_icon.dart';
@@ -75,11 +75,33 @@ class FooterSection extends StatelessWidget {
           Center(
             child: Text(
               "The University of Greenwich is a charity and company limited by guarantee, registered in England.",
-              style: AppTextStyle.h3poppinsRegular.copyWith(
+              style: AppTextStyle.h5poppinsRegular.copyWith(
                 color: AppColor.whiteColor,
-                fontSize: 12,
               ),
             ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(
+                AppGraphic.teachinAwardImage,
+                height: 120,
+              ),
+              Image.asset(
+                AppGraphic.uniAllianceLogoImage,
+                height: 120,
+              ),
+              Image.asset(
+                AppGraphic.studentCrowdImage,
+                height: 120,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 50,
           ),
         ],
       ),
