@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 
 import '../../../../../app/config/app_color.dart';
