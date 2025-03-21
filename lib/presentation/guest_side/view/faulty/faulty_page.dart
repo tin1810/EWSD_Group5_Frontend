@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/presentation/guest_side/view/faulty/widget/faculty_card.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 
@@ -54,6 +55,53 @@ class FacultyPage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Center(
+                child: Text("Directory",
+                    style: AppTextStyle.h1poppinsBold.copyWith(fontSize: 27))),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Expanded(
+                child: Text(
+                    "Find contact details, locations, news, events and other information about our departments.",
+                    style: AppTextStyle.h4poppinsRegular),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Container(
+                width: 120,
+                height: 10,
+                color: AppColor.blueColor,
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Container(
+              height: 220,
+              padding: EdgeInsets.symmetric(horizontal: 50),
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return FaultyCard(
+                      name: "Computer Science Faculty",
+                      text:
+                          "Discover the possibilities of technology at Greenwich, where courses shape students from undergraduate to postgraduate levels. Covering some of the most relevant industry topics, such as cybersecurity and artificial intelligence.",
+                    );
+                  }),
+            ),
+            SizedBox(
+              height: 50,
             ),
           ],
         ),
