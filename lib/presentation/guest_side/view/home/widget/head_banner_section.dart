@@ -39,26 +39,53 @@ class HeadBannerSection extends StatelessWidget {
     );
   }
 
-  Widget _buildFacultyCoordinatorMenu(BuildContext context) {
+  Widget _buildFacultyCoordinatorMenu(BuildContext context,
+      {Function(String)? onSelect}) {
     return Row(
       children: [
-        _menuItem('Home',
-            onTap: () => _navigateTo(context, FacultyCoordinatorHomepage())),
-        _menuItem('Publishion',
-            onTap: () => _navigateTo(context, PublishionPage())),
-        _menuItem('Reports', onTap: () => _navigateTo(context, ReportPage())),
+        _menuItem('Home', onTap: () {
+          if (onSelect != null) {
+            onSelect("home");
+          }
+          _navigateTo(context, FacultyCoordinatorHomepage());
+        }),
+        _menuItem('Publication', onTap: () {
+          if (onSelect != null) {
+            onSelect("Publication");
+          }
+          _navigateTo(context, PublishionPage());
+        }),
+        _menuItem('Reports', onTap: () {
+          if (onSelect != null) {
+            onSelect("Reports");
+          }
+          _navigateTo(context, ReportPage());
+        }),
       ],
     );
   }
 
-  Widget _buildStudentMenu(BuildContext context) {
+  Widget _buildStudentMenu(BuildContext context, {Function(String)? onSelect}) {
     return Row(
       children: [
-        _menuItem('Home', onTap: () => _navigateTo(context, StudentHomePage())),
-        _menuItem('Submit Article',
-            onTap: () => _navigateTo(context, SubmitPage())),
-        _menuItem('My Submissions',
-            onTap: () => _navigateTo(context, MySubmissionsPage())),
+        _menuItem('Home', onTap: () {
+          if (onSelect != null) {
+            onSelect("home");
+          }
+          _navigateTo(context, StudentHomePage());
+        }),
+        _menuItem('Submit Article', onTap: () {
+          if (onSelect != null) {
+            onSelect("Submit Article");
+          }
+          _navigateTo(context, SubmitPage());
+        }),
+        _menuItem('My Submissions', onTap: () {
+          if (onSelect != null) {
+            onSelect("My Submissions");
+          }
+          _navigateTo(context, MySubmissionsPage());
+        }),
       ],
     );
   }
@@ -66,7 +93,7 @@ class HeadBannerSection extends StatelessWidget {
   Widget _menuItem(String title, {VoidCallback? onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: HeaderSectionTitle(title: title, isFaulty: false, onTap: onTap),
+      child: HeaderSectionTitle(title: title, onTap: onTap),
     );
   }
 

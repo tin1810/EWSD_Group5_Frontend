@@ -34,7 +34,7 @@ class _SubmitPageState extends State<SubmitPage> {
           children: [
             HeadBannerSection(portal: "Student"),
             ContributeTitleWidget(),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child:
@@ -48,6 +48,7 @@ class _SubmitPageState extends State<SubmitPage> {
                   textAlign: TextAlign.center,
                   style: AppTextStyle.h5iterBold),
             ),
+            SizedBox(height: 20),
             Container(
               width: MediaQuery.sizeOf(context).width,
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),

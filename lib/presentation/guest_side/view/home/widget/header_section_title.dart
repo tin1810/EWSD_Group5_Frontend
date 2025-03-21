@@ -5,17 +5,15 @@ import 'package:university_magazine_project/app/config/app_textstyle.dart';
 class HeaderSectionTitle extends StatefulWidget {
   final String title;
   final Function? onTap;
-  final bool isFaulty;
 
   const HeaderSectionTitle({
     super.key,
     required this.title,
     this.onTap,
-    required this.isFaulty,
   });
 
   @override
-  _HeaderSectionTitleState createState() => _HeaderSectionTitleState();
+  State<HeaderSectionTitle> createState() => _HeaderSectionTitleState();
 }
 
 class _HeaderSectionTitleState extends State<HeaderSectionTitle> {
@@ -26,27 +24,28 @@ class _HeaderSectionTitleState extends State<HeaderSectionTitle> {
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
-      child: MaterialButton(
-        minWidth: 100,
-        height: 80,
-        onPressed: () {
-          if (widget.onTap != null) {
-            widget.onTap!();
-          }
-        },
-        elevation: 0,
-        hoverElevation: 0.1,
-        hoverColor: AppColor.hoverAppBarColor,
-        color: AppColor.whiteColor,
-        child: Text(
-          widget.title,
-          style: widget.isFaulty
-              ? AppTextStyle.h3poppinsRegular.copyWith(
-                  color: isHovered ? Colors.amber : AppColor.whiteColor,
-                )
-              : AppTextStyle.h3iterRegular.copyWith(
-                  color: isHovered ? AppColor.whiteColor : AppColor.blackColor,
-                ),
+      child: SizedBox(
+        width: 160,
+        height: 60,
+        child: MaterialButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          onPressed: () {
+            if (widget.onTap != null) {
+              widget.onTap!();
+            }
+          },
+          elevation: 0,
+          hoverElevation: 0.1,
+          hoverColor: AppColor.blackColor,
+          color: AppColor.whiteColor,
+          child: Text(
+            widget.title,
+            style: AppTextStyle.h3iterRegular.copyWith(
+              color: isHovered ? AppColor.whiteColor : AppColor.blackColor,
+            ),
+          ),
         ),
       ),
     );

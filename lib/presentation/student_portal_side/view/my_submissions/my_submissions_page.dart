@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submission_detail_page.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/contribute_title_widget.dart';
 
 class MySubmissionsPage extends StatelessWidget {
   const MySubmissionsPage({super.key});
@@ -20,21 +22,30 @@ class MySubmissionsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             HeadBannerSection(portal: "Student"),
-            Text("Track Your Submission",
-                style: AppTextStyle.h1iterBold.copyWith(color: Colors.black)),
-            SizedBox(height: 20),
-            Text(
-                "Stay informed about the status of your article submissions with our easy-to-use tracking tool.",
-                textAlign: TextAlign.center,
-                style: AppTextStyle.h5iterBold.copyWith(color: Colors.black)),
-            SizedBox(height: 20),
+            ContributeTitleWidget(
+              title: "Track Your Submission",
+              des:
+                  "Stay informed about the status of your article submissions with our easy-to-use tracking tool.",
+            ),
+            SizedBox(height: 40),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text("UPLOADED ARTICLES",
+                    style:
+                        AppTextStyle.h1iterBold.copyWith(color: Colors.black)),
+              ),
+            ),
+            SizedBox(height: 40),
             Wrap(
               spacing: 20,
               runSpacing: 20,
               children: [
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
                       return MySubmissionDetailPage();
                     }));
                   },
@@ -185,7 +196,8 @@ class MySubmissionsPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30,)
+            SizedBox(height: 20),
+            FooterSection(),
           ],
         ),
       ),
