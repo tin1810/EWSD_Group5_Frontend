@@ -34,7 +34,7 @@ class MySubmissionsPage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: (){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
                       return MySubmissionDetailPage();
                     }));
                   },

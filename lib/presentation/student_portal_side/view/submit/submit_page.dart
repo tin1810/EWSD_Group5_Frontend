@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/contribute_title_widget.dart';
@@ -139,34 +140,43 @@ class _SubmitPageState extends State<SubmitPage> {
             Center(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                width: MediaQuery.sizeOf(context).width / 2,
+                width: MediaQuery.sizeOf(context).width / 3,
                 decoration: BoxDecoration(
-                  color: Colors.black54,
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0, 0),
+                        blurStyle: BlurStyle.outer,
+                        blurRadius: 2,
+                        spreadRadius: 2)
+                  ],
                 ),
                 child: Column(
                   children: [
                     Text('Submit Your Article',
                         style: AppTextStyle.h1iterBold
-                            .copyWith(color: Colors.white)),
+                            .copyWith(color: Colors.black)),
                     SizedBox(height: 20),
                     Text('We look forward to reviewing your work!',
                         textAlign: TextAlign.center,
                         style: AppTextStyle.h5iterBold
-                            .copyWith(color: Colors.white)),
+                            .copyWith(color: Colors.black)),
                     SizedBox(height: 20),
                     TextField(
                       key: Key("1"),
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                       maxLines: 1,
                       controller: controller,
                       focusNode: focusNode,
                       decoration: InputDecoration(
                         label: Text(
                           "Article Title",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.black),
                         ),
                         hintText: "Enter Your Article Title",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(13),
                           borderSide: const BorderSide(color: Colors.black),
@@ -198,7 +208,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             (imageFile != null)
                                 ? (imageFile!.path.split("/")).last
                                 : "Add Article Cover Photo",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                           InkWell(
                             onTap: () async {
@@ -215,7 +225,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             },
                             child: Icon(
                               Icons.image,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                         ],
@@ -238,7 +248,7 @@ class _SubmitPageState extends State<SubmitPage> {
                             (wordFile != null)
                                 ? (wordFile!.path.split("/")).last
                                 : "Add Article File(WORD)",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                           InkWell(
                             onTap: () async {
@@ -255,15 +265,15 @@ class _SubmitPageState extends State<SubmitPage> {
                             },
                             child: Icon(
                               Icons.article_outlined,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(height: 20),
-                    FacultyDropdownWidget(),
-                    SizedBox(height: 20),
+                    // FacultyDropdownWidget(),
+                    // SizedBox(height: 20),
                     MaterialButton(
                       color: AppColor.blueColor,
                       onPressed: () {},
@@ -276,6 +286,8 @@ class _SubmitPageState extends State<SubmitPage> {
                 ),
               ),
             ),
+            SizedBox(height: 20),
+            FooterSection(),
           ],
         ),
       ),
