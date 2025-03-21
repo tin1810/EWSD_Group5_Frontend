@@ -5,11 +5,13 @@ import 'package:university_magazine_project/app/config/app_textstyle.dart';
 class HeaderSectionTitle extends StatefulWidget {
   final String title;
   final Function? onTap;
+  final bool isFaulty;
 
   const HeaderSectionTitle({
     super.key,
     required this.title,
     this.onTap,
+    required this.isFaulty,
   });
 
   @override
@@ -38,9 +40,13 @@ class _HeaderSectionTitleState extends State<HeaderSectionTitle> {
         color: AppColor.whiteColor,
         child: Text(
           widget.title,
-          style: AppTextStyle.h3iterRegular.copyWith(
-            color: isHovered ? AppColor.whiteColor : AppColor.blackColor,
-          ),
+          style: widget.isFaulty
+              ? AppTextStyle.h3poppinsRegular.copyWith(
+                  color: isHovered ? Colors.amber : AppColor.whiteColor,
+                )
+              : AppTextStyle.h3iterRegular.copyWith(
+                  color: isHovered ? AppColor.whiteColor : AppColor.blackColor,
+                ),
         ),
       ),
     );

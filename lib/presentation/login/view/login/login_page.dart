@@ -1,0 +1,154 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:university_magazine_project/app/config/app_color.dart';
+import 'package:university_magazine_project/app/config/app_graphic.dart';
+import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/presentation/portal/controller/login_controller.dart';
+import 'package:university_magazine_project/presentation/portal/view/login/widget/custom_login.dart';
+
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final LoginController loginController = Get.put(LoginController());
+    return Scaffold(
+      backgroundColor: AppColor.whiteColor,
+      body: Container(
+        decoration: BoxDecoration(),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            AppGraphic.loginBGImage,
+                          ),
+                          fit: BoxFit.cover))),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        AppGraphic.logoImage,
+                        height: 130,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('Welcome again to Login!',
+                            style: AppTextStyle.h1iterBold),
+                        Icon(
+                          FontAwesomeIcons.handPeace,
+                          color: Colors.amberAccent,
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
+                      child: Text(
+                        "Email",
+                        style: AppTextStyle.h4poppinsRegular,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 100, vertical: 10),
+                      child: CustomTextField(
+                        onChanged: (value) =>
+                            loginController.email.value = value,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 100, vertical: 10),
+                      child: Text(
+                        "Password",
+                        style: AppTextStyle.h4poppinsRegular,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
+                      child: CustomTextField(
+                        obscureText: true,
+                        onChanged: (value) =>
+                            loginController.password.value = value,
+                      ),
+                    ),
+
+                    // TextField(
+                    //   obscureText: true,
+                    //   decoration: InputDecoration(labelText: 'Password'),
+                    //   onChanged: (value) =>
+                    //       loginController.password.value = value,
+                    // ),
+                    SizedBox(height: 20),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 100),
+                        child: MaterialButton(
+                          minWidth: double.infinity,
+                          height: 50,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          color: AppColor.hoverAppBarColor,
+                          onPressed: () {},
+                          child: Text('Sign In',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                    // SizedBox(height: 10),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text('Already have an account? '),
+                    //     GestureDetector(
+                    //       onTap: () {},
+                    //       child: Text('Sign In',
+                    //           style: TextStyle(
+                    //               color: Colors.blue,
+                    //               fontWeight: FontWeight.bold)),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(height: 20),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     ElevatedButton.icon(
+                    //       onPressed: () {},
+                    //       icon: Icon(Icons.g_mobiledata),
+                    //       label: Text('Sign up with Google'),
+                    //     ),
+                    //     SizedBox(width: 10),
+                    //     ElevatedButton.icon(
+                    //       onPressed: () {},
+                    //       icon: Icon(Icons.apple),
+                    //       label: Text('Sign up with Apple'),
+                    //     ),
+                    //   ],
+                    // ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
