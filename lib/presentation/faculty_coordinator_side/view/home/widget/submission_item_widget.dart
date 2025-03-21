@@ -8,12 +8,14 @@ class SubmissionItemWidget extends StatelessWidget {
   final String? date;
   final String? text;
   final String? imageUrl;
+  final Color color;
   const SubmissionItemWidget({
     super.key,
     this.text,
     this.imageUrl,
     this.name,
     this.date,
+    required this.color,
   });
 
   @override
@@ -23,7 +25,7 @@ class SubmissionItemWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColor.whiteColor,
+        color: color,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Row(

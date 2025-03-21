@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
-import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/widget/submission_item_widget.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/submission_item_widget.dart';
 
 class SubmissionListWidget extends StatelessWidget {
   const SubmissionListWidget({
@@ -36,6 +36,7 @@ class SubmissionListWidget extends StatelessWidget {
             itemCount: 5,
             itemBuilder: (context, index) {
               return SubmissionItemWidget(
+                  color: AppColor.whiteColor,
                   name: "Rose",
                   date: "12/12/2021",
                   text:
