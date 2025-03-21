@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
-import 'package:university_magazine_project/presentation/article_detail_page.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 
 class MySubmissionDetailPage extends StatefulWidget {

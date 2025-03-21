@@ -114,6 +114,9 @@ class LoginPage extends StatelessWidget {
                             if(loginController.email.value == "coordinator@gmail.com"){
                               Get.to(FacultyCoordinatorHomepage());
                             }
+                            if(loginController.email.value == "manager@gmail.com"){
+                              Get.to(FacultyCoordinatorHomepage());
+                            }
                           },
                           child: Text('Sign In',
                               style: TextStyle(color: Colors.white)),

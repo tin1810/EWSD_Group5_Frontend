@@ -4,6 +4,7 @@ import 'package:university_magazine_project/presentation/faculty_coordinator_sid
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/publishion/publishion_page.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/report/report_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/faulty_page.dart';
+import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/header_section_title.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
@@ -24,7 +25,8 @@ class HeadBannerSection extends StatelessWidget {
         ),
         if (portal == null) _buildGuestMenu(context),
         if (portal == "Student") _buildStudentMenu(context),
-        if (portal == "CS") _buildFacultyCoordinatorMenu(context),
+        if (portal == "Coordinator") _buildFacultyCoordinatorMenu(context),
+        if (portal == "Manager") _buildFacultyCoordinatorMenu(context),
       ],
     );
   }
@@ -32,7 +34,7 @@ class HeadBannerSection extends StatelessWidget {
   Widget _buildGuestMenu(BuildContext context) {
     return Row(
       children: [
-        _menuItem('Home'),
+        _menuItem('Home', onTap: () => _navigateTo(context, HomePage())),
         _menuItem('Article'),
         _menuItem('Faculty', onTap: () => _navigateTo(context, FacultyPage())),
         _menuItem('About Us'),
@@ -44,16 +46,27 @@ class HeadBannerSection extends StatelessWidget {
       {Function(String)? onSelect}) {
     return Row(
       children: [
-        _menuItem(
-          'Home',
-          onTap: () => _navigateTo(
+        _menuItem('Home', onTap: () {
+          if (onSelect != null) {
+            onSelect("Home");
+          }
+          _navigateTo(
             context,
             FacultyCoordinatorHomepage(),
-          ),
-        ),
-        _menuItem('Publishion',
-            onTap: () => _navigateTo(context, PublishionPage())),
-        _menuItem('Reports', onTap: () => _navigateTo(context, ReportPage())),
+          );
+        }),
+        _menuItem('Publication', onTap: () {
+          if (onSelect != null) {
+            onSelect("Publication");
+          }
+          _navigateTo(context, PublishionPage());
+        }),
+        _menuItem('Reports', onTap: () {
+          if (onSelect != null) {
+            onSelect("Reports");
+          }
+          _navigateTo(context, ReportPage());
+        }),
       ],
     );
   }
