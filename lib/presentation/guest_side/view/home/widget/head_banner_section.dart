@@ -3,6 +3,7 @@ import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/publishion/publishion_page.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/report/report_page.dart';
+import 'package:university_magazine_project/presentation/guest_side/view/faulty/faulty_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/header_section_title.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
@@ -21,19 +22,19 @@ class HeadBannerSection extends StatelessWidget {
           height: 100,
           child: Image.asset(AppGraphic.logoImage, fit: BoxFit.cover),
         ),
-        if (portal == null) _buildGuestMenu(),
+        if (portal == null) _buildGuestMenu(context),
         if (portal == "Student") _buildStudentMenu(context),
         if (portal == "CS") _buildFacultyCoordinatorMenu(context),
       ],
     );
   }
 
-  Widget _buildGuestMenu() {
+  Widget _buildGuestMenu(BuildContext context) {
     return Row(
       children: [
         _menuItem('Home'),
         _menuItem('Article'),
-        _menuItem('Faculty'),
+        _menuItem('Faculty', onTap: () => _navigateTo(context, FacultyPage())),
         _menuItem('About Us'),
       ],
     );
@@ -42,8 +43,13 @@ class HeadBannerSection extends StatelessWidget {
   Widget _buildFacultyCoordinatorMenu(BuildContext context) {
     return Row(
       children: [
-        _menuItem('Home',
-            onTap: () => _navigateTo(context, FacultyCoordinatorHomepage())),
+        _menuItem(
+          'Home',
+          onTap: () => _navigateTo(
+            context,
+            FacultyCoordinatorHomepage(),
+          ),
+        ),
         _menuItem('Publishion',
             onTap: () => _navigateTo(context, PublishionPage())),
         _menuItem('Reports', onTap: () => _navigateTo(context, ReportPage())),
