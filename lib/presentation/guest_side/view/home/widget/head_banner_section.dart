@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
-import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/faculty_coordinator_homepage.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/publishion/publishion_page.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/report/report_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/header_section_title.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
@@ -43,9 +45,8 @@ class HeadBannerSection extends StatelessWidget {
         _menuItem('Home',
             onTap: () => _navigateTo(context, FacultyCoordinatorHomepage())),
         _menuItem('Publishion',
-            onTap: () => _navigateTo(context, SubmitPage())),
-        _menuItem('Notifications',
-            onTap: () => _navigateTo(context, MySubmissionsPage())),
+            onTap: () => _navigateTo(context, PublishionPage())),
+        _menuItem('Reports', onTap: () => _navigateTo(context, ReportPage())),
       ],
     );
   }
