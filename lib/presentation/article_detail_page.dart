@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
@@ -94,7 +93,7 @@ class CommentBoxWidget extends StatelessWidget {
     return Center(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        width: MediaQuery.sizeOf(context).width/3,
+        width: MediaQuery.sizeOf(context).width / 3,
         decoration: BoxDecoration(
           color: Color.fromRGBO(255, 255, 255, 1),
           borderRadius: BorderRadius.circular(20),
@@ -153,10 +152,9 @@ class ArticleBannerWidget extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-            left: MediaQuery.sizeOf(context).width / 20,
-            bottom: MediaQuery.sizeOf(context).width / 20,
-            top: 300
-          ),
+              left: MediaQuery.sizeOf(context).width / 20,
+              bottom: MediaQuery.sizeOf(context).width / 20,
+              top: 300),
           child: Container(
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -170,13 +168,13 @@ class ArticleBannerWidget extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Container(
-             width: 100,
+              width: 100,
               height: 50,
               decoration: BoxDecoration(
                   color: AppColor.blueColor,
@@ -185,7 +183,8 @@ class ArticleBannerWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   "Back",
-                  style: AppTextStyle.h2iterRegular.copyWith(color: Colors.white),
+                  style:
+                      AppTextStyle.h2iterRegular.copyWith(color: Colors.white),
                 ),
               ),
             ),
