@@ -6,6 +6,7 @@ import 'package:university_magazine_project/presentation/faculty_coordinator_sid
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/faulty_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/header_section_title.dart';
+import 'package:university_magazine_project/presentation/manager_side/view/contributions/manager_contribution_page.dart';
 import 'package:university_magazine_project/presentation/manager_side/view/home/manager_homepage.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
@@ -59,7 +60,7 @@ class HeadBannerSection extends StatelessWidget {
           if (onSelect != null) {
             onSelect("Contributions");
           }
-          _navigateTo(context, PublishionPage());
+          _navigateTo(context, ManagerContributionPage());
         }),
         _menuItem('Reports', onTap: () {
           if (onSelect != null) {
