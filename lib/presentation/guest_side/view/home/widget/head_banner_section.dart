@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
+import 'package:university_magazine_project/presentation/admin/view/system_settings.dart';
+import 'package:university_magazine_project/presentation/admin/view/user_management.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/publishion/publishion_page.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/report/report_page.dart';
@@ -38,6 +40,7 @@ class HeadBannerSection extends StatelessWidget {
         if (portal == "Student") _buildStudentMenu(context),
         if (portal == "Coordinator") _buildFacultyCoordinatorMenu(context),
         if (portal == "Manager") _buildManagerMenu(context),
+        if (portal == "Admin") _buildAdminMenu(context),
       ],
     );
   }
@@ -54,15 +57,48 @@ class HeadBannerSection extends StatelessWidget {
         children: [
           _menuItem('Home', onTap: () => _navigateTo(context, HomePage())),
           _menuItem('Article'),
-          _menuItem('Faculty', onTap: () => _navigateTo(context, FacultyPage())),
+          _menuItem('Faculty',
+              onTap: () => _navigateTo(context, FacultyPage())),
           _menuItem('About Us'),
         ],
       ),
     );
   }
 
+  Widget _buildAdminMenu(BuildContext context, {Function(String)? onSelect}) {
+    return Wrap(
+      alignment: WrapAlignment.start,
+      direction: (Device.screenType == ScreenType.desktop ||
+              Device.screenType == ScreenType.tablet)
+          ? Axis.horizontal
+          : Axis.vertical,
+      children: [
+        _menuItem('System Settings', onTap: () {
+          if (onSelect != null) {
+            onSelect("System Settings");
+          }
+          _navigateTo(
+            context,
+            SystemSettings(),
+          );
+        }),
+        _menuItem('User', onTap: () {
+          if (onSelect != null) {
+            onSelect("User");
+          }
+          _navigateTo(context, UserManagement());
+        }),
+      ],
+    );
+  }
+
   Widget _buildManagerMenu(BuildContext context, {Function(String)? onSelect}) {
-    return Row(
+    return Wrap(
+      alignment: WrapAlignment.start,
+      direction: (Device.screenType == ScreenType.desktop ||
+              Device.screenType == ScreenType.tablet)
+          ? Axis.horizontal
+          : Axis.vertical,
       children: [
         _menuItem('Home', onTap: () {
           if (onSelect != null) {

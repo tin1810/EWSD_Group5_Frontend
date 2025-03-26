@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_bindings.dart';
+import 'package:university_magazine_project/presentation/admin/view/admin_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/faulty_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: FacultyCoordinatorHomepage(),
+        home: AdminHomePage(),
       ),
     );
   }
