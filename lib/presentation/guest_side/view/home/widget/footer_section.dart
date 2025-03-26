@@ -49,16 +49,22 @@ class FooterSection extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: homeController.socialIcons
-                .map(
-                  (item) => HoverButton(
-                    icon: item['icon'],
-                    url: item['url'],
-                  ),
-                )
-                .toList(),
+          Align(
+            alignment: Alignment.center,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              direction: Axis.horizontal,
+              runAlignment: WrapAlignment.start,
+              runSpacing: 20,
+              children: homeController.socialIcons
+                  .map(
+                    (item) => HoverButton(
+                      icon: item['icon'],
+                      url: item['url'],
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
           SizedBox(
             height: 50,
@@ -83,22 +89,29 @@ class FooterSection extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Image.asset(
-                AppGraphic.teachinAwardImage,
-                height: 120,
-              ),
-              Image.asset(
-                AppGraphic.uniAllianceLogoImage,
-                height: 120,
-              ),
-              Image.asset(
-                AppGraphic.studentCrowdImage,
-                height: 120,
-              ),
-            ],
+          Align(
+            alignment: Alignment.center,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              direction: Axis.horizontal,
+              runAlignment: WrapAlignment.start,
+              spacing: MediaQuery.sizeOf(context).width/30,
+              runSpacing: MediaQuery.sizeOf(context).width/30,
+              children: [
+                Image.asset(
+                  AppGraphic.teachinAwardImage,
+                  height: 120,
+                ),
+                Image.asset(
+                  AppGraphic.uniAllianceLogoImage,
+                  height: 120,
+                ),
+                Image.asset(
+                  AppGraphic.studentCrowdImage,
+                  height: 120,
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 50,

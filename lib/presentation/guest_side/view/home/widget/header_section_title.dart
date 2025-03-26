@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 
@@ -25,7 +26,10 @@ class _HeaderSectionTitleState extends State<HeaderSectionTitle> {
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: SizedBox(
-        width: 160,
+        width: (Device.screenType == ScreenType.tablet ||
+            Device.screenType == ScreenType.desktop)
+            ? 160
+            : 160,
         height: 60,
         child: MaterialButton(
           shape: RoundedRectangleBorder(

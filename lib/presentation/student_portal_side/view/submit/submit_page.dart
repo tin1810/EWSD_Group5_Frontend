@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
@@ -53,7 +54,13 @@ class _SubmitPageState extends State<SubmitPage> {
               width: MediaQuery.sizeOf(context).width,
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               decoration: BoxDecoration(color: Colors.white),
-              child: Row(
+              child: Wrap(
+                direction: (Device.screenType == ScreenType.desktop ||
+                        Device.screenType == ScreenType.tablet)
+                    ? Axis.horizontal
+                    : Axis.vertical,
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.center,
                 children: [
                   Image.network(
                     width: MediaQuery.sizeOf(context).width / 2.3,
@@ -83,7 +90,13 @@ class _SubmitPageState extends State<SubmitPage> {
               width: MediaQuery.sizeOf(context).width,
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               decoration: BoxDecoration(color: Colors.white),
-              child: Row(
+              child: Wrap(
+                direction: (Device.screenType == ScreenType.desktop ||
+                        Device.screenType == ScreenType.tablet)
+                    ? Axis.horizontal
+                    : Axis.vertical,
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.center,
                 children: [
                   SizedBox(
                     width: MediaQuery.sizeOf(context).width / 2.3,
@@ -113,7 +126,13 @@ class _SubmitPageState extends State<SubmitPage> {
               width: MediaQuery.sizeOf(context).width,
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               decoration: BoxDecoration(color: Colors.white),
-              child: Row(
+              child: Wrap(
+                direction: (Device.screenType == ScreenType.desktop ||
+                        Device.screenType == ScreenType.tablet)
+                    ? Axis.horizontal
+                    : Axis.vertical,
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.center,
                 children: [
                   Image.network(
                     width: MediaQuery.sizeOf(context).width / 2.3,
@@ -141,7 +160,10 @@ class _SubmitPageState extends State<SubmitPage> {
             Center(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                width: MediaQuery.sizeOf(context).width / 3,
+                width: (Device.screenType == ScreenType.desktop ||
+                        Device.screenType == ScreenType.tablet)
+                    ? 400
+                    : 250,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.circular(20),

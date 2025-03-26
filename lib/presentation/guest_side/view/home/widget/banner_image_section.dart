@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
@@ -75,13 +76,18 @@ class BannerImageSection extends StatelessWidget {
           ),
         ),
 
-        // Welcome Text Box
         Positioned(
           bottom: -100,
-          left: 300,
-          right: 300,
+          left: (rs.Device.screenType == rs.ScreenType.tablet ||
+                  rs.Device.screenType == rs.ScreenType.desktop)
+              ? MediaQuery.sizeOf(context).width / 4
+              : 20,
+          right: (rs.Device.screenType == rs.ScreenType.tablet ||
+                  rs.Device.screenType == rs.ScreenType.desktop)
+              ? MediaQuery.sizeOf(context).width / 4
+              : 20,
           child: Container(
-            height: 200,
+            padding: EdgeInsets.all(30),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(

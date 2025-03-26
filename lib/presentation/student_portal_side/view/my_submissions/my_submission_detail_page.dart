@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
@@ -63,7 +64,10 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
             Center(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                width: MediaQuery.sizeOf(context).width / 3,
+                width: (Device.screenType == ScreenType.desktop ||
+                        Device.screenType == ScreenType.tablet)
+                    ? 400
+                    : 250,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(255, 255, 255, 1),
                   borderRadius: BorderRadius.circular(20),

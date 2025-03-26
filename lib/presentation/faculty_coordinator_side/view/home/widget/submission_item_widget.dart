@@ -30,7 +30,12 @@ class SubmissionItemWidget extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Row(
+      child: Wrap(
+        alignment: WrapAlignment.start,
+        crossAxisAlignment: WrapCrossAlignment.end,
+        spacing: 40,
+        runSpacing: 30,
+        direction: Axis.horizontal,
         children: [
           Container(
             height: 300,
@@ -44,61 +49,63 @@ class SubmissionItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 40),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      name ?? "Student Name",
-                      style: AppTextStyle.h3iterBold,
-                    ),
-                    SizedBox(width: 30),
-                    Text(
-                      date ?? "Submission Date",
-                      style: AppTextStyle.h5iterRegular,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Text(
-                  overflow: TextOverflow.ellipsis,
-                  text ?? "Submission Text",
-                  maxLines: 3,
-                  style: AppTextStyle.h5iterRegular,
-                ),
-                SizedBox(height: 15),
-                MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  hoverColor: AppColor.blueColor,
-                  padding: EdgeInsets.all(18),
-                  color: Colors.grey.shade400,
-                  elevation: 0,
-                  onPressed: () {
-                    viewDetail();
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width / 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
                       Text(
-                        "View Details",
-                        style: AppTextStyle.h5poppinsRegular
-                            .copyWith(color: AppColor.whiteColor),
+                        name ?? "Student Name",
+                        style: AppTextStyle.h3iterBold,
                       ),
-                      SizedBox(width: 10),
-                      Icon(
-                        FontAwesomeIcons.arrowRight,
-                        color: AppColor.whiteColor,
-                        size: 14,
+                      SizedBox(width: 30),
+                      Text(
+                        date ?? "Submission Date",
+                        style: AppTextStyle.h5iterRegular,
                       ),
                     ],
                   ),
-                ),
-              ],
+                  SizedBox(height: 10),
+                  Text(
+                    overflow: TextOverflow.ellipsis,
+                    text ?? "Submission Text",
+                    maxLines: 3,
+                    style: AppTextStyle.h5iterRegular,
+                  ),
+                  SizedBox(height: 15),
+                  MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    hoverColor: AppColor.blueColor,
+                    padding: EdgeInsets.all(18),
+                    color: Colors.grey.shade400,
+                    elevation: 0,
+                    onPressed: () {
+                      viewDetail();
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "View Details",
+                          style: AppTextStyle.h5poppinsRegular
+                              .copyWith(color: AppColor.whiteColor),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(
+                          FontAwesomeIcons.arrowRight,
+                          color: AppColor.whiteColor,
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 
@@ -36,6 +37,7 @@ class StudentHomeInformationWidget extends StatelessWidget {
           SizedBox(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: (MediaQuery.sizeOf(context).width / 4),
@@ -111,14 +113,20 @@ class StudentHomeInformationWidget extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
             decoration: BoxDecoration(color: Colors.white),
-            child: Row(
+            child: Wrap(
+              direction: (Device.screenType == ScreenType.desktop ||
+                      Device.screenType == ScreenType.tablet)
+                  ? Axis.horizontal
+                  : Axis.vertical,
               children: [
                 Image.network(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   fit: BoxFit.fitWidth,
                   "https://plus.unsplash.com/premium_photo-1661255378914-d0934128d91d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXJ0aWNsZXxlbnwwfHwwfHx8MA%3D%3D",
                 ),
-                SizedBox(width: 30),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width / 30,
+                ),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   child: Column(
@@ -141,14 +149,20 @@ class StudentHomeInformationWidget extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
             decoration: BoxDecoration(color: Colors.white),
-            child: Row(
+            child: Wrap(
+              direction: (Device.screenType == ScreenType.desktop ||
+                      Device.screenType == ScreenType.tablet)
+                  ? Axis.horizontal
+                  : Axis.vertical,
               children: [
                 Image.network(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   fit: BoxFit.fitWidth,
                   "https://images.unsplash.com/photo-1488372759477-a7f4aa078cb6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
                 ),
-                SizedBox(width: 30),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width / 30,
+                ),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   child: Column(
@@ -171,14 +185,20 @@ class StudentHomeInformationWidget extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
             decoration: BoxDecoration(color: Colors.white),
-            child: Row(
+            child: Wrap(
+              direction: (Device.screenType == ScreenType.desktop ||
+                      Device.screenType == ScreenType.tablet)
+                  ? Axis.horizontal
+                  : Axis.vertical,
               children: [
                 Image.network(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   fit: BoxFit.fitWidth,
                   "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXJ0aWNsZXxlbnwwfHwwfHx8MA%3D%3D",
                 ),
-                SizedBox(width: 30),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width / 30,
+                ),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width / 2.3,
                   child: Column(
