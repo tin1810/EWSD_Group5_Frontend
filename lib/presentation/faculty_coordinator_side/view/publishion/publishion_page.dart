@@ -40,6 +40,7 @@ class _PublishionPageState extends State<PublishionPage> {
             BannerImageWithTextWidget(
               imagePath: AppGraphic.csFaculty,
               title: "Publish Student Submissions",
+              isManager: false,
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
@@ -106,9 +107,7 @@ class _PublishionPageState extends State<PublishionPage> {
                                   color: _selectedItems[index]
                                       ? AppColor.blueColor.withOpacity(0.6)
                                       : Colors.grey.shade200,
-                                  viewDetail: (){
-
-                                  },
+                                  viewDetail: () {},
                                 ),
                               ),
                             ],

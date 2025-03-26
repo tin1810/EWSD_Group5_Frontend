@@ -6,27 +6,28 @@ import 'package:university_magazine_project/presentation/faculty_coordinator_sid
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
+import 'package:university_magazine_project/presentation/manager_side/view/contributions/widget/contribution_list_section.dart';
 
-class FacultyCoordinatorHomepage extends StatelessWidget {
-  const FacultyCoordinatorHomepage({super.key});
+class ManagerContributionPage extends StatelessWidget {
+  const ManagerContributionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColor.whiteColor,
-        appBar: HoverAppBar(portal: "Coordinator"),
+        appBar: HoverAppBar(portal: "Manager"),
         body: SingleChildScrollView(
           child: Column(
             children: [
               HeadBannerSection(
-                portal: "Coordinator",
+                portal: "Manager",
               ),
               BannerImageWithTextWidget(
-                imagePath: AppGraphic.csFaculty,
-                title: "Welcome to Computer Science Faculty",
-                isManager: false,
+                imagePath: AppGraphic.managerBG,
+                title: "Contributions Overview",
+                isManager: true,
               ),
-              SubmissionListWidget(),
+              ContributionListSection(),
               FooterSection(),
             ],
           ),
