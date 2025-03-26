@@ -6,8 +6,10 @@ import 'package:university_magazine_project/presentation/admin/view/admin_homepa
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/faulty_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
+import 'package:university_magazine_project/presentation/portal/view/login/login_page.dart';
 import 'package:university_magazine_project/presentation/manager_side/view/contributions/manager_contribution_page.dart';
 import 'package:university_magazine_project/presentation/manager_side/view/home/manager_homepage.dart';
+import 'package:university_magazine_project/presentation/portal/view/login/login_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/widgets/student_home_information_widget.dart';
 
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: AdminHomePage(),
+        home: ManagerHomepage(),
       ),
     );
   }

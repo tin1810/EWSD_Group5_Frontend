@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_zoom_image.dart';
@@ -55,10 +56,13 @@ class ThirdRowSection extends StatelessWidget {
                         style: AppTextStyle.h5poppinsRegular
                             .copyWith(color: AppColor.whiteColor),
                       ),
-                      const SizedBox(
-                          width: 8), // Adds spacing between text and icon
-                      const Icon(Icons.arrow_forward_outlined,
-                          color: Colors.white),
+                      if (Device.screenType == ScreenType.tablet ||
+                          Device.screenType == ScreenType.desktop)
+                        const SizedBox(width: 8),
+                      if (Device.screenType == ScreenType.tablet ||
+                          Device.screenType == ScreenType.desktop)
+                        const Icon(Icons.arrow_forward_outlined,
+                            color: Colors.white),
                     ],
                   ),
                 ),

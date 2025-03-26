@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
-import 'package:university_magazine_project/presentation/login/view/login/login_page.dart';
+import 'package:university_magazine_project/presentation/portal/view/login/login_page.dart';
 
 import '../../../../../app/config/app_textstyle.dart';
 

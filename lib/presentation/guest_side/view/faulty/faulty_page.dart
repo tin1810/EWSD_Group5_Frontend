@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/widget/faculty_card.dart';
+import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 
@@ -103,6 +104,7 @@ class FacultyPage extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
+            FooterSection(),
           ],
         ),
       ),
