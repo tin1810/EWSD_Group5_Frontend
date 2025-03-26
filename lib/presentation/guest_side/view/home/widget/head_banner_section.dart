@@ -6,6 +6,7 @@ import 'package:university_magazine_project/presentation/faculty_coordinator_sid
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/faulty_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/header_section_title.dart';
+import 'package:university_magazine_project/presentation/manager_side/view/home/manager_homepage.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/submit_page.dart';
@@ -26,7 +27,7 @@ class HeadBannerSection extends StatelessWidget {
         if (portal == null) _buildGuestMenu(context),
         if (portal == "Student") _buildStudentMenu(context),
         if (portal == "Coordinator") _buildFacultyCoordinatorMenu(context),
-        if (portal == "Manager") _buildFacultyCoordinatorMenu(context),
+        if (portal == "Manager") _buildManagerMenu(context),
       ],
     );
   }
@@ -38,6 +39,34 @@ class HeadBannerSection extends StatelessWidget {
         _menuItem('Article'),
         _menuItem('Faculty', onTap: () => _navigateTo(context, FacultyPage())),
         _menuItem('About Us'),
+      ],
+    );
+  }
+
+  Widget _buildManagerMenu(BuildContext context, {Function(String)? onSelect}) {
+    return Row(
+      children: [
+        _menuItem('Home', onTap: () {
+          if (onSelect != null) {
+            onSelect("Home");
+          }
+          _navigateTo(
+            context,
+            ManagerHomepage(),
+          );
+        }),
+        _menuItem('Contributions', onTap: () {
+          if (onSelect != null) {
+            onSelect("Contributions");
+          }
+          _navigateTo(context, PublishionPage());
+        }),
+        _menuItem('Reports', onTap: () {
+          if (onSelect != null) {
+            onSelect("Reports");
+          }
+          _navigateTo(context, ReportPage());
+        }),
       ],
     );
   }

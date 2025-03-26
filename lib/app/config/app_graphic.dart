@@ -7,4 +7,5 @@ class AppGraphic {
       'assets/images/University-Alliance-Logo.png';
   static const String loginBGImage = 'assets/images/loginBackgroundImage.jpg';
   static const String csFaculty = 'assets/images/cs_faculty.jpg';
+  static const String managerBG = 'assets/images/manager_bg.jpg';
 }
