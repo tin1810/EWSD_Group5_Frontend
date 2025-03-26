@@ -30,12 +30,12 @@ class _PublishionPageState extends State<PublishionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      appBar: HoverAppBar(portal: "Computer Science Faculty"),
+      appBar: HoverAppBar(portal: "Coordinator"),
       body: SingleChildScrollView(
         child: Column(
           children: [
             HeadBannerSection(
-              portal: "CS",
+              portal: "Coordinator",
             ),
             BannerImageWithTextWidget(
               imagePath: AppGraphic.csFaculty,
@@ -106,6 +106,9 @@ class _PublishionPageState extends State<PublishionPage> {
                                   color: _selectedItems[index]
                                       ? AppColor.blueColor.withOpacity(0.6)
                                       : Colors.grey.shade200,
+                                  viewDetail: (){
+
+                                  },
                                 ),
                               ),
                             ],

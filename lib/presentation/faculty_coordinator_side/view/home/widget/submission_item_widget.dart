@@ -9,6 +9,7 @@ class SubmissionItemWidget extends StatelessWidget {
   final String? text;
   final String? imageUrl;
   final Color color;
+  final Function viewDetail;
   const SubmissionItemWidget({
     super.key,
     this.text,
@@ -16,6 +17,7 @@ class SubmissionItemWidget extends StatelessWidget {
     this.name,
     this.date,
     required this.color,
+    required this.viewDetail,
   });
 
   @override
@@ -76,7 +78,9 @@ class SubmissionItemWidget extends StatelessWidget {
                   padding: EdgeInsets.all(18),
                   color: Colors.grey.shade400,
                   elevation: 0,
-                  onPressed: () {},
+                  onPressed: () {
+                    viewDetail();
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

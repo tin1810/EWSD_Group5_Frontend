@@ -14,12 +14,12 @@ class FacultyCoordinatorHomepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColor.whiteColor,
-        appBar: HoverAppBar(portal: "Computer Science Faculty"),
+        appBar: HoverAppBar(portal: "Coordinator"),
         body: SingleChildScrollView(
           child: Column(
             children: [
               HeadBannerSection(
-                portal: "CS",
+                portal: "Coordinator",
               ),
               BannerImageWithTextWidget(
                 imagePath: AppGraphic.csFaculty,
