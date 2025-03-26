@@ -18,7 +18,10 @@ class _RecentContributionSectionState extends State<RecentContributionSection> {
     return Container(
       height: 500,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 50),
+      margin: const EdgeInsets.symmetric(
+        vertical: 50,
+        horizontal: 20,
+      ),
       padding: const EdgeInsets.only(top: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
