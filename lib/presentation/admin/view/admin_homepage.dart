@@ -23,90 +23,31 @@ class AdminHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final AdminController adminController = Get.find<AdminController>();
     return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      body: Row(
-        children: [
-          SideAppBar(
-            onClicked: (AdminSection section) {
-              adminController.changeSection(section);
-            },
-          ),
-          Expanded(
-            child: Obx(() {
-              switch (adminController.selectedSection.value) {
-                case AdminSection.system:
-                  return SystemSetting();
-                case AdminSection.users:
-                  return UserManagement();
-                case AdminSection.logout:
-                  return UserManagement();
-              }
-            }),
-          ),
-        ],
-      ),
-    );
+        backgroundColor: AppColor.whiteColor,
+        body: Row(
+          children: [
+            SideAppBar(
+              onClicked: (AdminSection section) {
+                adminController.changeSection(section);
+
+                if (section == AdminSection.logout) {
+                  adminController.logoutDialog();
+                }
+              },
+            ),
+            Expanded(
+              child: Obx(() {
+                switch (adminController.selectedSection.value) {
+                  case AdminSection.system:
+                    return SystemSetting();
+                  case AdminSection.users:
+                    return UserManagement();
+                  default:
+                    return Container();
+                }
+              }),
+            ),
+          ],
+        ));
   }
 }
-
-
-// Widget _buildStatCard(String title, String value, IconData icon, Color color) {
-  // return Card(
-  //   elevation: 2,
-  //   child: Container(
-  //     width: 150,
-  //     height: 100,
-  //     padding: EdgeInsets.all(16),
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Row(
-  //           children: [
-  //             Icon(icon, color: color),
-  //             SizedBox(width: 10),
-  //             Text(value,
-  //                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-  //           ],
-  //         ),
-  //         SizedBox(height: 10),
-  //         Text(title, style: TextStyle(fontSize: 14, color: Colors.grey)),
-  //       ],
-  //     ),
-  //   ),
-  // );
-// }
-//     return Scaffold(
-//         backgroundColor: AppColor.whiteColor,
-//         appBar: HoverAppBar(portal: "Admin"),
-//         body: SingleChildScrollView(
-//           child: Column(
-//             children: [
-//               HeadBannerSection(
-//                 portal: "Admin",
-//               ),
-//               BannerImageWithTextWidget(
-//                 imagePath: AppGraphic.managerBG,
-//                 title: "Welcome to Admin Portal",
-//                 isManager: true,
-//               ),
-
-
-//               FooterSection(),
-//             ],
-//           ),
-//         ));
-//   }
-// }
-    // return Scaffold(
-    //   backgroundColor: AppColor.whiteColor,
-    //   appBar: HoverAppBar(portal: "Admin"),
-    //   body: Column(
-    //     children: [
-    //       SystemSettings(),
-    //       UserManagement(),
-    //     ],
-    //   ),
-    // );
-
-
