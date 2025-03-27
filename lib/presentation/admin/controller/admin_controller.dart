@@ -1,16 +1,14 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/user_model.dart';
 
-enum AdminSection { system, users, logout }
+enum AdminSection { system, users, faculty, logout }
 
 class AdminController extends GetxController {
   var submissionDeadline = DateTime(2025, 6, 12).obs;

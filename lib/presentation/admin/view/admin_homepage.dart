@@ -7,6 +7,7 @@ import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
+import 'package:university_magazine_project/presentation/admin/view/faculty_page.dart';
 import 'package:university_magazine_project/presentation/admin/view/system_settings.dart';
 import 'package:university_magazine_project/presentation/admin/view/user_management.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/side_appbar.dart';
@@ -39,9 +40,11 @@ class AdminHomePage extends StatelessWidget {
               child: Obx(() {
                 switch (adminController.selectedSection.value) {
                   case AdminSection.system:
-                    return SystemSetting();
+                    return FacultyPage();
                   case AdminSection.users:
                     return UserManagement();
+                  case AdminSection.faculty:
+                    return FacultyPage();
                   default:
                     return Container();
                 }

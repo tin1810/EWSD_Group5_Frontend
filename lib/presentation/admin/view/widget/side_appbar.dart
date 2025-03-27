@@ -48,6 +48,17 @@ class SideAppBar extends StatelessWidget {
             height: 15,
           ),
           SideBarItem(
+            title: 'Faculty',
+            icon: FontAwesomeIcons.school,
+            section: AdminSection.faculty,
+            onTap: () {
+              onClicked(AdminSection.faculty);
+            },
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          SideBarItem(
             title: 'Logout',
             icon: Icons.logout,
             section: AdminSection.logout,
