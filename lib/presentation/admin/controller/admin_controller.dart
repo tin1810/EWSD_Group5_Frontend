@@ -1,28 +1,62 @@
 import 'package:get/get.dart';
-import 'package:university_magazine_project/app/model/user_model.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+
+enum AdminSection { system, users, logout }
 
 class AdminController extends GetxController {
-  var submissionDeadline = ''.obs;
-  var finalDeadline = ''.obs;
-  var users = <User>[].obs;
+  var submissionDeadline = DateTime(2025, 6, 12).obs;
+  var finalDeadline = DateTime(2025, 9, 12).obs;
+  var selectedSection = AdminSection.system.obs;
 
-  void setSubmissionDeadline(String date) {
-    submissionDeadline.value = date;
+  void changeSection(AdminSection section) {
+    selectedSection.value = section;
   }
 
-  void setFinalDeadline(String date) {
-    finalDeadline.value = date;
+  String formatDate(DateTime date) {
+    return DateFormat('dd MMMM yyyy').format(date);
   }
 
-  void addUser(User user) {
-    users.add(user);
-  }
+  Future<void> selectDate(bool isSubmission) async {
+    DateTime initialDate =
+        isSubmission ? submissionDeadline.value : finalDeadline.value;
+    DateTime firstDate = DateTime(2024);
+    DateTime lastDate = DateTime(2030);
 
-  void editUser(int index, User user) {
-    users[index] = user;
-  }
+    DateTime? pickedDate = await Get.dialog<DateTime>(
+      DatePickerDialog(
+        initialDate: initialDate,
+        firstDate: firstDate,
+        lastDate: lastDate,
+      ),
+    );
 
-  void deleteUser(int index) {
-    users.removeAt(index);
+    if (pickedDate != null) {
+      if (isSubmission) {
+        // Ensure Submission Deadline is not after Final Deadline
+        if (pickedDate.isAfter(finalDeadline.value)) {
+          Get.snackbar(
+            "Invalid Date",
+            "Submission deadline cannot be after the final deadline",
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+          return;
+        }
+        submissionDeadline.value = pickedDate;
+      } else {
+        // Ensure Final Deadline is not before Submission Deadline
+        if (pickedDate.isBefore(submissionDeadline.value)) {
+          Get.snackbar(
+            "Invalid Date",
+            "Final deadline cannot be before the submission deadline",
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+          return;
+        }
+        finalDeadline.value = pickedDate;
+      }
+    }
   }
 }

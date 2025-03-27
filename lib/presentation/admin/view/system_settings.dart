@@ -1,35 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:university_magazine_project/app/config/app_color.dart';
+import 'package:university_magazine_project/app/config/app_graphic.dart';
+import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
+import 'package:university_magazine_project/presentation/admin/view/widget/systemcard.dart';
 
-class SystemSettings extends StatelessWidget {
-  const SystemSettings({super.key});
+class SystemSetting extends StatelessWidget {
+  const SystemSetting({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final AdminController controller = Get.find<AdminController>();
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          ListTile(
-            title: Text("Submission Deadline: "),
-            subtitle: Obx(() => Text(controller.submissionDeadline.value)),
-            trailing: ElevatedButton(
-              onPressed: () => controller.setSubmissionDeadline("2025-04-15"),
-              child: Text("Set"),
-            ),
-          ),
-          ListTile(
-            title: Text("Final Deadline: "),
-            subtitle: Obx(() => Text(controller.finalDeadline.value)),
-            trailing: ElevatedButton(
-              onPressed: () => controller.setFinalDeadline("2025-04-30"),
-              child: Text("Set"),
-            ),
-          ),
-        ],
-      ),
+    final AdminController adminController = Get.find<AdminController>();
+    return Column(
+      children: [
+        Image.asset(AppGraphic.logoImage, height: 100),
+        SizedBox(
+          height: 40,
+        ),
+        Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 20, bottom: 20),
+              child: Text("Set Deadline Here",
+                  style: AppTextStyle.h1iterBold
+                      .copyWith(color: AppColor.primaryColor)),
+            )),
+        Row(
+          children: [
+            Obx(() => Systemcard(
+                  title: adminController
+                      .formatDate(adminController.submissionDeadline.value),
+                  value: 'Submission Deadline',
+                  icon: FontAwesomeIcons.calendar,
+                  color: AppColor.hoverAppBarColor,
+                  onClicked: () => adminController.selectDate(true),
+                )),
+            Obx(() => Systemcard(
+                  title: adminController
+                      .formatDate(adminController.finalDeadline.value),
+                  value: 'Final Deadline',
+                  icon: FontAwesomeIcons.calendar,
+                  color: Colors.purple,
+                  onClicked: () => adminController.selectDate(false),
+                )),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -40,7 +40,7 @@ class HeadBannerSection extends StatelessWidget {
         if (portal == "Student") _buildStudentMenu(context),
         if (portal == "Coordinator") _buildFacultyCoordinatorMenu(context),
         if (portal == "Manager") _buildManagerMenu(context),
-        if (portal == "Admin") _buildAdminMenu(context),
+        // if (portal == "Admin") _buildAdminMenu(context),
       ],
     );
   }
@@ -77,16 +77,16 @@ class HeadBannerSection extends StatelessWidget {
           if (onSelect != null) {
             onSelect("System Settings");
           }
-          _navigateTo(
-            context,
-            SystemSettings(),
-          );
+          // _navigateTo(
+          //   context,
+          //   // SystemSettings(),
+          // );
         }),
         _menuItem('User', onTap: () {
           if (onSelect != null) {
             onSelect("User");
           }
-          _navigateTo(context, UserManagement());
+          // _navigateTo(context, UserManagement());
         }),
       ],
     );
