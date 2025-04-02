@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
-import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/submission_item_widget.dart';
 import 'package:university_magazine_project/presentation/manager_side/view/contributions/widget/contribution_item.dart';
 
 class ContributionListSection extends StatelessWidget {

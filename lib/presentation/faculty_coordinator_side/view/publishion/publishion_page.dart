@@ -16,7 +16,7 @@ class PublishionPage extends StatefulWidget {
 }
 
 class _PublishionPageState extends State<PublishionPage> {
-  List<bool> _selectedItems = List.generate(5, (index) => false);
+  final List<bool> _selectedItems = List.generate(5, (index) => false);
 
   void _toggleSelection(int index) {
     setState(() {

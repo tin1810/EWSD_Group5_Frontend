@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
-import 'package:university_magazine_project/presentation/admin/view/system_settings.dart';
-import 'package:university_magazine_project/presentation/admin/view/user_management.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/publishion/publishion_page.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/report/report_page.dart';

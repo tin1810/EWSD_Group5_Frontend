@@ -5,8 +5,7 @@ import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
-import 'package:university_magazine_project/presentation/admin/view/widget/table_item.dart';
-import 'package:university_magazine_project/presentation/admin/view/widget/table_title_row.dart';
+import 'package:university_magazine_project/presentation/admin/view/widget/faculty_card.dart';
 
 class FacultyPage extends StatelessWidget {
   const FacultyPage({
@@ -40,7 +39,7 @@ class FacultyPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     onPressed: () {
-                      adminController.showCreateUserDialog(context);
+                      adminController.showCreateFacultyDialog(context);
                     },
                     child: Row(
                       children: [
@@ -70,14 +69,9 @@ class FacultyPage extends StatelessWidget {
               spacing: 20,
               runSpacing: 20,
               children: List.generate(15, (index) {
-                return Container(
-                  height: 100,
-                  width: 300,
-                  color: AppColor.blueColor,
-                  child: Center(
-                    child: Text("Item $index",
-                        style: TextStyle(color: Colors.white)),
-                  ),
+                return FacultyCard(
+                  name: "Computer Science Faculty",
+                  lesson: "${index + 1} lessons",
                 );
               }),
             ),

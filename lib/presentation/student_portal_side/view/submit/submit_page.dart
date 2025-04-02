@@ -8,7 +8,6 @@ import 'package:university_magazine_project/presentation/guest_side/view/home/wi
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/contribute_title_widget.dart';
-import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/faculty_dropdown_widget.dart';
 
 class SubmitPage extends StatefulWidget {
   const SubmitPage({super.key});

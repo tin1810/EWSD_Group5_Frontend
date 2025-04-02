@@ -18,6 +18,9 @@ class AdminController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController facultyController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
+  final TextEditingController lessonController = TextEditingController();
+  final TextEditingController facultynameController = TextEditingController();
+
   final Rx<Uint8List?> profileImage = Rx<Uint8List?>(null);
   void changeSection(AdminSection section) {
     selectedSection.value = section;
@@ -195,6 +198,156 @@ class AdminController extends GetxController {
     );
   }
 
+  void showEditUserDialog(BuildContext context) {
+    Get.dialog(
+      barrierDismissible: false,
+      AlertDialog(
+        backgroundColor: AppColor.whiteColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        title: Text("Edit User", style: AppTextStyle.h3poppinsBold),
+        content: SingleChildScrollView(
+          child: SizedBox(
+            width: 300,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    pickProfileImage();
+                  },
+                  child: Obx(() => CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.grey.shade300,
+                        backgroundImage: profileImage.value != null
+                            ? MemoryImage(profileImage.value!)
+                            : null,
+                        child: profileImage.value == null
+                            ? Icon(Icons.camera_alt,
+                                color: Colors.white, size: 30)
+                            : null,
+                      )),
+                ),
+                SizedBox(height: 15),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                      labelText: "Name",
+                      labelStyle: AppTextStyle.h5poppinsRegular),
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                      labelText: "Email",
+                      labelStyle: AppTextStyle.h5poppinsRegular),
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: facultyController,
+                  decoration: InputDecoration(
+                      labelText: "Faculty",
+                      labelStyle: AppTextStyle.h5poppinsRegular),
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: roleController,
+                  decoration: InputDecoration(
+                      labelText: "Role",
+                      labelStyle: AppTextStyle.h5poppinsRegular),
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("Cancel", style: TextStyle(color: Colors.red)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // adminController.addUser(
+              //   nameController.text,
+              //   emailController.text,
+              //   facultyController.text,
+              //   roleController.text,
+              // );
+              Get.back();
+            },
+            child: Text("Edit"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showCreateFacultyDialog(BuildContext context) {
+    Get.dialog(
+      barrierDismissible: false,
+      AlertDialog(
+        backgroundColor: AppColor.whiteColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        title: Text("Create Faculty", style: AppTextStyle.h3poppinsBold),
+        content: SingleChildScrollView(
+          child: SizedBox(
+            width: 300,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    pickProfileImage();
+                  },
+                  child: Obx(() => CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.grey.shade300,
+                        backgroundImage: profileImage.value != null
+                            ? MemoryImage(profileImage.value!)
+                            : null,
+                        child: profileImage.value == null
+                            ? Icon(Icons.camera_alt,
+                                color: Colors.white, size: 30)
+                            : null,
+                      )),
+                ),
+                SizedBox(height: 15),
+                TextField(
+                  controller: facultynameController,
+                  decoration: InputDecoration(
+                      labelText: "Faculty Name",
+                      labelStyle: AppTextStyle.h5poppinsRegular),
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: lessonController,
+                  decoration: InputDecoration(
+                      labelText: "Lessons",
+                      labelStyle: AppTextStyle.h5poppinsRegular),
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("Cancel", style: TextStyle(color: Colors.red)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // adminController.addUser(
+              //   nameController.text,
+              //   emailController.text,
+              //   facultyController.text,
+              //   roleController.text,
+              // );
+              Get.back();
+            },
+            child: Text("Create"),
+          ),
+        ],
+      ),
+    );
+  }
+
   void logoutDialog() {
     Get.dialog(
       barrierDismissible: false,
@@ -203,6 +356,31 @@ class AdminController extends GetxController {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         title: Text("Logout", style: AppTextStyle.h3poppinsBold),
         content: Text("Are you sure you want to logout?"),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text("Cancel", style: TextStyle(color: Colors.red)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Perform logout logic here
+              Get.back();
+            },
+            child: Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void deleteUserDialog() {
+    Get.dialog(
+      barrierDismissible: false,
+      AlertDialog(
+        backgroundColor: AppColor.whiteColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        title: Text("Delete User", style: AppTextStyle.h3poppinsBold),
+        content: Text("Are you sure you want to delete this user?"),
         actions: [
           TextButton(
             onPressed: () => Get.back(),

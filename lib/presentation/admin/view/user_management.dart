@@ -96,7 +96,9 @@ class UserManagement extends StatelessWidget {
                               child: TableItem(
                                   name: adminController.users[index].role,
                                   title: adminController.users[index].faculty)),
-                          Expanded(child: SizedBox()),
+                          Expanded(
+                            child: SizedBox(),
+                          ),
                           Flexible(
                               flex: 1,
                               child: Container(
@@ -120,7 +122,10 @@ class UserManagement extends StatelessWidget {
                                     icon: Icon(FontAwesomeIcons.edit),
                                     iconSize: 20,
                                     color: Colors.purple,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      adminController
+                                          .showEditUserDialog(context);
+                                    },
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -131,7 +136,9 @@ class UserManagement extends StatelessWidget {
                                       size: 20,
                                       color: Colors.red,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      adminController.deleteUserDialog();
+                                    },
                                   ),
                                 ],
                               )),
