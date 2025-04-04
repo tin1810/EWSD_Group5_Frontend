@@ -348,7 +348,8 @@ class AdminController extends GetxController {
     );
   }
 
-  void logoutDialog() {
+  void logoutDialog({Function? onTapOk}) {
+
     Get.dialog(
       barrierDismissible: false,
       AlertDialog(
@@ -363,8 +364,10 @@ class AdminController extends GetxController {
           ),
           ElevatedButton(
             onPressed: () {
-              // Perform logout logic here
               Get.back();
+              if(onTapOk != null){
+                onTapOk();
+              }
             },
             child: Text("OK"),
           ),

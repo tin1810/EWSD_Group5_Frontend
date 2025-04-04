@@ -7,19 +7,22 @@ import 'package:university_magazine_project/presentation/admin/view/widget/sideb
 
 class SideAppBar extends StatelessWidget {
   final Function onClicked;
+  final double width;
   const SideAppBar({
     super.key,
     required this.onClicked,
+    this.width = 250,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      width: 250,
+      width: width,
       color: AppColor.primaryColor,
       padding: EdgeInsets.symmetric(vertical: 40),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Admin Portal",
               style:

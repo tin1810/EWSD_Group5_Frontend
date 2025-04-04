@@ -33,18 +33,18 @@ class SideBarItem extends StatelessWidget {
             onTap();
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(title,
-                  style: AppTextStyle.h4iterRegular
-                      .copyWith(color: AppColor.whiteColor)),
-              SizedBox(
-                width: 10,
-              ),
               Icon(
                 icon,
                 color: AppColor.whiteColor,
-              )
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Text(title,
+                  style: AppTextStyle.h4iterRegular
+                      .copyWith(color: AppColor.whiteColor)),
             ],
           )),
     );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/banner_imagewith_text.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/submission_item_widget.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
@@ -53,12 +55,12 @@ class _PublishionPageState extends State<PublishionPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Student Submissions Overview",
+                    "Faculty Students' Submissions",
                     style: AppTextStyle.h1iterBold.copyWith(fontSize: 26),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Explore the innovative ideas and research contributions from our Computer Science students.",
+                    "Select Your Favourite Article to Publish",
                     style: AppTextStyle.h4iterRegular,
                   ),
                   SizedBox(height: 20),
@@ -75,18 +77,6 @@ class _PublishionPageState extends State<PublishionPage> {
                           ),
                           padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 20),
-                          // decoration: BoxDecoration(
-                          //   color: _selectedItems[index]
-                          //       ? AppColor.blueColor.withOpacity(0.3)
-                          //       : AppColor.whiteColor,
-                          //   borderRadius: BorderRadius.circular(5),
-                          //   border: Border.all(
-                          //     color: _selectedItems[index]
-                          //         ? AppColor.blueColor
-                          //         : Colors.transparent,
-                          //     width: 2,
-                          //   ),
-                          // ),
                           child: Row(
                             children: [
                               Checkbox(
@@ -107,7 +97,9 @@ class _PublishionPageState extends State<PublishionPage> {
                                   color: _selectedItems[index]
                                       ? AppColor.blueColor.withOpacity(0.6)
                                       : Colors.grey.shade200,
-                                  viewDetail: () {},
+                                  viewDetail: () {
+                                    Get.to(()=>ArticleDetailPage());
+                                  },
                                 ),
                               ),
                             ],

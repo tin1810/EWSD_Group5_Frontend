@@ -63,32 +63,32 @@ class HeadBannerSection extends StatelessWidget {
     );
   }
 
-  Widget _buildAdminMenu(BuildContext context, {Function(String)? onSelect}) {
-    return Wrap(
-      alignment: WrapAlignment.start,
-      direction: (Device.screenType == ScreenType.desktop ||
-              Device.screenType == ScreenType.tablet)
-          ? Axis.horizontal
-          : Axis.vertical,
-      children: [
-        _menuItem('System Settings', onTap: () {
-          if (onSelect != null) {
-            onSelect("System Settings");
-          }
-          // _navigateTo(
-          //   context,
-          //   // SystemSettings(),
-          // );
-        }),
-        _menuItem('User', onTap: () {
-          if (onSelect != null) {
-            onSelect("User");
-          }
-          // _navigateTo(context, UserManagement());
-        }),
-      ],
-    );
-  }
+  // Widget _buildAdminMenu(BuildContext context, {Function(String)? onSelect}) {
+  //   return Wrap(
+  //     alignment: WrapAlignment.start,
+  //     direction: (Device.screenType == ScreenType.desktop ||
+  //             Device.screenType == ScreenType.tablet)
+  //         ? Axis.horizontal
+  //         : Axis.vertical,
+  //     children: [
+  //       _menuItem('System Settings', onTap: () {
+  //         if (onSelect != null) {
+  //           onSelect("System Settings");
+  //         }
+  //         // _navigateTo(
+  //         //   context,
+  //         //   // SystemSettings(),
+  //         // );
+  //       }),
+  //       _menuItem('User', onTap: () {
+  //         if (onSelect != null) {
+  //           onSelect("User");
+  //         }
+  //         // _navigateTo(context, UserManagement());
+  //       }),
+  //     ],
+  //   );
+  // }
 
   Widget _buildManagerMenu(BuildContext context, {Function(String)? onSelect}) {
     return Wrap(
@@ -113,12 +113,12 @@ class HeadBannerSection extends StatelessWidget {
           }
           _navigateTo(context, ManagerContributionPage());
         }),
-        _menuItem('Reports', onTap: () {
-          if (onSelect != null) {
-            onSelect("Reports");
-          }
-          _navigateTo(context, ReportPage());
-        }),
+        // _menuItem('Reports', onTap: () {
+        //   if (onSelect != null) {
+        //     onSelect("Reports");
+        //   }
+        //   _navigateTo(context, ReportPage());
+        // }),
       ],
     );
   }
@@ -149,12 +149,12 @@ class HeadBannerSection extends StatelessWidget {
             }
             _navigateTo(context, PublishionPage());
           }),
-          _menuItem('Reports', onTap: () {
-            if (onSelect != null) {
-              onSelect("Reports");
-            }
-            _navigateTo(context, ReportPage());
-          }),
+          // _menuItem('Reports', onTap: () {
+          //   if (onSelect != null) {
+          //     onSelect("Reports");
+          //   }
+          //   _navigateTo(context, ReportPage());
+          // }),
         ],
       ),
     );

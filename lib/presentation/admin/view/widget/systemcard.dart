@@ -42,9 +42,12 @@ class Systemcard extends StatelessWidget {
             children: [
               Icon(icon, color: color),
               SizedBox(width: 10),
-              Text(
-                title,
-                style: AppTextStyle.h3iterBold.copyWith(color: color),
+              Expanded(
+                child: Text(
+                  title,
+                  maxLines: 2,
+                  style: AppTextStyle.h3iterBold.copyWith(color: color),
+                ),
               ),
             ],
           ),
@@ -52,7 +55,7 @@ class Systemcard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(value, style: AppTextStyle.h4iterRegular),
+              Expanded(child: Text(value,maxLines: 2, style: AppTextStyle.h4iterRegular)),
               IconButton(
                   onPressed: () {
                     onClicked();

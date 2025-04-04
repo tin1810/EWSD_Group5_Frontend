@@ -29,7 +29,11 @@ class SystemSetting extends StatelessWidget {
                   style: AppTextStyle.h1iterBold
                       .copyWith(color: AppColor.primaryColor)),
             )),
-        Row(
+        Wrap(
+          alignment: WrapAlignment.start,
+          direction: Axis.horizontal,
+          spacing: 20,
+          runSpacing: 30,
           children: [
             Obx(() => Systemcard(
                   title: adminController

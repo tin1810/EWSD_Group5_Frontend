@@ -49,63 +49,94 @@ class SubmissionItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width / 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width / 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      name ?? "Student Name",
+                      style: AppTextStyle.h3iterBold,
+                    ),
+                    SizedBox(width: 30),
+                    Text(
+                      date ?? "Submission Date",
+                      style: AppTextStyle.h5iterRegular,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text(
+                  overflow: TextOverflow.ellipsis,
+                  text ?? "Submission Text",
+                  maxLines: 3,
+                  style: AppTextStyle.h5iterRegular,
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      size: 16,
+                      color: Colors.blue,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      "You've commented",
+                      maxLines: 1,
+                      style: AppTextStyle.h5poppinsRegular
+                          .copyWith(color: Colors.black),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.message_outlined,
+                      size: 14,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      "1 reply",
+                      style: AppTextStyle.h5poppinsRegular
+                          .copyWith(color: Colors.grey),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  hoverColor: AppColor.blueColor,
+                  padding: EdgeInsets.all(18),
+                  color: Colors.grey.shade400,
+                  elevation: 0,
+                  onPressed: () {
+                    viewDetail();
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        name ?? "Student Name",
-                        style: AppTextStyle.h3iterBold,
+                        "View Details",
+                        style: AppTextStyle.h5poppinsRegular
+                            .copyWith(color: AppColor.whiteColor),
                       ),
-                      SizedBox(width: 30),
-                      Text(
-                        date ?? "Submission Date",
-                        style: AppTextStyle.h5iterRegular,
+                      SizedBox(width: 10),
+                      Icon(
+                        FontAwesomeIcons.arrowRight,
+                        color: AppColor.whiteColor,
+                        size: 14,
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    overflow: TextOverflow.ellipsis,
-                    text ?? "Submission Text",
-                    maxLines: 3,
-                    style: AppTextStyle.h5iterRegular,
-                  ),
-                  SizedBox(height: 15),
-                  MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    hoverColor: AppColor.blueColor,
-                    padding: EdgeInsets.all(18),
-                    color: Colors.grey.shade400,
-                    elevation: 0,
-                    onPressed: () {
-                      viewDetail();
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "View Details",
-                          style: AppTextStyle.h5poppinsRegular
-                              .copyWith(color: AppColor.whiteColor),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(
-                          FontAwesomeIcons.arrowRight,
-                          color: AppColor.whiteColor,
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
