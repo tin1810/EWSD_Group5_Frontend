@@ -16,9 +16,6 @@ class ContributionListSection extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 30),
       padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
       width: double.infinity,
-      // decoration: BoxDecoration(
-      //   color: AppColor.blueColor.withOpacity(0.2),
-      // ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

@@ -22,7 +22,7 @@ class StudentHomePage extends StatelessWidget {
             HeadBannerSection(portal: "Student"),
             BannerImageSection(),
             SizedBox(
-              height: 150,
+              height: 120,
             ),
             StudentHomeInformationWidget(),
             FooterSection(),

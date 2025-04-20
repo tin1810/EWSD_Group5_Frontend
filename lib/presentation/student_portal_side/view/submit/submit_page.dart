@@ -78,6 +78,9 @@ class _SubmitPageState extends State<SubmitPage> {
                             'Please ensure your articles are submitted by this date to be considered for publication. Late submissions may not be accepted, so plan accordingly to meet this important deadline. We encourage early submissions to allow time for revisions.',
                             textAlign: TextAlign.center,
                             style: AppTextStyle.h6iterBold),
+                        SizedBox(height: 20),
+                        Text('12-05-2025',
+                            style: AppTextStyle.h3poppinsRegular),
                       ],
                     ),
                   )
@@ -108,6 +111,9 @@ class _SubmitPageState extends State<SubmitPage> {
                             'This is the final date for any changes or edits to your submitted articles after the initial submission deadline. Authors can update their work to enhance clarity and quality until this date. Make sure to finalize your contributions before this point.',
                             textAlign: TextAlign.center,
                             style: AppTextStyle.h6iterBold),
+                        SizedBox(height: 20),
+                        Text('12-05-2025',
+                            style: AppTextStyle.h3poppinsRegular),
                       ],
                     ),
                   ),
@@ -116,42 +122,6 @@ class _SubmitPageState extends State<SubmitPage> {
                     width: MediaQuery.sizeOf(context).width / 2.3,
                     fit: BoxFit.fitWidth,
                     "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmV2aWV3fGVufDB8fDB8fHww",
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30),
-            Container(
-              width: MediaQuery.sizeOf(context).width,
-              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-              decoration: BoxDecoration(color: Colors.white),
-              child: Wrap(
-                direction: (Device.screenType == ScreenType.desktop ||
-                        Device.screenType == ScreenType.tablet)
-                    ? Axis.horizontal
-                    : Axis.vertical,
-                alignment: WrapAlignment.center,
-                runAlignment: WrapAlignment.center,
-                children: [
-                  Image.network(
-                    width: MediaQuery.sizeOf(context).width / 2.3,
-                    fit: BoxFit.fitWidth,
-                    "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHVibGljYXRpb258ZW58MHx8MHx8fDA%3D",
-                  ),
-                  SizedBox(width: 30),
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width / 2.3,
-                    child: Column(
-                      children: [
-                        Text('Publication Date Announcement',
-                            style: AppTextStyle.h2iterBold),
-                        SizedBox(height: 20),
-                        Text(
-                            'Mark your calendars for the official publication date when accepted articles will be made available to our readers. Celebrate your contribution and see the impact of your work in our community. We look forward to sharing your ideas!',
-                            textAlign: TextAlign.center,
-                            style: AppTextStyle.h6iterBold),
-                      ],
-                    ),
                   ),
                 ],
               ),
@@ -294,8 +264,6 @@ class _SubmitPageState extends State<SubmitPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    // FacultyDropdownWidget(),
-                    // SizedBox(height: 20),
                     MaterialButton(
                       color: AppColor.blueColor,
                       onPressed: () {},

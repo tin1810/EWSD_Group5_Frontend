@@ -101,7 +101,7 @@ class SubmissionItemWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     Text(
-                      "1 reply",
+                      "1 update",
                       style: AppTextStyle.h5poppinsRegular
                           .copyWith(color: Colors.grey),
                     ),

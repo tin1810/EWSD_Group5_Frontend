@@ -79,7 +79,6 @@ class LoginPage extends StatelessWidget {
                             loginController.email.value = value,
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 100, vertical: 10),
@@ -96,13 +95,6 @@ class LoginPage extends StatelessWidget {
                             loginController.password.value = value,
                       ),
                     ),
-
-                    // TextField(
-                    //   obscureText: true,
-                    //   decoration: InputDecoration(labelText: 'Password'),
-                    //   onChanged: (value) =>
-                    //       loginController.password.value = value,
-                    // ),
                     SizedBox(height: 20),
                     Center(
                       child: Padding(
@@ -132,37 +124,6 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // SizedBox(height: 10),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text('Already have an account? '),
-                    //     GestureDetector(
-                    //       onTap: () {},
-                    //       child: Text('Sign In',
-                    //           style: TextStyle(
-                    //               color: Colors.blue,
-                    //               fontWeight: FontWeight.bold)),
-                    //     ),
-                    //   ],
-                    // ),
-                    // SizedBox(height: 20),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     ElevatedButton.icon(
-                    //       onPressed: () {},
-                    //       icon: Icon(Icons.g_mobiledata),
-                    //       label: Text('Sign up with Google'),
-                    //     ),
-                    //     SizedBox(width: 10),
-                    //     ElevatedButton.icon(
-                    //       onPressed: () {},
-                    //       icon: Icon(Icons.apple),
-                    //       label: Text('Sign up with Apple'),
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
