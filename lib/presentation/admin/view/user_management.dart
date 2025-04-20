@@ -118,12 +118,13 @@ class UserManagement extends StatelessWidget with UserDao {
                                       Row(
                                         children: [
                                           IconButton(
-                                            icon: Icon(FontAwesomeIcons.edit),
+                                            icon: Icon(Icons.block),
                                             iconSize: 20,
                                             color: Colors.purple,
                                             onPressed: () {
-                                              adminController
-                                                  .showEditUserDialog(context);
+                                              adminController.blockDialog(
+                                                onTapOk: () {},
+                                              );
                                             },
                                           ),
                                           IconButton(
@@ -199,14 +200,13 @@ class UserManagement extends StatelessWidget with UserDao {
                                             runSpacing: 10,
                                             children: [
                                               IconButton(
-                                                icon:
-                                                    Icon(FontAwesomeIcons.edit),
+                                                icon: Icon(Icons.block),
                                                 iconSize: 20,
                                                 color: Colors.purple,
                                                 onPressed: () {
-                                                  adminController
-                                                      .showEditUserDialog(
-                                                          context);
+                                                  adminController.blockDialog(
+                                                    onTapOk: () {},
+                                                  );
                                                 },
                                               ),
                                               SizedBox(

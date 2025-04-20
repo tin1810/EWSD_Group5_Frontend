@@ -16,6 +16,7 @@ import 'package:university_magazine_project/hive/dao/faculty_dao.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/hive/hive_constants.dart';
 import 'package:university_magazine_project/presentation/admin/view/admin_homepage.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

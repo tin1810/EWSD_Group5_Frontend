@@ -71,7 +71,7 @@ class FacultyPage extends StatelessWidget {
               children: List.generate(15, (index) {
                 return FacultyCard(
                   name: "Computer Science Faculty",
-                  lesson: "${index + 1} lessons",
+                  des: "${index + 1} lessons",
                 );
               }),
             ),
