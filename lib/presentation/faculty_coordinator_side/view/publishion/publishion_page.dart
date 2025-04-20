@@ -98,7 +98,8 @@ class _PublishionPageState extends State<PublishionPage> {
                                       ? AppColor.blueColor.withOpacity(0.6)
                                       : Colors.grey.shade200,
                                   viewDetail: () {
-                                    Get.to(()=>ArticleDetailPage());
+                                    // TODO:
+                                   // Get.to(()=>ArticleDetailPage());
                                   },
                                 ),
                               ),

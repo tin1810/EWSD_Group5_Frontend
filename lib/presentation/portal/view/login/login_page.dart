@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/presentation/admin/view/admin_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/manager_side/view/home/manager_homepage.dart';
 import 'package:university_magazine_project/presentation/portal/controller/login_controller.dart';
-import 'package:university_magazine_project/presentation/portal/view/login/widget/custom_login.dart';
+import 'package:university_magazine_project/presentation/portal/view/login/widget/custom_textfield.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -17,6 +19,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LoginController loginController = Get.put(LoginController());
+
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       body: Container(
@@ -75,6 +78,7 @@ class LoginPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 100, vertical: 10),
                       child: CustomTextField(
+                        focusNode: FocusNode(),
                         onChanged: (value) =>
                             loginController.email.value = value,
                       ),
@@ -90,6 +94,7 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 100),
                       child: CustomTextField(
+                        focusNode: FocusNode(),
                         obscureText: true,
                         onChanged: (value) =>
                             loginController.password.value = value,
@@ -106,18 +111,22 @@ class LoginPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(30)),
                           color: AppColor.hoverAppBarColor,
                           onPressed: () {
-                            if (loginController.email.value ==
-                                "student@gmail.com") {
-                              Get.to(StudentHomePage());
-                            }
-                            if (loginController.email.value ==
-                                "coordinator@gmail.com") {
-                              Get.to(FacultyCoordinatorHomepage());
-                            }
-                            if (loginController.email.value ==
-                                "manager@gmail.com") {
-                              Get.to(ManagerHomepage());
-                            }
+                            loginController.onTapLogin().then((v) {
+                              if (v == "s") {
+                                Get.to(StudentHomePage());
+                              }
+                              if (v == "a") {
+                                Get.to(AdminHomePage());
+                              }
+                              if (v == "c") {
+                                Get.to(FacultyCoordinatorHomepage());
+                              }
+                              if (v == "m") {
+                                Get.to(ManagerHomepage());
+                              }
+                            }).onError((e, st) {
+                              Fluttertoast.showToast(msg: e.toString());
+                            });
                           },
                           child: Text('Sign In',
                               style: TextStyle(color: Colors.white)),

@@ -36,7 +36,8 @@ class ContributionListSection extends StatelessWidget {
             itemBuilder: (context, index) {
               return ContributionItem(
                   viewDetail: () {
-                    Get.to(() => ArticleDetailPage());
+                    // TODO:
+                    // Get.to(() => ArticleDetailPage());
                   },
                   color: AppColor.whiteColor,
                   name: "Total Contributions",

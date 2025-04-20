@@ -1,13 +1,21 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
+import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/article_vo.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/submit/helper/word_file_manager.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/contribute_title_widget.dart';
+import 'dart:html';
 
 class SubmitPage extends StatefulWidget {
   const SubmitPage({super.key});
@@ -16,11 +24,22 @@ class SubmitPage extends StatefulWidget {
   State<SubmitPage> createState() => _SubmitPageState();
 }
 
-class _SubmitPageState extends State<SubmitPage> {
+class _SubmitPageState extends State<SubmitPage> with UserDao, ArticleDao {
   File? imageFile;
   File? wordFile;
+  UserVO? loggedInUser;
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
+  @override
+  void initState() {
+    try {
+      loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+    } catch (e) {
+      print(e.toString());
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,8 +73,8 @@ class _SubmitPageState extends State<SubmitPage> {
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               decoration: BoxDecoration(color: Colors.white),
               child: Wrap(
-                direction: (Device.screenType == ScreenType.desktop ||
-                        Device.screenType == ScreenType.tablet)
+                direction: (rs.Device.screenType == rs.ScreenType.desktop ||
+                        rs.Device.screenType == rs.ScreenType.tablet)
                     ? Axis.horizontal
                     : Axis.vertical,
                 alignment: WrapAlignment.center,
@@ -93,8 +112,8 @@ class _SubmitPageState extends State<SubmitPage> {
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               decoration: BoxDecoration(color: Colors.white),
               child: Wrap(
-                direction: (Device.screenType == ScreenType.desktop ||
-                        Device.screenType == ScreenType.tablet)
+                direction: (rs.Device.screenType == rs.ScreenType.desktop ||
+                        rs.Device.screenType == rs.ScreenType.tablet)
                     ? Axis.horizontal
                     : Axis.vertical,
                 alignment: WrapAlignment.center,
@@ -129,8 +148,8 @@ class _SubmitPageState extends State<SubmitPage> {
             Center(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                width: (Device.screenType == ScreenType.desktop ||
-                        Device.screenType == ScreenType.tablet)
+                width: (rs.Device.screenType == rs.ScreenType.desktop ||
+                        rs.Device.screenType == rs.ScreenType.tablet)
                     ? 400
                     : 250,
                 decoration: BoxDecoration(
@@ -198,22 +217,15 @@ class _SubmitPageState extends State<SubmitPage> {
                         children: [
                           Text(
                             (imageFile != null)
-                                ? (imageFile!.path.split("/")).last
+                                ? (imageFile!.name.split("/")).last
                                 : "Add Article Cover Photo",
                             style: TextStyle(color: Colors.black),
                           ),
                           InkWell(
                             onTap: () async {
-                              var result = await FilePicker.platform.pickFiles(
-                                type: FileType.image,
-                                allowMultiple: false,
-                              );
-                              var platFormFile = result?.files.first;
-                              if (platFormFile != null) {
-                                setState(() {
-                                  imageFile = File(platFormFile.path ?? "");
-                                });
-                              }
+                              imageFile =
+                                  await WordFileManager.pickImgFileFromDevice();
+                              setState(() {});
                             },
                             child: Icon(
                               Icons.image,
@@ -238,22 +250,15 @@ class _SubmitPageState extends State<SubmitPage> {
                         children: [
                           Text(
                             (wordFile != null)
-                                ? (wordFile!.path.split("/")).last
+                                ? (wordFile!.name.split("/")).last
                                 : "Add Article File(WORD)",
                             style: TextStyle(color: Colors.black),
                           ),
                           InkWell(
                             onTap: () async {
-                              var result = await FilePicker.platform.pickFiles(
-                                type: FileType.any,
-                                allowMultiple: false,
-                              );
-                              var platFormFile = result?.files.first;
-                              if (platFormFile != null) {
-                                setState(() {
-                                  wordFile = File(platFormFile.path ?? "");
-                                });
-                              }
+                              wordFile = await WordFileManager
+                                  .pickWordFileFromDevice();
+                              setState(() {});
                             },
                             child: Icon(
                               Icons.article_outlined,
@@ -266,7 +271,32 @@ class _SubmitPageState extends State<SubmitPage> {
                     SizedBox(height: 20),
                     MaterialButton(
                       color: AppColor.blueColor,
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (wordFile != null &&
+                            imageFile != null &&
+                            loggedInUser != null) {
+                          var doc = ArticleVO(
+                            id: DateTime.now()
+                                .microsecondsSinceEpoch
+                                .toString(),
+                            studentId: loggedInUser?.id,
+                            facultyId: loggedInUser?.facultyId,
+                            title: controller.text,
+                            wordBytes:
+                                await WordFileManager.convertFileToUnit8List(
+                                    wordFile!),
+                            imgBytes:
+                                await WordFileManager.convertFileToUnit8List(
+                                    imageFile!),
+                          );
+                          saveArticle(doc);
+                          Fluttertoast.showToast(
+                              msg: "Article Submitted Successfully");
+                          Get.to(MySubmissionsPage());
+                        } else {
+                          Fluttertoast.showToast(msg: "Fields Required!");
+                        }
+                      },
                       child: Text(
                         "Submit",
                         style: TextStyle(color: Colors.white),

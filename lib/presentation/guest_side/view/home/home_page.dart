@@ -6,11 +6,17 @@ import 'package:university_magazine_project/presentation/guest_side/view/home/wi
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/secondrow_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/thirdrow_section.dart';
-
 import 'widget/head_banner_section.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
 
   @override
   Widget build(BuildContext context) {

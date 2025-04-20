@@ -6,11 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
-import 'package:university_magazine_project/app/model/user_model.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 
 enum AdminSection { system, users, faculty, logout }
 
-class AdminController extends GetxController {
+class AdminController extends GetxController  {
   var submissionDeadline = DateTime(2025, 6, 12).obs;
   var finalDeadline = DateTime(2025, 9, 12).obs;
   var selectedSection = AdminSection.system.obs;
@@ -26,38 +27,6 @@ class AdminController extends GetxController {
     selectedSection.value = section;
   }
 
-  final users = [
-    User(
-        name: 'John Doe',
-        role: 'Student',
-        status: 'Active',
-        email: 'john@gmail.com',
-        faculty: "Computer Science"),
-    User(
-        name: 'Jane Smith',
-        role: 'Coordinator',
-        status: 'Active',
-        email: 'jane@gmail.com',
-        faculty: "Computer Science"),
-    User(
-        name: 'Alice Johnson',
-        role: 'Stident',
-        status: 'Active',
-        email: 'alice@gmail.com',
-        faculty: "Law"),
-    User(
-        name: 'Bob Brown',
-        role: 'Marketing Manager',
-        status: 'Active',
-        email: 'bob@gmail.com',
-        faculty: 'Medicine'),
-    User(
-        name: 'Charlie Davis',
-        role: 'Coordinator',
-        status: 'Active',
-        email: 'davis@gmail.com',
-        faculty: 'Law'),
-  ];
   String formatDate(DateTime date) {
     return DateFormat('dd MMMM yyyy').format(date);
   }
@@ -349,7 +318,6 @@ class AdminController extends GetxController {
   }
 
   void logoutDialog({Function? onTapOk}) {
-
     Get.dialog(
       barrierDismissible: false,
       AlertDialog(
@@ -365,7 +333,7 @@ class AdminController extends GetxController {
           ElevatedButton(
             onPressed: () {
               Get.back();
-              if(onTapOk != null){
+              if (onTapOk != null) {
                 onTapOk();
               }
             },

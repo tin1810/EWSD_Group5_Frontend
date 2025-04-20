@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/hive/dao/faculty_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/widget/faculty_card.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 
-class FacultyPage extends StatelessWidget {
+class FacultyPage extends StatelessWidget with FacultyDao {
   const FacultyPage({super.key});
 
   @override
@@ -95,9 +96,8 @@ class FacultyPage extends StatelessWidget {
                   itemCount: 3,
                   itemBuilder: (context, index) {
                     return FaultyCard(
-                      name: "Computer Science Faculty",
-                      text:
-                          "Discover the possibilities of technology at Greenwich, where courses shape students from undergraduate to postgraduate levels. Covering some of the most relevant industry topics, such as cybersecurity and artificial intelligence.",
+                      name: getAllFaculty()?[index]?.name,
+                      text: getAllFaculty()?[index]?.description,
                     );
                   }),
             ),

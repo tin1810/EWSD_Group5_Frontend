@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/article_vo.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 
 class ArticleDetailPage extends StatefulWidget {
-  const ArticleDetailPage({super.key});
+  final ArticleVO articleVO;
+  const ArticleDetailPage({super.key,required this.articleVO,});
 
   @override
   State<ArticleDetailPage> createState() => _ArticleDetailPageState();
@@ -21,7 +24,9 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ArticleBannerWidget(),
+            ArticleBannerWidget(
+              image: widget.articleVO.imgBytes!,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.sizeOf(context).width / 10),
@@ -136,19 +141,33 @@ class CommentBoxWidget extends StatelessWidget {
 }
 
 class ArticleBannerWidget extends StatelessWidget {
+  final Uint8List image;
   const ArticleBannerWidget({
     super.key,
+    required this.image,
   });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.network(
-          "https://media.istockphoto.com/id/107429764/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/woman-taking-vitamins-and-supplements.jpg?s=1024x1024&w=is&k=20&c=-IVuRL-VTpW5gtoXt9FFG-q3Sg8p_1KdJf8JXs6Hg0E=",
-          fit: BoxFit.cover,
-          width: MediaQuery.sizeOf(context).width,
+        // Image.network(
+        //   "https://media.istockphoto.com/id/107429764/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/woman-taking-vitamins-and-supplements.jpg?s=1024x1024&w=is&k=20&c=-IVuRL-VTpW5gtoXt9FFG-q3Sg8p_1KdJf8JXs6Hg0E=",
+        //   fit: BoxFit.cover,
+        //   width: MediaQuery.sizeOf(context).width,
+        //   height: 400,
+        // ),
+        Image.memory(
+          image,
           height: 400,
+          width: MediaQuery.sizeOf(context).width,
+          errorBuilder: (context, o, e) {
+            return Image.asset(
+              "assets/images/article_error.jpg",
+              height: 400,
+              width: MediaQuery.sizeOf(context).width,
+            );
+          },
         ),
         Padding(
           padding: EdgeInsets.only(

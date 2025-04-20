@@ -63,7 +63,8 @@ class SubmissionListWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               return SubmissionItemWidget(
                   viewDetail: () {
-                    Get.to(() => ArticleDetailPage());
+                    // TODO:
+                   /// Get.to(() => ArticleDetailPage());
                   },
                   color: AppColor.whiteColor,
                   name: "Rose",

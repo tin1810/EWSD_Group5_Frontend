@@ -5,11 +5,12 @@ import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/table_item.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/table_title_row.dart';
 
-class UserManagement extends StatelessWidget {
+class UserManagement extends StatelessWidget with UserDao {
   const UserManagement({
     super.key,
   });
@@ -104,15 +105,13 @@ class UserManagement extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           TableItem(
-                                              name: adminController
-                                                  .users[index].name,
-                                              title: adminController
-                                                  .users[index].email),
+                                              name: getAllUsers()?[index]?.name,
+                                              title:
+                                                  getAllUsers()?[index]?.email),
                                           TableItem(
-                                              name: adminController
-                                                  .users[index].role,
-                                              title: adminController
-                                                  .users[index].faculty),
+                                              name: getAllUsers()?[index]?.role,
+                                              title: getAllUsers()?[index]
+                                                  ?.facultyId),
                                         ],
                                       ),
                                       SizedBox(height: 8),
@@ -166,16 +165,14 @@ class UserManagement extends StatelessWidget {
                                       Expanded(
                                           flex: 2,
                                           child: TableItem(
-                                              name: adminController
-                                                  .users[index].name,
-                                              title: adminController
-                                                  .users[index].email)),
+                                              name: getAllUsers()?[index]?.name,
+                                              title: getAllUsers()?[index]
+                                                  ?.email)),
                                       Expanded(
                                           child: TableItem(
-                                              name: adminController
-                                                  .users[index].role,
-                                              title: adminController
-                                                  .users[index].faculty)),
+                                              name: getAllUsers()?[index]?.role,
+                                              title: getAllUsers()?[index]
+                                                  ?.facultyId)),
                                       Expanded(
                                         child: SizedBox(),
                                       ),
@@ -240,7 +237,7 @@ class UserManagement extends StatelessWidget {
                     separatorBuilder: (context, index) {
                       return Divider();
                     },
-                    itemCount: adminController.users.length)
+                    itemCount: getAllUsers()?.length ?? 0)
               ],
             ),
           ),

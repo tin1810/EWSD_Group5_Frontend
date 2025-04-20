@@ -1,14 +1,19 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/article_vo.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/submit/helper/word_file_manager.dart';
 
 class MySubmissionDetailPage extends StatefulWidget {
-  const MySubmissionDetailPage({super.key});
+  final ArticleVO articleVO;
+  const MySubmissionDetailPage({
+    super.key,
+    required this.articleVO,
+  });
 
   @override
   State<MySubmissionDetailPage> createState() => _MySubmissionDetailPageState();
@@ -24,10 +29,12 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ArticleBannerWidget(),
+            ArticleBannerWidget(
+              image: widget.articleVO.imgBytes!,
+            ),
             SizedBox(height: 20),
             Text(
-              'March 6, 2025',
+              widget.articleVO.date ?? "",
               style: AppTextStyle.h5iterRegular.copyWith(color: Colors.grey),
             ),
             SizedBox(height: 20),
@@ -38,20 +45,20 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww"),
+                  backgroundImage: AssetImage(
+                      "assets/images/commenter.jpg"),
                   radius: 14,
                 ),
                 SizedBox(width: 8),
                 Text(
-                  'Htet Wai Lwin',
+                  widget.articleVO.comment?.coordinatorName ?? "",
                   style: AppTextStyle.h5iterBold.copyWith(color: Colors.black),
                 ),
                 SizedBox(width: 40),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width / 2,
                   child: Text(
-                    'Mental health issues among students have gained significant attention in recent years. In this article, we highlight the importance of mental health awareness initiatives on campuses, discussing various programs and services that universities have implemented to support students in need.',
+                    widget.articleVO.comment?.comment ?? "",
                     style: AppTextStyle.h5iterRegular
                         .copyWith(color: Colors.black),
                   ),
@@ -108,23 +115,15 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
                           children: [
                             Text(
                               (wordFile != null)
-                                  ? (wordFile!.path.split("/")).last
+                                  ? (wordFile!.name.split("/")).last
                                   : "Add Article File(WORD)",
                               style: TextStyle(color: Colors.black),
                             ),
                             InkWell(
                               onTap: () async {
-                                var result =
-                                    await FilePicker.platform.pickFiles(
-                                  type: FileType.any,
-                                  allowMultiple: false,
-                                );
-                                var platFormFile = result?.files.first;
-                                if (platFormFile != null) {
-                                  setState(() {
-                                    wordFile = File(platFormFile.path ?? "");
-                                  });
-                                }
+                                wordFile = await WordFileManager
+                                    .pickWordFileFromDevice();
+                                setState(() {});
                               },
                               child: Icon(
                                 Icons.article_outlined,

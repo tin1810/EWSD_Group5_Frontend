@@ -1,10 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_zoom_image.dart';
 
-class ThirdRowSection extends StatelessWidget {
+class ThirdRowSection extends StatelessWidget with ArticleDao {
   const ThirdRowSection({super.key});
 
   @override
@@ -22,7 +25,7 @@ class ThirdRowSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Announcement",
+                  "Articles",
                   style: AppTextStyle.h1poppinsBold
                       .copyWith(fontSize: 30, color: AppColor.blackColor),
                 ),
@@ -38,34 +41,6 @@ class ThirdRowSection extends StatelessWidget {
                   style: AppTextStyle.h4poppinsRegular,
                 ),
                 const SizedBox(height: 20),
-                // MaterialButton(
-                //   minWidth: 100,
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(20),
-                //   ),
-                //   hoverColor: AppColor.hoverAppBarColor,
-                //   padding: const EdgeInsets.all(18),
-                //   color: AppColor.blueColor,
-                //   onPressed: () {},
-                //   child: Row(
-                //     mainAxisSize:
-                //         MainAxisSize.min, // Prevents unnecessary stretching
-                //     children: [
-                //       Text(
-                //         "More News",
-                //         style: AppTextStyle.h5poppinsRegular
-                //             .copyWith(color: AppColor.whiteColor),
-                //       ),
-                //       if (Device.screenType == ScreenType.tablet ||
-                //           Device.screenType == ScreenType.desktop)
-                //         const SizedBox(width: 8),
-                //       if (Device.screenType == ScreenType.tablet ||
-                //           Device.screenType == ScreenType.desktop)
-                //         const Icon(Icons.arrow_forward_outlined,
-                //             color: Colors.white),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -78,74 +53,17 @@ class ThirdRowSection extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Row(
-                  children: [
-                    AnnouncementWidget(
-                      image:
-                          "https://images.unsplash.com/photo-1623039405147-547794f92e9e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXJ0aWNsZXxlbnwwfHwwfHx8MA%3D%3D",
-                    ),
-                    AnnouncementWidget(
-                      des: "A partnership between the University of Greenwich and the KMD College, the top up degree will be achieved better outcomes for Student communities.",
-                      image:
-                          "https://images.unsplash.com/photo-1476242906366-d8eb64c2f661?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXJ0aWNsZXxlbnwwfHwwfHx8MA%3D%3D",
-                    ),
-                    AnnouncementWidget(
-                      des: "The University of Greenwich is an authentic environment.Their research team in various scientific fields will lead the future",
-                      image:
-                          "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGFydGljbGV8ZW58MHx8MHx8fDA%3D",
-                    ),
-                  ],
+                  children: getAllArticles()?.map((e) {
+                        var img = e!.imgBytes;
+                        return AnnouncementWidget(
+                          image: img!,
+                          des: e.title ?? "",
+                          date: e.date ?? "",
+                        );
+                      }).toList() ??
+                      [],
                 ),
               ),
-              // Constrains ListView's height
-              // child: ListView.builder(
-              //   itemCount: 3,
-              //   scrollDirection: Axis.horizontal, // Allows horizontal scrolling
-              //   itemBuilder: (context, index) {
-              //     return Container(
-              //       margin: const EdgeInsets.symmetric(horizontal: 20),
-              //       width: 310,
-              //       child: Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           HoverZoomImage(
-              //             imageUrl:
-              //                 "https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              //           ),
-              //           SizedBox(
-              //             height: 10,
-              //           ),
-              //           Row(
-              //             children: [
-              //               SizedBox(
-              //                 width: 5,
-              //               ),
-              //               CircleAvatar(
-              //                 maxRadius: 2,
-              //                 backgroundColor: AppColor.blackColor,
-              //               ),
-              //               SizedBox(
-              //                 width: 8,
-              //               ),
-              //               Text("March 14 2025",
-              //                   style: AppTextStyle.h5poppinsRegular.copyWith(
-              //                       color:
-              //                           AppColor.blackColor.withOpacity(0.7))),
-              //             ],
-              //           ),
-              //           SizedBox(
-              //             height: 10,
-              //           ),
-              //           Text(
-              //               "UAB Comprehensive Snakebite Program is one of few in the state to offer snakebite care in an outpatient setting",
-              //               maxLines: 5,
-              //               overflow: TextOverflow.ellipsis,
-              //               style: AppTextStyle.h2poppinsRegular
-              //                   .copyWith(color: AppColor.blackColor)),
-              //         ],
-              //       ),
-              //     );
-              //   },
-              // ),
             ),
           ),
         ],
@@ -155,7 +73,8 @@ class ThirdRowSection extends StatelessWidget {
 }
 
 class AnnouncementWidget extends StatelessWidget {
-  final String image, date, des;
+  final String date, des;
+  final Uint8List image;
   const AnnouncementWidget({
     super.key,
     required this.image,
