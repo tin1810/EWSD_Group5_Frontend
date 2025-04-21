@@ -29,9 +29,9 @@ class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: controller.backgroundColor.value,
             onPressed: () {
               if (portal == null || portal == "" || portal == "Portal") {
-                Get.to(LoginPage());
+                Get.to(() => LoginPage());
               } else {
-                Get.to(HomePage());
+                Get.to(() => HomePage());
               }
             },
             child: Text(

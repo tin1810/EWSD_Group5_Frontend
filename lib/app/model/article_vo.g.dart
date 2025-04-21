@@ -25,13 +25,15 @@ class ArticleVOAdapter extends TypeAdapter<ArticleVO> {
       imgBytes: fields[5] as Uint8List?,
       date: fields[7] as String?,
       comment: fields[6] as CommentVO?,
+      isSelected: fields[8] as bool?,
+      isPublished: fields[9] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ArticleVO obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +49,11 @@ class ArticleVOAdapter extends TypeAdapter<ArticleVO> {
       ..writeByte(6)
       ..write(obj.comment)
       ..writeByte(7)
-      ..write(obj.date);
+      ..write(obj.date)
+      ..writeByte(8)
+      ..write(obj.isSelected)
+      ..writeByte(9)
+      ..write(obj.isPublished);
   }
 
   @override

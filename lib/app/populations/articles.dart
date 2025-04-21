@@ -4,11 +4,11 @@ import 'package:university_magazine_project/app/model/comment_vo.dart';
 
 Uint8List fakeBytes(String label) => Uint8List.fromList(label.codeUnits);
 
-final List<ArticleVO> articles = [
+final List<ArticleVO> populatedArticles = [
   ArticleVO(
     id: 'a001',
-    studentId: 's001',
-    facultyId: 'eng001',
+    studentId: 'U001',
+    facultyId: 'F001',
     title: 'Sustainable Energy in Modern Cities',
     wordBytes: fakeBytes('Energy Word Content'),
     imgBytes: fakeBytes('Energy Image'),
@@ -20,8 +20,8 @@ final List<ArticleVO> articles = [
   ),
   ArticleVO(
     id: 'a002',
-    studentId: 's002',
-    facultyId: 'bus001',
+    studentId: 'U001',
+    facultyId: 'F001',
     title: 'Global Market Trends 2025',
     wordBytes: fakeBytes('Market Word Content'),
     imgBytes: fakeBytes('Market Image'),
@@ -33,8 +33,8 @@ final List<ArticleVO> articles = [
   ),
   ArticleVO(
     id: 'a003',
-    studentId: 's003',
-    facultyId: 'art001',
+    studentId: 'U001',
+    facultyId: 'F001',
     title: 'The Evolution of Postmodern Literature',
     wordBytes: fakeBytes('Literature Word Content'),
     imgBytes: fakeBytes('Literature Image'),
@@ -46,8 +46,8 @@ final List<ArticleVO> articles = [
   ),
   ArticleVO(
     id: 'a004',
-    studentId: 's004',
-    facultyId: 'eng001',
+    studentId: 'U003',
+    facultyId: 'F002',
     title: 'AI Integration in Civil Engineering',
     wordBytes: fakeBytes('AI Civil Word Content'),
     imgBytes: fakeBytes('AI Civil Image'),
@@ -59,8 +59,8 @@ final List<ArticleVO> articles = [
   ),
   ArticleVO(
     id: 'a005',
-    studentId: 's005',
-    facultyId: 'bus001',
+    studentId: 'U003',
+    facultyId: 'F002',
     title: 'Ethics in Corporate Leadership',
     wordBytes: fakeBytes('Ethics Word Content'),
     imgBytes: fakeBytes('Ethics Image'),
@@ -72,8 +72,8 @@ final List<ArticleVO> articles = [
   ),
   ArticleVO(
     id: 'a006',
-    studentId: 's006',
-    facultyId: 'art001',
+    studentId: 'U003',
+    facultyId: 'F002',
     title: 'Visual Storytelling Through Photography',
     wordBytes: fakeBytes('Photography Word Content'),
     imgBytes: fakeBytes('Photography Image'),

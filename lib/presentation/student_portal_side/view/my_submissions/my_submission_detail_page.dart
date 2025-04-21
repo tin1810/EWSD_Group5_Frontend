@@ -1,11 +1,16 @@
 import 'dart:html';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/article_vo.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/my_submissions_page.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/helper/word_file_manager.dart';
 
 class MySubmissionDetailPage extends StatefulWidget {
@@ -19,7 +24,8 @@ class MySubmissionDetailPage extends StatefulWidget {
   State<MySubmissionDetailPage> createState() => _MySubmissionDetailPageState();
 }
 
-class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
+class _MySubmissionDetailPageState extends State<MySubmissionDetailPage>
+    with UserDao, ArticleDao {
   File? wordFile;
 
   @override
@@ -30,6 +36,7 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
         child: Column(
           children: [
             ArticleBannerWidget(
+              title: widget.articleVO.title??"",
               image: widget.articleVO.imgBytes!,
             ),
             SizedBox(height: 20),
@@ -45,8 +52,7 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage(
-                      "assets/images/commenter.jpg"),
+                  backgroundImage: AssetImage("assets/images/commenter.jpg"),
                   radius: 14,
                 ),
                 SizedBox(width: 8),
@@ -71,8 +77,8 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
             Center(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                width: (Device.screenType == ScreenType.desktop ||
-                        Device.screenType == ScreenType.tablet)
+                width: (rs.Device.screenType == rs.ScreenType.desktop ||
+                        rs.Device.screenType == rs.ScreenType.tablet)
                     ? 400
                     : 250,
                 decoration: BoxDecoration(
@@ -137,7 +143,19 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage> {
                     SizedBox(height: 20),
                     MaterialButton(
                       color: AppColor.blueColor,
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (wordFile != null) {
+                          widget.articleVO.wordBytes =
+                              await WordFileManager.convertFileToUnit8List(
+                                  wordFile!);
+                          saveArticle(widget.articleVO);
+                          Fluttertoast.showToast(
+                              msg: "Article Submitted Successfully");
+                          Get.to(()=>MySubmissionsPage());
+                        } else {
+                          Fluttertoast.showToast(msg: "Fields Required!");
+                        }
+                      },
                       child: Text(
                         "Submit",
                         style: TextStyle(color: Colors.white),

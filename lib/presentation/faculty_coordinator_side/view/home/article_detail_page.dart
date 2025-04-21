@@ -8,7 +8,10 @@ import 'package:university_magazine_project/presentation/guest_side/view/home/wi
 
 class ArticleDetailPage extends StatefulWidget {
   final ArticleVO articleVO;
-  const ArticleDetailPage({super.key,required this.articleVO,});
+  const ArticleDetailPage({
+    super.key,
+    required this.articleVO,
+  });
 
   @override
   State<ArticleDetailPage> createState() => _ArticleDetailPageState();
@@ -25,6 +28,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
         child: Column(
           children: [
             ArticleBannerWidget(
+              title: widget.articleVO.title ?? "No title",
               image: widget.articleVO.imgBytes!,
             ),
             Padding(
@@ -142,9 +146,11 @@ class CommentBoxWidget extends StatelessWidget {
 
 class ArticleBannerWidget extends StatelessWidget {
   final Uint8List image;
+  final String title;
   const ArticleBannerWidget({
     super.key,
     required this.image,
+    required this.title,
   });
 
   @override
@@ -181,7 +187,7 @@ class ArticleBannerWidget extends StatelessWidget {
               color: Colors.black.withOpacity(0.4),
             ),
             child: Text(
-              'The Future of Sustainable Energy',
+              title,
               style: AppTextStyle.h2iterRegular.copyWith(color: Colors.white),
             ),
           ),

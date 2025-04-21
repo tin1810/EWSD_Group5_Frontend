@@ -3,20 +3,49 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/banner_imagewith_text.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/submission_list_widget.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 
-class FacultyCoordinatorHomepage extends StatelessWidget {
+class FacultyCoordinatorHomepage extends StatefulWidget {
   const FacultyCoordinatorHomepage({super.key});
 
   @override
+  State<FacultyCoordinatorHomepage> createState() =>
+      _FacultyCoordinatorHomepageState();
+}
+
+class _FacultyCoordinatorHomepageState extends State<FacultyCoordinatorHomepage>
+    with ArticleDao {
+  late int commentPercent, missPercent;
+  late double progressPercent;
+
+  @override
+  void initState() {
+    super.initState();
+    var commentedList =
+        getAllArticles()?.where((e) => e?.comment != null).toList();
+    var unCommentedList =
+        getAllArticles()?.where((e) => e?.comment == null).toList();
+    var length1 = commentedList?.length ?? 0;
+    var length2 = unCommentedList?.length ?? 0;
+    var total = length1 + length2;
+    if (total != 0) {
+      commentPercent = ((length1 / total) * 100).round();
+    } else {
+      commentPercent = 0;
+    }
+
+    missPercent = 100 - commentPercent;
+    progressPercent = missPercent / 100;
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var commentPercent = 80;
-    var missPercent = 100 - commentPercent;
-    var progressPercent = missPercent / 100;
     return Scaffold(
         backgroundColor: AppColor.whiteColor,
         appBar: HoverAppBar(portal: "Coordinator"),
@@ -39,12 +68,14 @@ class FacultyCoordinatorHomepage extends StatelessWidget {
                   child: Text(
                     "Faculty Report",
                     style: AppTextStyle.h2poppinsBold
-                        .copyWith(fontSize: 18,color: Colors.black),
+                        .copyWith(fontSize: 18, color: Colors.black),
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              CoordinatorReport(progressPercent: progressPercent, commentPercent: commentPercent),
+              CoordinatorReport(
+                  progressPercent: progressPercent,
+                  commentPercent: commentPercent),
               SizedBox(height: 20),
               FooterSection(),
             ],
@@ -98,8 +129,7 @@ class CoordinatorReport extends StatelessWidget {
                   SizedBox(width: 8),
                   Text(
                     "Commented (within 14 days)",
-                    style: AppTextStyle.h5poppinsRegular
-                        .copyWith(fontSize: 14),
+                    style: AppTextStyle.h5poppinsRegular.copyWith(fontSize: 14),
                   ),
                 ],
               ),
@@ -113,8 +143,7 @@ class CoordinatorReport extends StatelessWidget {
                   SizedBox(width: 8),
                   Text(
                     "Without comments (within 14 days)",
-                    style: AppTextStyle.h5poppinsRegular
-                        .copyWith(fontSize: 14),
+                    style: AppTextStyle.h5poppinsRegular.copyWith(fontSize: 14),
                   ),
                 ],
               ),

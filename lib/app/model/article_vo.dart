@@ -22,6 +22,10 @@ class ArticleVO {
   CommentVO? comment;
   @HiveField(7)
   String? date;
+  @HiveField(8)
+  bool? isSelected;
+  @HiveField(9)
+  bool? isPublished;
 
   ArticleVO({
     this.id,
@@ -32,5 +36,7 @@ class ArticleVO {
     this.imgBytes,
     this.date,
     this.comment,
+    this.isSelected,
+    this.isPublished,
   });
 }

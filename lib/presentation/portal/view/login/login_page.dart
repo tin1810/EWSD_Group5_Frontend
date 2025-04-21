@@ -113,16 +113,16 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             loginController.onTapLogin().then((v) {
                               if (v == "s") {
-                                Get.to(StudentHomePage());
+                                Get.to(()=>StudentHomePage());
                               }
                               if (v == "a") {
-                                Get.to(AdminHomePage());
+                                Get.to(()=>AdminHomePage());
                               }
                               if (v == "c") {
-                                Get.to(FacultyCoordinatorHomepage());
+                                Get.to(()=>FacultyCoordinatorHomepage());
                               }
                               if (v == "m") {
-                                Get.to(ManagerHomepage());
+                                Get.to(()=>ManagerHomepage());
                               }
                             }).onError((e, st) {
                               Fluttertoast.showToast(msg: e.toString());

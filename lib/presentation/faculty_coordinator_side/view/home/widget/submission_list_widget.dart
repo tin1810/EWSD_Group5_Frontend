@@ -1,14 +1,42 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/article_vo.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/submission_item_widget.dart';
 
-class SubmissionListWidget extends StatelessWidget {
+class SubmissionListWidget extends StatefulWidget {
   const SubmissionListWidget({
     super.key,
   });
+
+  @override
+  State<SubmissionListWidget> createState() => _SubmissionListWidgetState();
+}
+
+class _SubmissionListWidgetState extends State<SubmissionListWidget>
+    with UserDao, ArticleDao {
+  UserVO? loggedInUser;
+  List<ArticleVO?>? articleList;
+
+  @override
+  void initState() {
+    try {
+      loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+      var facID = loggedInUser?.facultyId;
+      articleList = getAllArticles()?.where((e) => e?.facultyId == facID).toList();
+      setState(() {});
+    } catch (e) {
+      print(e.toString());
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +87,23 @@ class SubmissionListWidget extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 5,
+            itemCount: articleList?.length ?? 0,
             itemBuilder: (context, index) {
+              var sid = articleList?[index]?.studentId ?? "";
+              var student = getAllUsers()?.firstWhere((e) => e?.id == sid);
               return SubmissionItemWidget(
-                  viewDetail: () {
-                    // TODO:
-                   /// Get.to(() => ArticleDetailPage());
-                  },
-                  color: AppColor.whiteColor,
-                  name: "Rose",
-                  date: "12/12/2021",
-                  text:
-                      "Access a comprehensive list of all contributions submitted by students within the Computer Science Faculty. This feature allows faculty members to review the work and insights of students, ensuring that all contributions are acknowledged and assessed appropriately.");
+                viewDetail: () {
+                  Get.to(() => ArticleDetailPage(
+                        articleVO: articleList?[index] ?? ArticleVO(),
+                      ));
+                },
+                color: AppColor.whiteColor,
+                name: student?.name ?? "",
+                date: articleList?[index]?.date ?? "",
+                text: articleList?[index]?.title ?? "",
+                isCommented: articleList?[index]?.comment != null,
+                imageUrl: articleList![index]!.imgBytes!,
+              );
             },
           ),
         ],

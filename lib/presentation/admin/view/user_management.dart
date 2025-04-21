@@ -5,12 +5,11 @@ import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
-import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/table_item.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/table_title_row.dart';
 
-class UserManagement extends StatelessWidget with UserDao {
+class UserManagement extends StatelessWidget {
   const UserManagement({
     super.key,
   });
@@ -42,7 +41,7 @@ class UserManagement extends StatelessWidget with UserDao {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     onPressed: () {
-                      adminController.showCreateUserDialog(context);
+                      adminController.showCreateUserDialog();
                     },
                     child: Row(
                       children: [
@@ -83,161 +82,228 @@ class UserManagement extends StatelessWidget with UserDao {
                     child: TitleTableRow(),
                   ),
                 if (rs.Device.screenType != rs.ScreenType.mobile) Divider(),
-                ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return LayoutBuilder(
-                        builder: (context, constraints) {
-                          bool isMobile =
-                              rs.Device.screenType == rs.ScreenType.mobile;
+                Obx(
+                  () => ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return LayoutBuilder(
+                          builder: (context, constraints) {
+                            bool isMobile =
+                                rs.Device.screenType == rs.ScreenType.mobile;
 
-                          return (isMobile)
-                              ? Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TableItem(
-                                              name: getAllUsers()?[index]?.name,
-                                              title:
-                                                  getAllUsers()?[index]?.email),
-                                          TableItem(
-                                              name: getAllUsers()?[index]?.role,
-                                              title: getAllUsers()?[index]
-                                                  ?.facultyId),
-                                        ],
-                                      ),
-                                      SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                            icon: Icon(Icons.block),
-                                            iconSize: 20,
-                                            color: Colors.purple,
-                                            onPressed: () {
-                                              adminController.blockDialog(
-                                                onTapOk: () {},
-                                              );
-                                            },
-                                          ),
-                                          IconButton(
-                                            icon: Icon(
-                                              FontAwesomeIcons.deleteLeft,
-                                              size: 20,
-                                              color: Colors.red,
+                            return (isMobile)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20,
+                                        right: 20,
+                                        top: 10,
+                                        bottom: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TableItem(
+                                                name: adminController
+                                                    .users[index]?.name,
+                                                title: adminController
+                                                    .users[index]?.email),
+                                            TableItem(
+                                                name: (adminController
+                                                            .users[index]
+                                                            ?.role ==
+                                                        "s")
+                                                    ? "Student"
+                                                    : (adminController
+                                                                .users[index]
+                                                                ?.role ==
+                                                            "a")
+                                                        ? "Admin"
+                                                        : (adminController
+                                                                    .users[
+                                                                        index]
+                                                                    ?.role ==
+                                                                "c")
+                                                            ? "Faculty Coordinator"
+                                                            : (adminController
+                                                                        .users[
+                                                                            index]
+                                                                        ?.role ==
+                                                                    "m")
+                                                                ? "Marketing Manager"
+                                                                : "",
+                                                title: adminController
+                                                    .users[index]?.facultyId),
+                                          ],
+                                        ),
+                                        SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.block),
+                                              iconSize: 20,
+                                              color: Colors.purple,
+                                              onPressed: () {
+                                                adminController
+                                                    .suspendUserDialog(
+                                                        adminController
+                                                            .users[index]);
+                                              },
                                             ),
-                                            onPressed: () {
-                                              adminController
-                                                  .deleteUserDialog();
-                                            },
-                                          ),
-                                          Spacer(),
-                                          Container(
-                                            width: 80,
-                                            height: 24,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                color: Colors.green.shade300),
-                                            child: Center(
-                                                child: Text(
-                                              "Active",
-                                              style: AppTextStyle.h6iterRegular,
-                                            )),
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(), // Adds a visual separation for mobile items
-                                    ],
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10, bottom: 10),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 2,
-                                          child: TableItem(
-                                              name: getAllUsers()?[index]?.name,
-                                              title: getAllUsers()?[index]
-                                                  ?.email)),
-                                      Expanded(
-                                          child: TableItem(
-                                              name: getAllUsers()?[index]?.role,
-                                              title: getAllUsers()?[index]
-                                                  ?.facultyId)),
-                                      Expanded(
-                                        child: SizedBox(),
-                                      ),
-                                      Flexible(
-                                          flex: 1,
-                                          child: Container(
-                                            width: 80,
-                                            height: 24,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                color: Colors.green.shade300),
-                                            child: Center(
-                                                child: Text(
-                                              "Active",
-                                              style: AppTextStyle.h6iterRegular,
-                                            )),
-                                          )),
-                                      Expanded(child: SizedBox()),
-                                      Flexible(
-                                          flex: 1,
-                                          child: Wrap(
-                                            alignment: WrapAlignment.start,
-                                            runSpacing: 10,
-                                            children: [
-                                              IconButton(
-                                                icon: Icon(Icons.block),
-                                                iconSize: 20,
-                                                color: Colors.purple,
-                                                onPressed: () {
-                                                  adminController.blockDialog(
-                                                    onTapOk: () {},
-                                                  );
-                                                },
+                                            IconButton(
+                                              icon: Icon(
+                                                FontAwesomeIcons.deleteLeft,
+                                                size: 20,
+                                                color: Colors.red,
                                               ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              IconButton(
-                                                icon: Icon(
-                                                  FontAwesomeIcons.deleteLeft,
-                                                  size: 20,
-                                                  color: Colors.red,
+                                              onPressed: () {
+                                                adminController
+                                                    .deleteUserDialog(
+                                                        adminController
+                                                                .users[index]
+                                                                ?.id ??
+                                                            "");
+                                              },
+                                            ),
+                                            Spacer(),
+                                            Container(
+                                              width: 80,
+                                              height: 24,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.green.shade300),
+                                              child: Center(
+                                                  child: Text(
+                                                "Active",
+                                                style:
+                                                    AppTextStyle.h6iterRegular,
+                                              )),
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(), // Adds a visual separation for mobile items
+                                      ],
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20,
+                                        right: 20,
+                                        top: 10,
+                                        bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            flex: 2,
+                                            child: TableItem(
+                                                name: adminController
+                                                    .users[index]?.name,
+                                                title: adminController
+                                                    .users[index]?.email)),
+                                        Expanded(
+                                            child: TableItem(
+                                                name: (adminController
+                                                            .users[index]
+                                                            ?.role ==
+                                                        "s")
+                                                    ? "Student"
+                                                    : (adminController
+                                                                .users[index]
+                                                                ?.role ==
+                                                            "a")
+                                                        ? "Admin"
+                                                        : (adminController
+                                                                    .users[
+                                                                        index]
+                                                                    ?.role ==
+                                                                "c")
+                                                            ? "Faculty Coordinator"
+                                                            : (adminController
+                                                                        .users[
+                                                                            index]
+                                                                        ?.role ==
+                                                                    "m")
+                                                                ? "Marketing Manager"
+                                                                : "",
+                                                title: adminController
+                                                    .users[index]?.facultyId)),
+                                        Expanded(
+                                          child: SizedBox(),
+                                        ),
+                                        Flexible(
+                                            flex: 1,
+                                            child: Container(
+                                              width: 80,
+                                              height: 24,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.green.shade300),
+                                              child: Center(
+                                                  child: Text(
+                                                "Active",
+                                                style:
+                                                    AppTextStyle.h6iterRegular,
+                                              )),
+                                            )),
+                                        Expanded(child: SizedBox()),
+                                        Flexible(
+                                            flex: 1,
+                                            child: Wrap(
+                                              alignment: WrapAlignment.start,
+                                              runSpacing: 10,
+                                              children: [
+                                                IconButton(
+                                                  icon: Icon(Icons.block),
+                                                  iconSize: 20,
+                                                  color: Colors.purple,
+                                                  onPressed: () {
+                                                    adminController
+                                                        .suspendUserDialog(
+                                                            adminController
+                                                                .users[index]);
+                                                  },
                                                 ),
-                                                onPressed: () {
-                                                  adminController
-                                                      .deleteUserDialog();
-                                                },
-                                              ),
-                                            ],
-                                          )),
-                                      // Expanded(
-                                      //   child: Text("Action"),
-                                      // ),
-                                    ],
-                                  ),
-                                );
-                        },
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return Divider();
-                    },
-                    itemCount: getAllUsers()?.length ?? 0)
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(
+                                                    FontAwesomeIcons.deleteLeft,
+                                                    size: 20,
+                                                    color: Colors.red,
+                                                  ),
+                                                  onPressed: () {
+                                                    adminController
+                                                        .deleteUserDialog(
+                                                            adminController
+                                                                    .users[
+                                                                        index]
+                                                                    ?.id ??
+                                                                "");
+                                                  },
+                                                ),
+                                              ],
+                                            )),
+                                        // Expanded(
+                                        //   child: Text("Action"),
+                                        // ),
+                                      ],
+                                    ),
+                                  );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return Divider();
+                      },
+                      itemCount: adminController.users.length),
+                )
               ],
             ),
           ),

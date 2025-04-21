@@ -58,7 +58,7 @@ class ThirdRowSection extends StatelessWidget with ArticleDao {
                         return AnnouncementWidget(
                           image: img!,
                           des: e.title ?? "",
-                          date: e.date ?? "",
+                          date: e.date ?? DateTime.now().toString().substring(0,10),
                         );
                       }).toList() ??
                       [],

@@ -8,6 +8,7 @@ import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/article_vo.dart';
 import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/deadline_dao.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
@@ -24,7 +25,8 @@ class SubmitPage extends StatefulWidget {
   State<SubmitPage> createState() => _SubmitPageState();
 }
 
-class _SubmitPageState extends State<SubmitPage> with UserDao, ArticleDao {
+class _SubmitPageState extends State<SubmitPage>
+    with UserDao, ArticleDao, DeadlineDao {
   File? imageFile;
   File? wordFile;
   UserVO? loggedInUser;
@@ -98,7 +100,12 @@ class _SubmitPageState extends State<SubmitPage> with UserDao, ArticleDao {
                             textAlign: TextAlign.center,
                             style: AppTextStyle.h6iterBold),
                         SizedBox(height: 20),
-                        Text('12-05-2025',
+                        Text(
+                            getDeadline()?.firstFinalDate ??
+                                (DateTime.now()
+                                    .add(Duration(days: 7))
+                                    .toString()
+                                    .substring(0, 10)),
                             style: AppTextStyle.h3poppinsRegular),
                       ],
                     ),
@@ -131,7 +138,12 @@ class _SubmitPageState extends State<SubmitPage> with UserDao, ArticleDao {
                             textAlign: TextAlign.center,
                             style: AppTextStyle.h6iterBold),
                         SizedBox(height: 20),
-                        Text('12-05-2025',
+                        Text(
+                            getDeadline()?.secondFinalDate ??
+                                (DateTime.now()
+                                    .add(Duration(days: 14))
+                                    .toString()
+                                    .substring(0, 10)),
                             style: AppTextStyle.h3poppinsRegular),
                       ],
                     ),
@@ -292,7 +304,7 @@ class _SubmitPageState extends State<SubmitPage> with UserDao, ArticleDao {
                           saveArticle(doc);
                           Fluttertoast.showToast(
                               msg: "Article Submitted Successfully");
-                          Get.to(MySubmissionsPage());
+                          Get.to(()=>MySubmissionsPage());
                         } else {
                           Fluttertoast.showToast(msg: "Fields Required!");
                         }

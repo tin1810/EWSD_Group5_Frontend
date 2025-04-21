@@ -1,6 +1,6 @@
 import 'package:university_magazine_project/app/model/faculty_vo.dart';
 
-final List<FacultyVO> faculties = [
+final List<FacultyVO> populatedFaculties = [
   FacultyVO(
     name: 'Faculty of Engineering',
     id: 'F001',

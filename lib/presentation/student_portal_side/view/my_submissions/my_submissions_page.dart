@@ -53,7 +53,7 @@ class MySubmissionsPage extends StatelessWidget with ArticleDao, UserDao {
                       date: e.date ?? "",
                       comments: e.comment != null ? "1" : "0",
                       onTap: () {
-                        Get.to(MySubmissionDetailPage(articleVO: e));
+                        Get.to(()=>MySubmissionDetailPage(articleVO: e));
                       },
                     );
                   }).toList() ??

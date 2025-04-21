@@ -4,7 +4,6 @@ import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/publishion/publishion_page.dart';
-import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/report/report_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/faulty_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/header_section_title.dart';

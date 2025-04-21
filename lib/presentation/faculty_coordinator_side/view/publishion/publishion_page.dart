@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/article_vo.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/banner_imagewith_text.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/submission_item_widget.dart';
@@ -17,16 +22,24 @@ class PublishionPage extends StatefulWidget {
   _PublishionPageState createState() => _PublishionPageState();
 }
 
-class _PublishionPageState extends State<PublishionPage> {
-  final List<bool> _selectedItems = List.generate(5, (index) => false);
+class _PublishionPageState extends State<PublishionPage>
+    with UserDao, ArticleDao {
+  UserVO? loggedInUser;
+  List<ArticleVO?>? articleList;
 
-  void _toggleSelection(int index) {
-    setState(() {
-      _selectedItems[index] = !_selectedItems[index];
-    });
+  @override
+  void initState() {
+    try {
+      loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+      var facID = loggedInUser?.facultyId;
+      articleList =
+          getAllArticles()?.where((e) => e?.facultyId == facID).toList();
+      setState(() {});
+    } catch (e) {
+      print(e.toString());
+    }
+    super.initState();
   }
-
-  bool get _isAnySelected => _selectedItems.contains(true);
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +80,18 @@ class _PublishionPageState extends State<PublishionPage> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: 5,
+                    itemCount: articleList?.length ?? 0,
                     itemBuilder: (context, index) {
+                      var sid = articleList?[index]?.studentId ?? "";
+                      var student =
+                          getAllUsers()?.firstWhere((e) => e?.id == sid);
                       return GestureDetector(
-                        onTap: () => _toggleSelection(index),
+                        onTap: () {
+                          var isSelected =
+                              articleList?[index]?.isSelected ?? false;
+                          articleList?[index]?.isSelected = !isSelected;
+                          setState(() {});
+                        },
                         child: Container(
                           margin: EdgeInsets.symmetric(
                             vertical: 10,
@@ -82,25 +103,30 @@ class _PublishionPageState extends State<PublishionPage> {
                               Checkbox(
                                 checkColor: AppColor.whiteColor,
                                 activeColor: AppColor.blueColor,
-                                value: _selectedItems[index],
+                                value: articleList?[index]?.isSelected ?? false,
                                 onChanged: (bool? value) {
-                                  _toggleSelection(index);
+                                  var isSelected =
+                                      articleList?[index]?.isSelected ?? false;
+                                  articleList?[index]?.isSelected = !isSelected;
+                                  setState(() {});
                                 },
                               ),
                               SizedBox(width: 20),
                               Expanded(
                                 child: SubmissionItemWidget(
-                                  name: "Rose",
-                                  date: "12/12/2021",
-                                  text:
-                                      "Access a comprehensive list of all contributions submitted by students within the Computer Science Faculty.",
-                                  color: _selectedItems[index]
-                                      ? AppColor.blueColor.withOpacity(0.6)
-                                      : Colors.grey.shade200,
                                   viewDetail: () {
-                                    // TODO:
-                                   // Get.to(()=>ArticleDetailPage());
+                                    Get.to(() => ArticleDetailPage(
+                                          articleVO: articleList?[index] ??
+                                              ArticleVO(),
+                                        ));
                                   },
+                                  color: AppColor.whiteColor,
+                                  name: student?.name ?? "",
+                                  date: articleList?[index]?.date ?? "",
+                                  text: articleList?[index]?.title ?? "",
+                                  isCommented:
+                                      articleList?[index]?.comment != null,
+                                  imageUrl: articleList![index]!.imgBytes!,
                                 ),
                               ),
                             ],
@@ -113,8 +139,22 @@ class _PublishionPageState extends State<PublishionPage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: MaterialButton(
-                      onPressed:
-                          _isAnySelected ? () => print("Publishing...") : null,
+                      onPressed: () {
+                        var list = articleList
+                                ?.where((e) => e?.isSelected ?? false)
+                                .toList() ??
+                            [];
+                        if (list.isNotEmpty) {
+                          for (ArticleVO? article in list) {
+                            article?.isSelected = true;
+                            article?.isPublished = true;
+                            saveArticle(article);
+                          }
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Selected Articles are successfully published");
+                        }
+                      },
                       color: AppColor.blueColor,
                       disabledColor: Colors.grey,
                       padding: EdgeInsets.all(20),
