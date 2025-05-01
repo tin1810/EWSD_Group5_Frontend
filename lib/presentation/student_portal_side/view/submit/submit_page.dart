@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
+import 'package:university_magazine_project/app/config/app_constants.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/article_vo.dart';
 import 'package:university_magazine_project/app/model/user_vo.dart';
@@ -17,6 +20,7 @@ import 'package:university_magazine_project/presentation/student_portal_side/vie
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/helper/word_file_manager.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/contribute_title_widget.dart';
 import 'dart:html';
+import 'package:http/http.dart' as http;
 
 class SubmitPage extends StatefulWidget {
   const SubmitPage({super.key});
@@ -40,6 +44,51 @@ class _SubmitPageState extends State<SubmitPage>
       print(e.toString());
     }
     super.initState();
+  }
+
+  Future<void> sendEmail({
+    required String name,
+    required String email,
+    required String subject,
+    required String toEmail,
+    required String message,
+  }) async {
+    final serviceId = 'service_3xn2d1t';
+    final templateId = 'template_ulplfj9';
+    final userId = 'ppkRQ7mtNoYYnDkHg';
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+
+    final payload = {
+      'service_id': serviceId,
+      'template_id': templateId,
+      'user_id': userId,
+      'template_params': {
+        'user_name': name,
+        'user_email': email,
+        'to_email': toEmail,
+        'user_subject': subject,
+        'user_message': message,
+      }
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        body: jsonEncode(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print("✅ Email sent successfully.");
+      } else {
+        print("❌ Failed to send email. Status: ${response.statusCode}");
+        print("Response: ${response.body}");
+      }
+    } catch (e) {
+      print("❗Error sending email: $e");
+    }
   }
 
   @override
@@ -341,7 +390,26 @@ class _SubmitPageState extends State<SubmitPage>
                                     .convertFileToUnit8List(imageFile!),
                                 date:
                                     DateTime.now().toString().substring(0, 10));
+
                             saveArticle(doc);
+                            var user = getAllUsers();
+                            final coordinator = user?.firstWhere(
+                              (user) =>
+                                  user?.facultyId == loggedInUser?.facultyId &&
+                                  user?.role == "Coordinator",
+                              orElse: () => UserVO(
+                                  id: "",
+                                  name: "",
+                                  email: "",
+                                  facultyId: "",
+                                  role: ""),
+                            );
+                            sendEmail(
+                                name: loggedInUser?.name ?? "",
+                                email: loggedInUser?.email ?? "",
+                                subject: "Article Submission",
+                                message: "Article Submitted",
+                                toEmail: coordinator?.email ?? "");
                             Fluttertoast.showToast(
                                 msg: "Article Submitted Successfully");
                             Get.to(() => MySubmissionsPage());

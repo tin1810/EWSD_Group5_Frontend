@@ -55,8 +55,9 @@ final List<UserVO> populatedUsers = [
     name: "Moe Htet",
     email: "moehtet@gmail.com",
     password: "12345678",
-    role: "a",
+    role: "Admin",
     id: "U001",
+    facultyId: "NO Faculty",
     isLoggedIn: false,
   ),
 ];

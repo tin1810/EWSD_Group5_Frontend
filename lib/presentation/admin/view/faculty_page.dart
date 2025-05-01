@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
-import 'package:university_magazine_project/hive/dao/faculty_dao.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/faculty_card.dart';
 

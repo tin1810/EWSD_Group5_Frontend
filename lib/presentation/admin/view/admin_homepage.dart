@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
+import 'package:university_magazine_project/app/config/app_constants.dart';
 import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
@@ -9,6 +10,7 @@ import 'package:university_magazine_project/presentation/admin/view/faculty_page
 import 'package:university_magazine_project/presentation/admin/view/system_settings.dart';
 import 'package:university_magazine_project/presentation/admin/view/user_management.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/side_appbar.dart';
+import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -50,7 +52,12 @@ class _AdminHomePageState extends State<AdminHomePage> with UserDao {
                   onTapOk: () {
                     loggedInUser?.isLoggedIn = false;
                     saveUser(loggedInUser);
-                    Get.to(() => HomePage());
+
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ));
                   },
                   onTapCancel: () {
                     adminController.changeSection(oldSec);
@@ -75,7 +82,12 @@ class _AdminHomePageState extends State<AdminHomePage> with UserDao {
                           onTapOk: () {
                             loggedInUser?.isLoggedIn = false;
                             saveUser(loggedInUser);
-                            Get.to(() => HomePage());
+
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ));
                           },
                           onTapCancel: () {
                             adminController.changeSection(oldSec);

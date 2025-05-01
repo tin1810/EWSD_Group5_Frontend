@@ -14,7 +14,7 @@ import 'package:university_magazine_project/hive/dao/user_dao.dart';
 
 enum AdminSection { system, users, faculty, logout }
 
-enum RoleSection { manager, student, coordinator, admin }
+enum RoleSection { Manager, Student, Coordinator, Admin }
 
 class AdminController extends GetxController
     with FacultyDao, UserDao, DeadlineDao {
@@ -232,7 +232,15 @@ class AdminController extends GetxController
                 status: 'active',
                 id: DateTime.now().millisecondsSinceEpoch.toString(),
               );
+
               saveUser(user);
+              update;
+              _fetchAllUsers();
+              nameController.clear();
+              emailController.clear();
+              passwordController.clear();
+              facultyController.clear();
+              roleController.clear();
               Get.back();
             },
             child: Text("Create"),

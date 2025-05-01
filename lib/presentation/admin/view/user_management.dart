@@ -116,24 +116,24 @@ class UserManagement extends StatelessWidget {
                                                 name: (adminController
                                                             .users[index]
                                                             ?.role ==
-                                                        "s")
+                                                        "Student")
                                                     ? "Student"
                                                     : (adminController
                                                                 .users[index]
                                                                 ?.role ==
-                                                            "a")
+                                                            "Admin")
                                                         ? "Admin"
                                                         : (adminController
                                                                     .users[
                                                                         index]
                                                                     ?.role ==
-                                                                "c")
+                                                                "Coordinator")
                                                             ? "Faculty Coordinator"
                                                             : (adminController
                                                                         .users[
                                                                             index]
                                                                         ?.role ==
-                                                                    "m")
+                                                                    "Manager")
                                                                 ? "Marketing Manager"
                                                                 : "",
                                                 title: adminController
@@ -210,24 +210,24 @@ class UserManagement extends StatelessWidget {
                                                 name: (adminController
                                                             .users[index]
                                                             ?.role ==
-                                                        "s")
+                                                        "Student")
                                                     ? "Student"
                                                     : (adminController
                                                                 .users[index]
                                                                 ?.role ==
-                                                            "a")
+                                                            "Admin")
                                                         ? "Admin"
                                                         : (adminController
                                                                     .users[
                                                                         index]
                                                                     ?.role ==
-                                                                "c")
+                                                                "Coordinator")
                                                             ? "Faculty Coordinator"
                                                             : (adminController
                                                                         .users[
                                                                             index]
                                                                         ?.role ==
-                                                                    "m")
+                                                                    "Manager")
                                                                 ? "Marketing Manager"
                                                                 : "",
                                                 title: adminController

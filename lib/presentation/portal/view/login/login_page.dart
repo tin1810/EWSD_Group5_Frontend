@@ -112,17 +112,46 @@ class LoginPage extends StatelessWidget {
                           color: AppColor.hoverAppBarColor,
                           onPressed: () {
                             loginController.onTapLogin().then((v) {
-                              if (v == "s") {
-                                Get.to(()=>StudentHomePage());
+                              if (v == "Student") {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const StudentHomePage()),
+                                  (route) => false,
+                                );
+
+                                // Get.offAll(() => StudentHomePage());
                               }
-                              if (v == "a") {
-                                Get.to(()=>AdminHomePage());
+                              if (v == "Admin") {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AdminHomePage()),
+                                  (route) => false,
+                                );
+                                //   Get.offAll(() => AdminHomePage());
                               }
-                              if (v == "c") {
-                                Get.to(()=>FacultyCoordinatorHomepage());
+                              if (v == "Coordinator") {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FacultyCoordinatorHomepage()),
+                                  (route) => false,
+                                );
+                                //  Get.offAll(() => FacultyCoordinatorHomepage());
                               }
-                              if (v == "m") {
-                                Get.to(()=>ManagerHomepage());
+                              if (v == "Manager") {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ManagerHomepage()),
+                                  (route) => false,
+                                );
+                                //Get.offAll(() => ManagerHomepage());
                               }
                             }).onError((e, st) {
                               Fluttertoast.showToast(msg: e.toString());

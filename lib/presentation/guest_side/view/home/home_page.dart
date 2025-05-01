@@ -5,14 +5,14 @@ import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/admin/view/admin_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
+import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/banner_image_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/firstrow_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/secondrow_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/thirdrow_section.dart';
-import 'package:university_magazine_project/presentation/manager_side/view/home/manager_homepage.dart';
-import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
+
 import 'widget/head_banner_section.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +22,14 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>with UserDao {
+class _HomePageState extends State<HomePage> with UserDao {
+  final HomeController controller = Get.find<HomeController>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

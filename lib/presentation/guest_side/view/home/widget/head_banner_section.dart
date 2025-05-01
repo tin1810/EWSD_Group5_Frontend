@@ -53,10 +53,10 @@ class HeadBannerSection extends StatelessWidget {
             : Axis.vertical,
         children: [
           _menuItem('Home', onTap: () => _navigateTo(context, HomePage())),
-        //  _menuItem('Article'),
+          //  _menuItem('Article'),
           _menuItem('Faculty',
               onTap: () => _navigateTo(context, FacultyPage())),
-         // _menuItem('About Us'),
+          // _menuItem('About Us'),
         ],
       ),
     );
