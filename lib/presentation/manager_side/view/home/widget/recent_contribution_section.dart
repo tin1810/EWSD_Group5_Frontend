@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/article_vo.dart';
+import 'package:university_magazine_project/app/populations/articles.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 
 class RecentContributionSection extends StatefulWidget {
   const RecentContributionSection({super.key});
@@ -10,8 +16,19 @@ class RecentContributionSection extends StatefulWidget {
       _RecentContributionSectionState();
 }
 
-class _RecentContributionSectionState extends State<RecentContributionSection> {
-  final List<bool> _isHovered = List.filled(3, false);
+class _RecentContributionSectionState extends State<RecentContributionSection>
+    with ArticleDao {
+  late List<bool> _isHovered;
+  List<ArticleVO?>? publishedList;
+
+  @override
+  void initState() {
+    super.initState();
+    publishedList =
+        getAllArticles()?.where((e) => e?.isPublished == true).toList();
+    _isHovered = List.filled(publishedList?.length ?? 0, false);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +67,10 @@ class _RecentContributionSectionState extends State<RecentContributionSection> {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () {
-                      debugPrint('Contribution $index clicked');
+                      Get.to(() => ArticleDetailPage(
+                        articleVO: publishedList![index]!,
+                        isManager: true,
+                      ));
                     },
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
@@ -73,31 +93,32 @@ class _RecentContributionSectionState extends State<RecentContributionSection> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.network(
-                            "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                          Center(
+                            child: Image.memory(
+                              publishedList?[index]?.imgBytes ??
+                                  fakeBytes("hello world"),
+                              height: 170,
+                              errorBuilder: (context, o, e) {
+                                return Image.asset(
+                                  "assets/images/article_error.jpg",
+                                  height: 170,
+                                  width: 170,
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'The Future of Sustainable Energy',
+                            publishedList?[index]?.title ?? "",
                             style: AppTextStyle.h2iterBold
                                 .copyWith(color: AppColor.blackColor),
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            'March 6, 2025',
+                            publishedList?[index]?.date ?? "",
                             textAlign: TextAlign.center,
                             style: AppTextStyle.h3iterRegular
                                 .copyWith(color: AppColor.blackColor),
-                          ),
-                          const SizedBox(height: 5),
-                          Expanded(
-                            child: Text(
-                              "In this latest contribution, researchers from the Faculty of Environmental Studies explore the future of sustainable energy and the role of universities in promoting sustainable practices.",
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyle.h5iterRegular
-                                  .copyWith(color: AppColor.blackColor),
-                            ),
                           ),
                         ],
                       ),

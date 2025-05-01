@@ -59,30 +59,30 @@ class _SubmissionListWidgetState extends State<SubmissionListWidget>
             "Explore the innovative ideas and research contributions from our Computer Science students.",
             style: AppTextStyle.h4iterRegular,
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "Filter",
-                  style: AppTextStyle.h4poppinsBold,
-                ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return ContributionFilterDialog();
-                        });
-                  },
-                  icon: Icon(
-                    Icons.filter_alt_outlined,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.topRight,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     children: [
+          //       Text(
+          //         "Filter",
+          //         style: AppTextStyle.h4poppinsBold,
+          //       ),
+          //       IconButton(
+          //         onPressed: () {
+          //           showDialog(
+          //               context: context,
+          //               builder: (context) {
+          //                 return ContributionFilterDialog();
+          //               });
+          //         },
+          //         icon: Icon(
+          //           Icons.filter_alt_outlined,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           SizedBox(height: 20),
           ListView.builder(
             shrinkWrap: true,

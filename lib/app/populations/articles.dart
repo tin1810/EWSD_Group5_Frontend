@@ -17,6 +17,8 @@ final List<ArticleVO> populatedArticles = [
       coordinatorName: 'Dr. Jane Smith',
     ),
     date: '2025-04-10',
+    isSelected: true,
+    isPublished: true,
   ),
   ArticleVO(
     id: 'a002',
@@ -30,6 +32,8 @@ final List<ArticleVO> populatedArticles = [
       coordinatorName: 'Prof. Alan White',
     ),
     date: '2025-04-12',
+    isSelected: false,
+    isPublished: false,
   ),
   ArticleVO(
     id: 'a003',
@@ -43,6 +47,8 @@ final List<ArticleVO> populatedArticles = [
       coordinatorName: 'Dr. Emily Carter',
     ),
     date: '2025-04-13',
+    isSelected: true,
+    isPublished: true,
   ),
   ArticleVO(
     id: 'a004',
@@ -56,6 +62,8 @@ final List<ArticleVO> populatedArticles = [
       coordinatorName: 'Dr. Brian Kim',
     ),
     date: '2025-04-15',
+    isSelected: false,
+    isPublished: false,
   ),
   ArticleVO(
     id: 'a005',
@@ -69,6 +77,8 @@ final List<ArticleVO> populatedArticles = [
       coordinatorName: 'Prof. Rachel Lee',
     ),
     date: '2025-04-16',
+    isSelected: true,
+    isPublished: true,
   ),
   ArticleVO(
     id: 'a006',
@@ -82,5 +92,7 @@ final List<ArticleVO> populatedArticles = [
       coordinatorName: 'Dr. Mark Owen',
     ),
     date: '2025-04-18',
+    isSelected: false,
+    isPublished: false,
   ),
 ];

@@ -19,6 +19,7 @@ class LoginController extends GetxController with UserDao {
         return e?.email == email.value && e?.password == password.value;
       });
       user!.isLoggedIn = true;
+      user.lastLoggedInDate = DateTime.now().toString().substring(0, 10);
       saveUser(user);
       return Future.value(user.role ?? "");
     } catch (e) {

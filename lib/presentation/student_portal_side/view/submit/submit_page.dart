@@ -281,32 +281,76 @@ class _SubmitPageState extends State<SubmitPage>
                       ),
                     ),
                     SizedBox(height: 20),
+                    // MaterialButton(
+                    //   color: AppColor.blueColor,
+                    //   onPressed: () {
+                    //     final deadline = getDeadline();
+                    //     if (deadline == null || deadline.firstFinalDate == null)
+                    //       return;
+                    //
+                    //     final firstFinalDate =
+                    //         DateTime.tryParse(deadline.firstFinalDate!);
+                    //     final today = DateTime.now();
+                    //
+                    //     // Optional: Handle invalid date parsing
+                    //     if (firstFinalDate == null) return;
+                    //
+                    //     // Allow submit only if today is before or on the deadline
+                    //     if (today.isBefore(firstFinalDate) ||
+                    //         _isSameDate(today, firstFinalDate)) {
+                    //       // Submit logic here
+                    //       print("Submitted!");
+                    //     } else {
+                    //       // Too late
+                    //       print("Submission deadline has passed.");
+                    //     }
+                    //   },
+                    //   child: Text(
+                    //     "Submit",
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    // ),
                     MaterialButton(
                       color: AppColor.blueColor,
                       onPressed: () async {
-                        if (wordFile != null &&
-                            imageFile != null &&
-                            loggedInUser != null) {
-                          var doc = ArticleVO(
-                            id: DateTime.now()
-                                .microsecondsSinceEpoch
-                                .toString(),
-                            studentId: loggedInUser?.id,
-                            facultyId: loggedInUser?.facultyId,
-                            title: controller.text,
-                            wordBytes:
-                                await WordFileManager.convertFileToUnit8List(
-                                    wordFile!),
-                            imgBytes:
-                                await WordFileManager.convertFileToUnit8List(
-                                    imageFile!),
-                          );
-                          saveArticle(doc);
-                          Fluttertoast.showToast(
-                              msg: "Article Submitted Successfully");
-                          Get.to(()=>MySubmissionsPage());
+                        final deadline = getDeadline();
+                        if (deadline == null ||
+                            deadline.firstFinalDate == null) {
+                          Fluttertoast.showToast(msg: "Something went wrong");
+                        }
+                        final firstFinalDate =
+                            DateTime.tryParse(deadline?.firstFinalDate ?? "");
+                        final today = DateTime.now();
+
+                        if (firstFinalDate == null) return;
+                        if (today.isBefore(firstFinalDate) ||
+                            _isSameDate(today, firstFinalDate)) {
+                          if (wordFile != null &&
+                              imageFile != null &&
+                              loggedInUser != null) {
+                            var doc = ArticleVO(
+                                id: DateTime.now()
+                                    .microsecondsSinceEpoch
+                                    .toString(),
+                                studentId: loggedInUser?.id,
+                                facultyId: loggedInUser?.facultyId,
+                                title: controller.text,
+                                wordBytes: await WordFileManager
+                                    .convertFileToUnit8List(wordFile!),
+                                imgBytes: await WordFileManager
+                                    .convertFileToUnit8List(imageFile!),
+                                date:
+                                    DateTime.now().toString().substring(0, 10));
+                            saveArticle(doc);
+                            Fluttertoast.showToast(
+                                msg: "Article Submitted Successfully");
+                            Get.to(() => MySubmissionsPage());
+                          } else {
+                            Fluttertoast.showToast(msg: "Fields Required!");
+                          }
                         } else {
-                          Fluttertoast.showToast(msg: "Fields Required!");
+                          Fluttertoast.showToast(
+                              msg: "  Submission deadline has passed.");
                         }
                       },
                       child: Text(
@@ -324,5 +368,19 @@ class _SubmitPageState extends State<SubmitPage>
         ),
       ),
     );
+  }
+
+  bool _isSameDate(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  bool isDeadlinePassed() {
+    final deadline = getDeadline();
+    final firstDate = DateTime.tryParse(deadline?.firstFinalDate ?? '');
+    final today = DateTime.now();
+
+    if (firstDate == null) return true;
+
+    return today.isAfter(firstDate);
   }
 }

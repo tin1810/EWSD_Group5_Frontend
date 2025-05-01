@@ -25,13 +25,14 @@ class UserVOAdapter extends TypeAdapter<UserVO> {
       facultyId: fields[5] as String?,
       id: fields[6] as String?,
       isLoggedIn: fields[7] as bool?,
+      lastLoggedInDate: fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserVO obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class UserVOAdapter extends TypeAdapter<UserVO> {
       ..writeByte(6)
       ..write(obj.id)
       ..writeByte(7)
-      ..write(obj.isLoggedIn);
+      ..write(obj.isLoggedIn)
+      ..writeByte(8)
+      ..write(obj.lastLoggedInDate);
   }
 
   @override

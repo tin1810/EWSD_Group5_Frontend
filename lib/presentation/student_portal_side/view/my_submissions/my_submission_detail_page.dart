@@ -7,6 +7,7 @@ import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/article_vo.dart';
 import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/deadline_dao.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/article_detail_page.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
@@ -25,7 +26,7 @@ class MySubmissionDetailPage extends StatefulWidget {
 }
 
 class _MySubmissionDetailPageState extends State<MySubmissionDetailPage>
-    with UserDao, ArticleDao {
+    with UserDao, ArticleDao, DeadlineDao {
   File? wordFile;
 
   @override
@@ -36,7 +37,7 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage>
         child: Column(
           children: [
             ArticleBannerWidget(
-              title: widget.articleVO.title??"",
+              title: widget.articleVO.title ?? "",
               image: widget.articleVO.imgBytes!,
             ),
             SizedBox(height: 20),
@@ -45,35 +46,40 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage>
               style: AppTextStyle.h5iterRegular.copyWith(color: Colors.grey),
             ),
             SizedBox(height: 20),
-            Divider(),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/commenter.jpg"),
-                  radius: 14,
-                ),
-                SizedBox(width: 8),
-                Text(
-                  widget.articleVO.comment?.coordinatorName ?? "",
-                  style: AppTextStyle.h5iterBold.copyWith(color: Colors.black),
-                ),
-                SizedBox(width: 40),
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width / 2,
-                  child: Text(
-                    widget.articleVO.comment?.comment ?? "",
-                    style: AppTextStyle.h5iterRegular
-                        .copyWith(color: Colors.black),
+            if (widget.articleVO.comment != null) Divider(),
+            if (widget.articleVO.comment != null) SizedBox(height: 20),
+            if (widget.articleVO.comment != null)
+              Text("Comments", style: AppTextStyle.h2iterBold),
+            if (widget.articleVO.comment != null) SizedBox(height: 15),
+            if (widget.articleVO.comment != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage("assets/images/commenter.jpg"),
+                    radius: 14,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Divider(),
-            SizedBox(height: 40),
+                  SizedBox(width: 8),
+                  Text(
+                    widget.articleVO.comment?.coordinatorName ?? "",
+                    style:
+                        AppTextStyle.h5iterBold.copyWith(color: Colors.black),
+                  ),
+                  SizedBox(width: 40),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width / 2,
+                    child: Text(
+                      widget.articleVO.comment?.comment ?? "",
+                      style: AppTextStyle.h5iterRegular
+                          .copyWith(color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+            if (widget.articleVO.comment != null) SizedBox(height: 20),
+            if (widget.articleVO.comment != null) Divider(),
+            if (widget.articleVO.comment != null) SizedBox(height: 40),
             Center(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -144,20 +150,38 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage>
                     MaterialButton(
                       color: AppColor.blueColor,
                       onPressed: () async {
-                        if (wordFile != null) {
-                          widget.articleVO.wordBytes =
-                              await WordFileManager.convertFileToUnit8List(
-                                  wordFile!);
-                          saveArticle(widget.articleVO);
-                          Fluttertoast.showToast(
-                              msg: "Article Submitted Successfully");
-                          Get.to(()=>MySubmissionsPage());
+                        final deadline = getDeadline();
+                        if (deadline == null ||
+                            deadline.secondFinalDate == null) {
+                          Fluttertoast.showToast(msg: "Something went wrong");
+                        }
+                        final secondFinalDate =
+                            DateTime.tryParse(deadline?.secondFinalDate ?? "");
+                        final today = DateTime.now();
+
+                        if (secondFinalDate == null) return;
+                        if (today.isBefore(secondFinalDate) ||
+                            _isSameDate(today, secondFinalDate)) {
+                          if (wordFile != null) {
+                            widget.articleVO.wordBytes =
+                                await WordFileManager.convertFileToUnit8List(
+                                    wordFile!);
+                            widget.articleVO.date =
+                                DateTime.now().toString().substring(0, 10);
+                            saveArticle(widget.articleVO);
+                            Fluttertoast.showToast(
+                                msg: "Article Submitted Successfully");
+                            Get.to(() => MySubmissionsPage());
+                          } else {
+                            Fluttertoast.showToast(msg: "Fields Required!");
+                          }
                         } else {
-                          Fluttertoast.showToast(msg: "Fields Required!");
+                          Fluttertoast.showToast(
+                              msg: "  Submission deadline has passed.");
                         }
                       },
                       child: Text(
-                        "Submit",
+                        "ReSubmit",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -171,5 +195,19 @@ class _MySubmissionDetailPageState extends State<MySubmissionDetailPage>
         ),
       ),
     );
+  }
+
+  bool _isSameDate(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  bool isDeadlinePassed() {
+    final deadline = getDeadline();
+    final secDate = DateTime.tryParse(deadline?.secondFinalDate ?? '');
+    final today = DateTime.now();
+
+    if (secDate == null) return true;
+
+    return today.isAfter(secDate);
   }
 }

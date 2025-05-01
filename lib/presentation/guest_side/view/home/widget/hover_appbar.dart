@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 import 'package:university_magazine_project/presentation/portal/view/login/login_page.dart';
 
 import '../../../../../app/config/app_textstyle.dart';
 
-class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
+class HoverAppBar extends StatelessWidget
+    with UserDao
+    implements PreferredSizeWidget {
   final HomeController controller = Get.find<HomeController>();
   final String? portal;
 
@@ -44,6 +48,25 @@ class HoverAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+      actions: (controller.user.value.name == null)
+          ? null
+          : [
+              CircleAvatar(
+                backgroundImage: AssetImage("assets/images/commenter.jpg"),
+                radius: 14,
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Text(
+                controller.user.value.name ?? "",
+                style: AppTextStyle.h5poppinsRegular
+                    .copyWith(color: AppColor.whiteColor),
+              ),
+              SizedBox(
+                width: 4,
+              ),
+            ],
     );
   }
 

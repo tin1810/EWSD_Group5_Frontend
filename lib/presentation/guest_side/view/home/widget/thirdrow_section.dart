@@ -53,12 +53,16 @@ class ThirdRowSection extends StatelessWidget with ArticleDao {
                 scrollDirection: Axis.horizontal,
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Row(
-                  children: getAllArticles()?.map((e) {
+                  children: getAllArticles()
+                          ?.where((ei) => ei?.isPublished == true)
+                          .toList()
+                          .map((e) {
                         var img = e!.imgBytes;
                         return AnnouncementWidget(
                           image: img!,
                           des: e.title ?? "",
-                          date: e.date ?? DateTime.now().toString().substring(0,10),
+                          date: e.date ??
+                              DateTime.now().toString().substring(0, 10),
                         );
                       }).toList() ??
                       [],

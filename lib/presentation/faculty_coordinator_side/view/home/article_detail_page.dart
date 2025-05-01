@@ -1,24 +1,41 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/article_vo.dart';
+import 'package:university_magazine_project/app/model/comment_vo.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
+import 'package:university_magazine_project/app/populations/articles.dart';
+import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/deadline_dao.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/submit/helper/word_file_manager.dart';
 
 class ArticleDetailPage extends StatefulWidget {
   final ArticleVO articleVO;
+  final bool isManager;
   const ArticleDetailPage({
     super.key,
     required this.articleVO,
+    this.isManager = false,
   });
 
   @override
   State<ArticleDetailPage> createState() => _ArticleDetailPageState();
 }
 
-class _ArticleDetailPageState extends State<ArticleDetailPage> {
-  File? wordFile;
+class _ArticleDetailPageState extends State<ArticleDetailPage>
+    with UserDao, ArticleDao, DeadlineDao {
+  UserVO? student;
+  @override
+  void initState() {
+    student =
+        getAllUsers()?.firstWhere((e) => e?.id == widget.articleVO.studentId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +54,41 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
               child: Column(
                 children: [
                   SizedBox(height: 20),
-                  NameAndDateWidget(),
+                  NameAndDateWidget(
+                    name: student?.name ?? "",
+                    date: widget.articleVO.date ?? "",
+                  ),
                   const SizedBox(height: 20),
                   Divider(),
                   const SizedBox(height: 20),
                   Text(
-                    'Mental health issues among students have gained significant attention in recent years. In this article, we highlight the importance of mental health awareness initiatives on campuses, discussing various programs and services that universities have implemented to support students in need.Mental health issues among students have gained significant attention in recent years. In this article, we highlight the importance of mental health awareness initiatives on campuses, discussing various programs and services that universities have implemented to support students in needMental health issues among students have gained significant attention in recent years. In this article, we highlight the importance of mental health awareness initiatives on campuses, discussing various programs and services that universities have implemented to support students in needMental health issues among students have gained significant attention in recent years. In this article, we highlight the importance of mental health awareness initiatives on campuses, discussing various programs and services that universities have implemented to support students in needMental health issues among students have gained significant attention in recent years. In this article, we highlight the importance of mental health awareness initiatives on campuses, discussing various programs and services that universities have implemented to support students in needMental health issues among students have gained significant attention in recent years. In this article, we highlight the importance of mental health awareness initiatives on campuses, discussing various programs and services that universities have implemented to support students in need',
+                    WordFileManager.extractTextFromDocx(
+                        widget.articleVO.wordBytes ?? fakeBytes("yoo")),
                     style: AppTextStyle.h5iterRegular
                         .copyWith(color: Colors.black),
                   ),
                   const SizedBox(height: 40),
                   Divider(),
                   SizedBox(height: 40),
-                  CommentBoxWidget(),
+                  if (widget.isManager == false)
+                    CommentBoxWidget(
+                      onResubmit: (comment) {
+                        if (isAfter14Days(
+                            getDeadline()?.secondFinalDate ?? "")) {
+                          var user = getAllUsers()
+                              ?.firstWhere((e) => e?.isLoggedIn == true);
+                          widget.articleVO.comment = CommentVO(
+                              comment: comment,
+                              coordinatorName: user?.name ?? "");
+                          saveArticle(widget.articleVO);
+                          Fluttertoast.showToast(msg: "Commented successfully");
+                        } else {
+                          Fluttertoast.showToast(
+                              msg:
+                                  "You can't comment after 14 days of final closure date!");
+                        }
+                      },
+                    ),
                   SizedBox(height: 20),
                 ],
               ),
@@ -60,11 +99,26 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
       ),
     );
   }
+
+  bool isAfter14Days(String dateString) {
+    try {
+      final startDate = DateTime.parse(dateString);
+      final expiryDate = startDate.add(Duration(days: 14));
+      final today = DateTime.now();
+      return today.isAfter(expiryDate);
+    } catch (e) {
+      print("Invalid date format: $e");
+      return true;
+    }
+  }
 }
 
 class NameAndDateWidget extends StatelessWidget {
+  final String name, date;
   const NameAndDateWidget({
     super.key,
+    required this.name,
+    required this.date,
   });
 
   @override
@@ -73,18 +127,17 @@ class NameAndDateWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleAvatar(
-          backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww"),
+          backgroundImage: AssetImage("assets/images/commenter.jpg"),
           radius: 14,
         ),
         SizedBox(width: 8),
         Text(
-          'Htet Wai Lwin',
+          name,
           style: AppTextStyle.h5iterBold.copyWith(color: Colors.black),
         ),
         const Spacer(),
         Text(
-          'March 6, 2025',
+          date,
           style: AppTextStyle.h5iterRegular.copyWith(color: Colors.grey),
         ),
       ],
@@ -92,11 +145,19 @@ class NameAndDateWidget extends StatelessWidget {
   }
 }
 
-class CommentBoxWidget extends StatelessWidget {
+class CommentBoxWidget extends StatefulWidget {
+  final Function(String) onResubmit;
   const CommentBoxWidget({
     super.key,
+    required this.onResubmit,
   });
 
+  @override
+  State<CommentBoxWidget> createState() => _CommentBoxWidgetState();
+}
+
+class _CommentBoxWidgetState extends State<CommentBoxWidget> {
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -123,14 +184,16 @@ class CommentBoxWidget extends StatelessWidget {
                 style: AppTextStyle.h5iterBold.copyWith(color: Colors.black)),
             SizedBox(height: 20),
             TextField(
-              controller: TextEditingController(),
+              controller: controller,
             ),
             SizedBox(height: 20),
             Align(
               alignment: Alignment.centerRight,
               child: MaterialButton(
                 color: AppColor.blueColor,
-                onPressed: () {},
+                onPressed: () {
+                  widget.onResubmit(controller.text);
+                },
                 child: Text(
                   "Send",
                   style: TextStyle(color: Colors.white),

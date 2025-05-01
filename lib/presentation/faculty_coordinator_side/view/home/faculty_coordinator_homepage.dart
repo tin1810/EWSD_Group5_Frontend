@@ -3,7 +3,9 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_graphic.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/banner_imagewith_text.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/widget/submission_list_widget.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
@@ -19,9 +21,10 @@ class FacultyCoordinatorHomepage extends StatefulWidget {
 }
 
 class _FacultyCoordinatorHomepageState extends State<FacultyCoordinatorHomepage>
-    with ArticleDao {
+    with ArticleDao,UserDao {
   late int commentPercent, missPercent;
   late double progressPercent;
+
 
   @override
   void initState() {

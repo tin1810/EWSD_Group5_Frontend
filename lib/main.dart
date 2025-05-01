@@ -10,9 +10,11 @@ import 'package:university_magazine_project/app/model/deadline_vo.dart';
 import 'package:university_magazine_project/app/model/faculty_vo.dart';
 import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/app/populations/articles.dart';
+import 'package:university_magazine_project/app/populations/deadline.dart';
 import 'package:university_magazine_project/app/populations/faculty.dart';
 import 'package:university_magazine_project/app/populations/user.dart';
 import 'package:university_magazine_project/hive/dao/article_dao.dart';
+import 'package:university_magazine_project/hive/dao/deadline_dao.dart';
 import 'package:university_magazine_project/hive/dao/faculty_dao.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/hive/hive_constants.dart';
@@ -42,7 +44,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with UserDao, ArticleDao, FacultyDao {
+class _MyAppState extends State<MyApp> with UserDao, ArticleDao, FacultyDao ,DeadlineDao{
   @override
   void initState() {
     for (UserVO user in populatedUsers) {
@@ -51,9 +53,10 @@ class _MyAppState extends State<MyApp> with UserDao, ArticleDao, FacultyDao {
     for (FacultyVO fac in populatedFaculties) {
       saveFaculty(fac);
     }
-    for (ArticleVO art in populatedArticles) {
-      saveArticle(art);
-    }
+    // for (ArticleVO art in populatedArticles) {
+    //   saveArticle(art);
+    // }
+    saveDeadline(populatedDL);
     super.initState();
   }
 
@@ -64,11 +67,14 @@ class _MyAppState extends State<MyApp> with UserDao, ArticleDao, FacultyDao {
         title: 'University Magazine',
         debugShowCheckedModeBanner: false,
         initialBinding: AppBindings(),
+
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: HomePage(),
+        home:
+
+        HomePage(),
       ),
     );
   }

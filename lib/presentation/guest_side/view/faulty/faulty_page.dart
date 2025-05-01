@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/faculty_dao.dart';
+import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/faulty/widget/faculty_card.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/head_banner_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 
-class FacultyPage extends StatelessWidget with FacultyDao {
+class FacultyPage extends StatefulWidget  {
   const FacultyPage({super.key});
+
+  @override
+  State<FacultyPage> createState() => _FacultyPageState();
+}
+
+class _FacultyPageState extends State<FacultyPage> with FacultyDao,UserDao{
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +24,7 @@ class FacultyPage extends StatelessWidget with FacultyDao {
       backgroundColor: AppColor.whiteColor,
       appBar: HoverAppBar(
         portal: "Portal",
+
       ),
       body: SingleChildScrollView(
         child: Column(

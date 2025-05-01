@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/article_dao.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/footer_section.dart';
@@ -11,9 +12,15 @@ import 'package:university_magazine_project/presentation/student_portal_side/vie
 import 'package:university_magazine_project/presentation/student_portal_side/view/my_submissions/widgets/submitted_article.dart';
 import 'package:university_magazine_project/presentation/student_portal_side/view/submit/widgets/contribute_title_widget.dart';
 
-class MySubmissionsPage extends StatelessWidget with ArticleDao, UserDao {
+class MySubmissionsPage extends StatefulWidget {
   const MySubmissionsPage({super.key});
 
+  @override
+  State<MySubmissionsPage> createState() => _MySubmissionsPageState();
+}
+
+class _MySubmissionsPageState extends State<MySubmissionsPage>
+    with ArticleDao, UserDao {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +60,7 @@ class MySubmissionsPage extends StatelessWidget with ArticleDao, UserDao {
                       date: e.date ?? "",
                       comments: e.comment != null ? "1" : "0",
                       onTap: () {
-                        Get.to(()=>MySubmissionDetailPage(articleVO: e));
+                        Get.to(() => MySubmissionDetailPage(articleVO: e));
                       },
                     );
                   }).toList() ??

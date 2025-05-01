@@ -2,6 +2,11 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:html' as html;
 import 'package:hive/hive.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:archive/archive.dart';
+import 'package:universal_html/html.dart' as html;
 
 class WordFileManager {
   static const String boxName = 'wordFiles';
@@ -23,6 +28,40 @@ class WordFileManager {
     });
 
     return completer.future;
+  }
+
+  static String extractTextFromDocx(Uint8List bytes) {
+    String combinedText = "";
+    final archive = ZipDecoder().decodeBytes(bytes);
+    for (final file in archive) {
+      if (file.name == 'word/document.xml') {
+        final xmlContent = utf8.decode(file.content);
+        combinedText = combinedText + parseTextFromXml(xmlContent);
+        break;
+      }
+    }
+    return combinedText;
+  }
+
+  static String parseTextFromXml(String xml) {
+    final text = xml
+        .replaceAll(RegExp(r'<[^>]+>'), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    return text;
+  }
+
+  static void downloadAsZip(Uint8List wordBytes) {
+    final archive = Archive()
+      ..addFile(ArchiveFile('original.docx', wordBytes.length, wordBytes));
+
+    final zippedBytes = ZipEncoder().encode(archive);
+    final blob = html.Blob([Uint8List.fromList(zippedBytes!)]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute('download', 'converted.zip')
+      ..click();
+    html.Url.revokeObjectUrl(url);
   }
 
   static Future<html.File?> pickImgFileFromDevice() async {
@@ -50,21 +89,5 @@ class WordFileManager {
     await reader.onLoad.first;
     final bytes = reader.result as Uint8List;
     return bytes;
-  }
-
-  /// Download the Word file stored in Hive
-  static Future<void> downloadFileFromHive(String key) async {
-    final box = await Hive.openBox<Uint8List>(boxName);
-    final bytes = box.get(key);
-    if (bytes != null) {
-      final blob = html.Blob([bytes]);
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      final anchor = html.AnchorElement(href: url)
-        ..setAttribute("download", "$key.docx")
-        ..click();
-      html.Url.revokeObjectUrl(url);
-    } else {
-      print("File not found in Hive");
-    }
   }
 }

@@ -114,11 +114,9 @@ class _PublishionPageState extends State<PublishionPage>
                               SizedBox(width: 20),
                               Expanded(
                                 child: SubmissionItemWidget(
+                                  isPublish: true,
                                   viewDetail: () {
-                                    Get.to(() => ArticleDetailPage(
-                                          articleVO: articleList?[index] ??
-                                              ArticleVO(),
-                                        ));
+
                                   },
                                   color: AppColor.whiteColor,
                                   name: student?.name ?? "",

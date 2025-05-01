@@ -20,6 +20,8 @@ class UserVO {
   String? id;
   @HiveField(7)
   bool? isLoggedIn;
+  @HiveField(8)
+  String? lastLoggedInDate;
 
   UserVO({
     this.name,
@@ -30,5 +32,6 @@ class UserVO {
     this.facultyId,
     this.id,
     this.isLoggedIn,
+    this.lastLoggedInDate,
   });
 }

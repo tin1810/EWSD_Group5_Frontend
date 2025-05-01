@@ -299,7 +299,7 @@ class AdminController extends GetxController
     );
   }
 
-  void logoutDialog({Function? onTapOk}) {
+  void logoutDialog({Function? onTapOk, Function? onTapCancel}) {
     Get.dialog(
       barrierDismissible: false,
       AlertDialog(
@@ -309,12 +309,16 @@ class AdminController extends GetxController
         content: Text("Are you sure you want to logout?"),
         actions: [
           TextButton(
-            onPressed: () => Get.back(),
+            onPressed: () {
+              Get.back();
+              if (onTapCancel != null) {
+                onTapCancel();
+              }
+            },
             child: Text("Cancel", style: TextStyle(color: Colors.red)),
           ),
           ElevatedButton(
             onPressed: () {
-              Get.back();
               if (onTapOk != null) {
                 onTapOk();
               }

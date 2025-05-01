@@ -1,15 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
+import 'package:university_magazine_project/app/populations/articles.dart';
 
 class ContributionItem extends StatelessWidget {
   final String? name;
   final String? date;
   final String? text;
-  final String? imageUrl;
+  final Uint8List? imageUrl;
   final Color color;
-  final Function viewDetail;
+  final Function onDownload;
   const ContributionItem({
     super.key,
     this.text,
@@ -17,7 +20,7 @@ class ContributionItem extends StatelessWidget {
     this.name,
     this.date,
     required this.color,
-    required this.viewDetail,
+    required this.onDownload,
   });
 
   @override
@@ -30,27 +33,39 @@ class ContributionItem extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Row(
+      child: Wrap(
         children: [
-          Container(
-            height: 400,
-            width: MediaQuery.sizeOf(context).width / 2.4,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://images.unsplash.com/photo-1523289333742-be1143f6b766?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-                fit: BoxFit.cover,
-              ),
-            ),
+          Image.memory(
+            imageUrl ?? fakeBytes("hello world"),
+            height: 170,
+            width: 170,
+            errorBuilder: (context, o, e) {
+              return Image.asset(
+                "assets/images/article_error.jpg",
+                height: 170,
+                width: 170,
+              );
+            },
+            fit: BoxFit.cover,
           ),
+          // Container(
+          //   height: 400,
+          //   width: MediaQuery.sizeOf(context).width / 2.4,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(10),
+          //     image: DecorationImage(
+          //       image: NetworkImage(
+          //           "https://images.unsplash.com/photo-1523289333742-be1143f6b766?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           SizedBox(width: 40),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Wrap(
                   children: [
                     Text(
                       name ?? "Student Name",
@@ -80,7 +95,9 @@ class ContributionItem extends StatelessWidget {
                   padding: EdgeInsets.all(18),
                   color: Colors.grey.shade400,
                   elevation: 0,
-                  onPressed: () {},
+                  onPressed: () {
+                    onDownload();
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

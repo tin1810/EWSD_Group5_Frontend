@@ -12,7 +12,7 @@ class SubmissionItemWidget extends StatelessWidget {
   final Uint8List imageUrl;
   final Color color;
   final Function viewDetail;
-  final bool isCommented;
+  final bool isCommented,isPublish;
   const SubmissionItemWidget({
     super.key,
     this.text,
@@ -21,6 +21,7 @@ class SubmissionItemWidget extends StatelessWidget {
     this.date,
     required this.color,
     required this.viewDetail,
+    this.isPublish = false,
     this.isCommented = false,
   });
 
@@ -93,23 +94,6 @@ class SubmissionItemWidget extends StatelessWidget {
                   style: AppTextStyle.h5iterRegular,
                 ),
                 SizedBox(height: 10),
-                // Row(
-                //   children: [
-                //     Icon(
-                //       Icons.info_outline,
-                //       size: 16,
-                //       color: Colors.blue,
-                //     ),
-                //       SizedBox(width: 4),
-                //         Text(
-                //           "You've commented",
-                //           maxLines: 1,
-                //           style: AppTextStyle.h5poppinsRegular
-                //               .copyWith(color: Colors.black),
-                //         ),
-                //   ],
-                // ),
-                // SizedBox(height: 10),
                 if (isCommented)
                   Row(
                     children: [
@@ -127,6 +111,7 @@ class SubmissionItemWidget extends StatelessWidget {
                     ],
                   ),
                 SizedBox(height: 15),
+                if(!isPublish)
                 MaterialButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
