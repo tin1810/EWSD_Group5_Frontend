@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/article_vo.dart';
@@ -59,7 +58,7 @@ class _RecentContributionSectionState extends State<RecentContributionSection>
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 3,
+              itemCount: publishedList?.length ?? 0,
               itemBuilder: (context, index) {
                 return MouseRegion(
                   onEnter: (_) => setState(() => _isHovered[index] = true),
@@ -68,9 +67,9 @@ class _RecentContributionSectionState extends State<RecentContributionSection>
                   child: GestureDetector(
                     onTap: () {
                       Get.to(() => ArticleDetailPage(
-                        articleVO: publishedList![index]!,
-                        isManager: true,
-                      ));
+                            articleVO: publishedList![index]!,
+                            isManager: true,
+                          ));
                     },
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
