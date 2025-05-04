@@ -222,7 +222,7 @@ class AdminController extends GetxController
           ),
           ElevatedButton(
             onPressed: () {
-              if (selectedFaculty != null &&
+              if (selectedRole != null &&
                   nameController.text != "" &&
                   emailController.text != "" &&
                   passwordController.text != "") {
@@ -235,7 +235,6 @@ class AdminController extends GetxController
                   status: 'active',
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                 );
-
                 saveUser(user);
                 update;
                 _fetchAllUsers();

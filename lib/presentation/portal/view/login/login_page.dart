@@ -195,7 +195,6 @@ class _LoginPageState extends State<LoginPage> with UserDao {
                                                 const AdminHomePage()),
                                         (route) => true,
                                       );
-                                      //   Get.offAll(() => AdminHomePage());
                                     }
                                     if (v == "Coordinator") {
                                       Navigator.pushAndRemoveUntil(
@@ -205,7 +204,6 @@ class _LoginPageState extends State<LoginPage> with UserDao {
                                                 const FacultyCoordinatorHomepage()),
                                         (route) => true,
                                       );
-                                      //  Get.offAll(() => FacultyCoordinatorHomepage());
                                     }
                                     if (v == "Manager") {
                                       Navigator.pushAndRemoveUntil(
@@ -215,7 +213,15 @@ class _LoginPageState extends State<LoginPage> with UserDao {
                                                 const ManagerHomepage()),
                                         (route) => true,
                                       );
-                                      //Get.offAll(() => ManagerHomepage());
+                                    }
+                                    if (v == "Guest") {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                            const HomePage()),
+                                            (route) => true,
+                                      );
                                     }
                                   }).onError((e, st) {
                                     Fluttertoast.showToast(msg: e.toString());

@@ -33,36 +33,6 @@ class _HomePageState extends State<HomePage> with UserDao {
     try {
       loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
       if (loggedInUser != null) {
-        // var v = loggedInUser?.role;
-        // if (v == "Student") {
-        //   Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => const StudentHomePage()),
-        //     (route) => true,
-        //   );
-        // }
-        // if (v == "Admin") {
-        //   Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => const AdminHomePage()),
-        //     (route) => true,
-        //   );
-        // }
-        // if (v == "Coordinator") {
-        //   Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => const FacultyCoordinatorHomepage()),
-        //     (route) => true,
-        //   );
-        // }
-        // if (v == "Manager") {
-        //   Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => const ManagerHomepage()),
-        //     (route) => true,
-        //   );
-        // }
       }
     } catch (e) {
       print(e.toString());
