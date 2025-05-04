@@ -45,7 +45,7 @@ class _PublishionPageState extends State<PublishionPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      appBar: HoverAppBar(portal: "Coordinator"),
+      appBar: HoverAppBar(portal: "Coordinator",userVO: loggedInUser,),
       body: SingleChildScrollView(
         child: Column(
           children: [

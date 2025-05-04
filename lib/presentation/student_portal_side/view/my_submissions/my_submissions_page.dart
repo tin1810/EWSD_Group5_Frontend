@@ -21,12 +21,23 @@ class MySubmissionsPage extends StatefulWidget {
 
 class _MySubmissionsPageState extends State<MySubmissionsPage>
     with ArticleDao, UserDao {
+  UserVO? loggedInUser;
+  @override
+  void initState() {
+    try {
+      loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+    } catch (e) {
+      print(e.toString());
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       appBar: HoverAppBar(
         portal: "Student",
+        userVO: loggedInUser,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -52,12 +63,12 @@ class _MySubmissionsPageState extends State<MySubmissionsPage>
             Wrap(
               spacing: 20,
               runSpacing: 20,
-              children: getAllArticles()?.map((e) {
+              children: getAllArticles()?.where((e)=> e?.studentId == loggedInUser?.id).map((e) {
                     var img = e!.imgBytes;
                     return SubmittedArticle(
                       imgBytes: img!,
                       title: e.title ?? "",
-                      date: e.date ?? "",
+                      date: e.studentId ?? "",
                       comments: e.comment != null ? "1" : "0",
                       onTap: () {
                         Get.to(() => MySubmissionDetailPage(articleVO: e));

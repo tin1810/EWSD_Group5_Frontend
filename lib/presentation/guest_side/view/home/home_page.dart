@@ -12,6 +12,8 @@ import 'package:university_magazine_project/presentation/guest_side/view/home/wi
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/hover_appbar.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/secondrow_section.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/widget/thirdrow_section.dart';
+import 'package:university_magazine_project/presentation/manager_side/view/home/manager_homepage.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 
 import 'widget/head_banner_section.dart';
 
@@ -23,10 +25,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with UserDao {
-  final HomeController controller = Get.find<HomeController>();
 
+
+  UserVO? loggedInUser;
   @override
   void initState() {
+    try {
+      loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+      if (loggedInUser != null) {
+        // var v = loggedInUser?.role;
+        // if (v == "Student") {
+        //   Navigator.pushAndRemoveUntil(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => const StudentHomePage()),
+        //     (route) => true,
+        //   );
+        // }
+        // if (v == "Admin") {
+        //   Navigator.pushAndRemoveUntil(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => const AdminHomePage()),
+        //     (route) => true,
+        //   );
+        // }
+        // if (v == "Coordinator") {
+        //   Navigator.pushAndRemoveUntil(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => const FacultyCoordinatorHomepage()),
+        //     (route) => true,
+        //   );
+        // }
+        // if (v == "Manager") {
+        //   Navigator.pushAndRemoveUntil(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => const ManagerHomepage()),
+        //     (route) => true,
+        //   );
+        // }
+      }
+    } catch (e) {
+      print(e.toString());
+    }
     super.initState();
   }
 
@@ -36,6 +76,7 @@ class _HomePageState extends State<HomePage> with UserDao {
       backgroundColor: AppColor.whiteColor,
       appBar: HoverAppBar(
         portal: "Portal",
+        userVO: loggedInUser,
       ),
       body: SingleChildScrollView(
         child: Column(

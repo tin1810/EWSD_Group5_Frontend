@@ -15,63 +15,6 @@ import 'package:university_magazine_project/presentation/guest_side/view/home/wi
 import 'package:university_magazine_project/presentation/manager_side/view/home/widget/key_reports_section.dart';
 import 'package:university_magazine_project/presentation/manager_side/view/home/widget/recent_contribution_section.dart';
 
-// List<DateDetailVO> dateDetails = [
-//   DateDetailVO(
-//     percentValue: 85,
-//     faculty: 'Engineering',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 78,
-//     faculty: 'Business',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 92,
-//     faculty: 'Arts & Humanities',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 65,
-//     faculty: 'Science',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 74,
-//     faculty: 'Education',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 88,
-//     faculty: 'Law',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 81,
-//     faculty: 'Medicine',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 81,
-//     faculty: 'Social',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-//   DateDetailVO(
-//     percentValue: 81,
-//     faculty: 'Psycho',
-//     totalContributions: "34",
-//     totalContributors: "22",
-//   ),
-// ];
-
 class ManagerHomepage extends StatefulWidget {
   const ManagerHomepage({super.key});
 
@@ -81,22 +24,19 @@ class ManagerHomepage extends StatefulWidget {
 
 class _ManagerHomepageState extends State<ManagerHomepage>
     with ArticleDao, FacultyDao, UserDao {
-  List<ArticleVO?>? publishedList;
   List<FacultyVO?>? facultyList;
   List<DateDetailVO>? dateList;
   UserVO? loginUser;
   @override
   void initState() {
     loginUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn == true);
-    publishedList =
-        getAllArticles()?.where((e) => e?.isPublished == true).toList();
     facultyList = getAllFaculty();
     dateList = List.generate(facultyList?.length ?? 0, (index) {
       var studentsInFac = getAllUsers()
               ?.where((e) => e?.facultyId == facultyList?[index]?.id)
               .toList() ??
           [];
-      var publishedListByFacId = publishedList
+      var publishedListByFacId = getAllArticles()
               ?.where((e) => e?.facultyId == facultyList?[index]?.id)
               .toList() ??
           [];
@@ -127,6 +67,7 @@ class _ManagerHomepageState extends State<ManagerHomepage>
         backgroundColor: AppColor.whiteColor,
         appBar: HoverAppBar(
           portal: "Manager",
+          userVO: loginUser,
         ),
         body: SingleChildScrollView(
           child: Column(

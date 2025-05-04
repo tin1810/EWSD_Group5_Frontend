@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart' as rs;
 import 'package:university_magazine_project/app/config/app_color.dart';
-import 'package:university_magazine_project/app/config/app_constants.dart';
 import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
@@ -10,7 +9,6 @@ import 'package:university_magazine_project/presentation/admin/view/faculty_page
 import 'package:university_magazine_project/presentation/admin/view/system_settings.dart';
 import 'package:university_magazine_project/presentation/admin/view/user_management.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/side_appbar.dart';
-import 'package:university_magazine_project/presentation/guest_side/controller/home_controller.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -27,7 +25,6 @@ class _AdminHomePageState extends State<AdminHomePage> with UserDao {
   void initState() {
     try {
       loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
-      setState(() {});
     } catch (e) {
       print(e.toString());
     }
@@ -64,6 +61,11 @@ class _AdminHomePageState extends State<AdminHomePage> with UserDao {
                   },
                 );
               }
+              if (section == AdminSection.home) {
+                adminController.changeSection(AdminSection.system);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => HomePage()));
+              }
             },
           ),
         ),
@@ -82,7 +84,6 @@ class _AdminHomePageState extends State<AdminHomePage> with UserDao {
                           onTapOk: () {
                             loggedInUser?.isLoggedIn = false;
                             saveUser(loggedInUser);
-
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -93,6 +94,13 @@ class _AdminHomePageState extends State<AdminHomePage> with UserDao {
                             adminController.changeSection(oldSec);
                           },
                         );
+                      }
+                      if (section == AdminSection.home) {
+                        Get.to(()=>HomePage());
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => HomePage()));
                       }
                     },
                   ),

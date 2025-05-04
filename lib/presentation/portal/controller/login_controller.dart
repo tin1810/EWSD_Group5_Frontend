@@ -8,25 +8,32 @@ class LoginController extends GetxController with UserDao {
   var password = ''.obs;
   List<UserVO?>? userList;
 
-  @override
-  void onInit() {
-    userList = getAllUsers();
-    super.onInit();
-  }
-
   Future<String> onTapLogin() {
+    userList = getAllUsers();
+    UserVO? user;
     try {
-      var user = userList?.firstWhere((e) {
-        return e?.email == email.value && e?.password == password.value;
-      });
-      user!.isLoggedIn = true;
-      if (user.lastLoggedInDate == null) {
-        Fluttertoast.showToast(msg: "Welcome ${user.name}");
+      if (userList != null) {
+        for (UserVO? u in userList!) {
+          u?.isLoggedIn == false;
+          saveUser(u);
+        }
+        user = userList?.firstWhere((e) {
+          return e?.email == email.value && e?.password == password.value;
+        });
+        user!.isLoggedIn = true;
+        if (user.lastLoggedInDate == null) {
+          Fluttertoast.showToast(msg: "Welcome ${user.name}");
+        } else {
+          Fluttertoast.showToast(
+              msg: "Your last login date is ${user.lastLoggedInDate}",
+              toastLength: Toast.LENGTH_LONG);
+        }
+        user.lastLoggedInDate = DateTime.now().toString().substring(0, 10);
+        saveUser(user);
+        update();
+        return Future.value(user.role ?? "");
       }
-      user.lastLoggedInDate = DateTime.now().toString().substring(0, 10);
-      saveUser(user);
-      update();
-      return Future.value(user.role ?? "");
+      return Future.error("Wrong Credentials!");
     } catch (e) {
       return Future.error("Wrong Credentials!");
     }

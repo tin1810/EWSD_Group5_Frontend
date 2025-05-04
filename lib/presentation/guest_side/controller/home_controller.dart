@@ -4,8 +4,7 @@ import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/model/user_vo.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 
-class HomeController extends GetxController with UserDao {
-  var user = UserVO().obs;
+class HomeController extends GetxController  {
   var backgroundColor = AppColor.primaryColor.obs;
   final List<String> imageUrlsForBanners = [
     "https://images.unsplash.com/photo-1568792923760-d70635a89fdc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -26,14 +25,5 @@ class HomeController extends GetxController with UserDao {
     {'icon': FontAwesomeIcons.linkedinIn, 'url': 'https://linkedin.com'},
   ];
 
-  @override
-  void onInit() {
-    try {
-      user.value =
-          getAllUsers()?.firstWhere((e) => e?.isLoggedIn == true) ?? UserVO();
-    } catch (e) {
-      user.value = UserVO();
-    }
-    super.onInit();
-  }
+
 }

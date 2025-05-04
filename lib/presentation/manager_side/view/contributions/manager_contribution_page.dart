@@ -17,12 +17,22 @@ class ManagerContributionPage extends StatefulWidget  {
 }
 
 class _ManagerContributionPageState extends State<ManagerContributionPage>with UserDao {
+  UserVO? loggedInUser;
+  @override
+  void initState() {
+    try {
+      loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+    } catch (e) {
+      print(e.toString());
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColor.whiteColor,
-        appBar: HoverAppBar(portal: "Manager"),
+        appBar: HoverAppBar(portal: "Manager",userVO: loggedInUser,),
         body: SingleChildScrollView(
           child: Column(
             children: [

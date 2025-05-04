@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/app/model/article_vo.dart';
@@ -73,8 +75,8 @@ class _ArticleDetailPageState extends State<ArticleDetailPage>
                   if (widget.isManager == false)
                     CommentBoxWidget(
                       onResubmit: (comment) {
-                        if (isAfter14Days(
-                            getDeadline()?.secondFinalDate ?? "")) {
+                        if (!isAfter14Days(
+                            widget.articleVO.date ?? "")) {
                           var user = getAllUsers()
                               ?.firstWhere((e) => e?.isLoggedIn == true);
                           widget.articleVO.comment = CommentVO(
@@ -82,6 +84,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage>
                               coordinatorName: user?.name ?? "");
                           saveArticle(widget.articleVO);
                           Fluttertoast.showToast(msg: "Commented successfully");
+                          Get.back();
                         } else {
                           Fluttertoast.showToast(
                               msg:

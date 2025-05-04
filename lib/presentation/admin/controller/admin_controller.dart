@@ -12,9 +12,9 @@ import 'package:university_magazine_project/hive/dao/deadline_dao.dart';
 import 'package:university_magazine_project/hive/dao/faculty_dao.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 
-enum AdminSection { system, users, faculty, logout }
+enum AdminSection { home, system, users, faculty, logout }
 
-enum RoleSection { Manager, Student, Coordinator, Admin }
+enum RoleSection { Manager, Student, Coordinator, Admin, Guest }
 
 class AdminController extends GetxController
     with FacultyDao, UserDao, DeadlineDao {
@@ -23,15 +23,6 @@ class AdminController extends GetxController
   var selectedSection = AdminSection.system.obs;
   var faculties = <FacultyVO?>[].obs;
   var users = <UserVO?>[].obs;
-  Rx<DeadlineVO?>? deadline;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController facultyController = TextEditingController();
-  final TextEditingController roleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController facultynameController = TextEditingController();
-  final Rx<Uint8List?> profileImage = Rx<Uint8List?>(null);
 
   @override
   void onInit() {
@@ -44,6 +35,7 @@ class AdminController extends GetxController
       finalDeadline.value =
           DateTime.parse(getDeadline()?.secondFinalDate ?? "");
     }
+    selectedSection.value = AdminSection.system;
     super.onInit();
   }
 
@@ -94,6 +86,7 @@ class AdminController extends GetxController
     );
 
     if (pickedDate != null) {
+      var d = getDeadline();
       if (isSubmission) {
         if (pickedDate.isAfter(finalDeadline.value)) {
           Get.snackbar(
@@ -105,8 +98,9 @@ class AdminController extends GetxController
           return;
         }
         submissionDeadline.value = pickedDate;
-        DeadlineVO? deadline =
-            DeadlineVO(firstFinalDate: pickedDate.toString().substring(0, 10));
+        DeadlineVO? deadline = DeadlineVO(
+            firstFinalDate: pickedDate.toString().substring(0, 10),
+            secondFinalDate: d?.secondFinalDate);
         saveDeadline(deadline);
       } else {
         if (pickedDate.isBefore(submissionDeadline.value)) {
@@ -119,8 +113,9 @@ class AdminController extends GetxController
           return;
         }
         finalDeadline.value = pickedDate;
-        DeadlineVO? deadline =
-            DeadlineVO(secondFinalDate: pickedDate.toString().substring(0, 10));
+        DeadlineVO? deadline = DeadlineVO(
+            firstFinalDate: d?.firstFinalDate,
+            secondFinalDate: pickedDate.toString().substring(0, 10));
         saveDeadline(deadline);
       }
     }
@@ -129,7 +124,9 @@ class AdminController extends GetxController
   void showCreateUserDialog() {
     FacultyVO? selectedFaculty;
     RoleSection? selectedRole;
-
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     Get.dialog(
       barrierDismissible: false,
       AlertDialog(
@@ -165,53 +162,55 @@ class AdminController extends GetxController
                   ),
                 ),
                 SizedBox(height: 10),
-
-                /// Faculty dropdown
                 StatefulBuilder(
                   builder: (context, setState) {
-                    return DropdownButtonFormField<FacultyVO>(
-                      isExpanded: true,
-                      decoration: InputDecoration(
-                        labelText: "Faculty",
-                        labelStyle: AppTextStyle.h5poppinsRegular,
-                      ),
-                      value: selectedFaculty,
-                      items: faculties
-                          .map((faculty) => DropdownMenuItem(
-                                value: faculty,
-                                child: Text(faculty?.name ?? 'Unknown'),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() => selectedFaculty = value);
-                      },
-                    );
-                  },
-                ),
-                SizedBox(height: 10),
+                    return Column(
+                      children: [
+                        /// Role dropdown
+                        DropdownButtonFormField<RoleSection>(
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            labelText: "Role",
+                            labelStyle: AppTextStyle.h5poppinsRegular,
+                          ),
+                          value: selectedRole,
+                          items: RoleSection.values
+                              .map((role) => DropdownMenuItem(
+                                    value: role,
+                                    child: Text(role.name),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() => selectedRole = value);
+                          },
+                        ),
+                        SizedBox(height: 10),
 
-                /// Role dropdown
-                StatefulBuilder(
-                  builder: (context, setState) {
-                    return DropdownButtonFormField<RoleSection>(
-                      isExpanded: true,
-                      decoration: InputDecoration(
-                        labelText: "Role",
-                        labelStyle: AppTextStyle.h5poppinsRegular,
-                      ),
-                      value: selectedRole,
-                      items: RoleSection.values
-                          .map((role) => DropdownMenuItem(
-                                value: role,
-                                child: Text(role.name),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() => selectedRole = value);
-                      },
+                        /// Faculty dropdown
+                        Visibility(
+                          visible: selectedRole != RoleSection.Manager,
+                          child: DropdownButtonFormField<FacultyVO>(
+                            isExpanded: true,
+                            decoration: InputDecoration(
+                              labelText: "Faculty",
+                              labelStyle: AppTextStyle.h5poppinsRegular,
+                            ),
+                            value: selectedFaculty,
+                            items: faculties
+                                .map((faculty) => DropdownMenuItem(
+                                      value: faculty,
+                                      child: Text(faculty?.name ?? 'Unknown'),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() => selectedFaculty = value);
+                            },
+                          ),
+                        ),
+                      ],
                     );
                   },
-                ),
+                )
               ],
             ),
           ),
@@ -223,25 +222,25 @@ class AdminController extends GetxController
           ),
           ElevatedButton(
             onPressed: () {
-              var user = UserVO(
-                name: nameController.text,
-                email: emailController.text,
-                password: passwordController.text,
-                facultyId: selectedFaculty?.id,
-                role: selectedRole?.name,
-                status: 'active',
-                id: DateTime.now().millisecondsSinceEpoch.toString(),
-              );
+              if (selectedFaculty != null &&
+                  nameController.text != "" &&
+                  emailController.text != "" &&
+                  passwordController.text != "") {
+                var user = UserVO(
+                  name: nameController.text,
+                  email: emailController.text,
+                  password: passwordController.text,
+                  facultyId: selectedFaculty?.id,
+                  role: selectedRole?.name,
+                  status: 'active',
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                );
 
-              saveUser(user);
-              update;
-              _fetchAllUsers();
-              nameController.clear();
-              emailController.clear();
-              passwordController.clear();
-              facultyController.clear();
-              roleController.clear();
-              Get.back();
+                saveUser(user);
+                update;
+                _fetchAllUsers();
+                Get.back();
+              }
             },
             child: Text("Create"),
           ),
@@ -251,8 +250,8 @@ class AdminController extends GetxController
   }
 
   void showCreateFacultyDialog(FacultyVO? fac) {
-    facultynameController.text = fac?.name ?? "";
-    descriptionController.text = fac?.description ?? "";
+    final TextEditingController descriptionController = TextEditingController();
+    final TextEditingController facultynameController = TextEditingController();
     Get.dialog(
       barrierDismissible: false,
       AlertDialog(

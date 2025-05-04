@@ -17,12 +17,23 @@ class FacultyPage extends StatefulWidget {
 }
 
 class _FacultyPageState extends State<FacultyPage> with FacultyDao, UserDao {
+  UserVO? loggedInUser;
+  @override
+  void initState() {
+    try {
+      loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+    } catch (e) {
+      print(e.toString());
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       appBar: HoverAppBar(
         portal: "Portal",
+        userVO: loggedInUser,
       ),
       body: SingleChildScrollView(
         child: Column(

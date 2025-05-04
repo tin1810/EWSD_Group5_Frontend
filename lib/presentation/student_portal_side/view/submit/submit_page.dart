@@ -36,6 +36,7 @@ class _SubmitPageState extends State<SubmitPage>
   UserVO? loggedInUser;
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
+  bool isAgreed = false;
   @override
   void initState() {
     try {
@@ -97,6 +98,7 @@ class _SubmitPageState extends State<SubmitPage>
       backgroundColor: AppColor.whiteColor,
       appBar: HoverAppBar(
         portal: "Student",
+        userVO: loggedInUser,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -330,96 +332,157 @@ class _SubmitPageState extends State<SubmitPage>
                       ),
                     ),
                     SizedBox(height: 20),
-                    // MaterialButton(
-                    //   color: AppColor.blueColor,
-                    //   onPressed: () {
-                    //     final deadline = getDeadline();
-                    //     if (deadline == null || deadline.firstFinalDate == null)
-                    //       return;
-                    //
-                    //     final firstFinalDate =
-                    //         DateTime.tryParse(deadline.firstFinalDate!);
-                    //     final today = DateTime.now();
-                    //
-                    //     // Optional: Handle invalid date parsing
-                    //     if (firstFinalDate == null) return;
-                    //
-                    //     // Allow submit only if today is before or on the deadline
-                    //     if (today.isBefore(firstFinalDate) ||
-                    //         _isSameDate(today, firstFinalDate)) {
-                    //       // Submit logic here
-                    //       print("Submitted!");
-                    //     } else {
-                    //       // Too late
-                    //       print("Submission deadline has passed.");
-                    //     }
-                    //   },
-                    //   child: Text(
-                    //     "Submit",
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    // ),
                     MaterialButton(
                       color: AppColor.blueColor,
-                      onPressed: () async {
-                        final deadline = getDeadline();
-                        if (deadline == null ||
-                            deadline.firstFinalDate == null) {
-                          Fluttertoast.showToast(msg: "Something went wrong");
-                        }
-                        final firstFinalDate =
-                            DateTime.tryParse(deadline?.firstFinalDate ?? "");
-                        final today = DateTime.now();
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Center(
+                                child: Card(
+                                  color: Colors.transparent,
+                                  child: Center(
+                                    child: Container(
+                                      height: 230,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 14, vertical: 14),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      width: MediaQuery.sizeOf(context).width /
+                                          1.5,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Terms and conditions",
+                                            style:
+                                                AppTextStyle.h3poppinsRegular,
+                                          ),
+                                          Text(
+                                              "By using this platform, users agree to contribute content or resources in a respectful, lawful, and academic-appropriate manner. All submissions must be original or properly credited. The university reserves the right to review, modify, or remove any content at its discretion. Users are responsible for the accuracy and legality of their contributions. Misuse of the platform may result in suspension of access or further disciplinary action in accordance with university policies."),
+                                          TermsAndConditionCheck(
+                                            onCheck: (v) {
+                                              isAgreed = v;
+                                            },
+                                          ),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: ElevatedButton(
+                                                onPressed: () async {
+                                                  if (isAgreed) {
+                                                    final deadline =
+                                                        getDeadline();
+                                                    if (deadline == null ||
+                                                        deadline.firstFinalDate ==
+                                                            null) {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "Something went wrong");
+                                                    }
+                                                    final firstFinalDate =
+                                                        DateTime.tryParse(deadline
+                                                                ?.firstFinalDate ??
+                                                            "");
+                                                    final today =
+                                                        DateTime.now();
 
-                        if (firstFinalDate == null) return;
-                        if (today.isBefore(firstFinalDate) ||
-                            _isSameDate(today, firstFinalDate)) {
-                          if (wordFile != null &&
-                              imageFile != null &&
-                              loggedInUser != null) {
-                            var doc = ArticleVO(
-                                id: DateTime.now()
-                                    .microsecondsSinceEpoch
-                                    .toString(),
-                                studentId: loggedInUser?.id,
-                                facultyId: loggedInUser?.facultyId,
-                                title: controller.text,
-                                wordBytes: await WordFileManager
-                                    .convertFileToUnit8List(wordFile!),
-                                imgBytes: await WordFileManager
-                                    .convertFileToUnit8List(imageFile!),
-                                date:
-                                    DateTime.now().toString().substring(0, 10));
+                                                    if (firstFinalDate == null)
+                                                      return;
+                                                    if (today.isBefore(
+                                                            firstFinalDate) ||
+                                                        _isSameDate(today,
+                                                            firstFinalDate)) {
+                                                      if (wordFile != null &&
+                                                          imageFile != null &&
+                                                          loggedInUser !=
+                                                              null) {
+                                                        var doc = ArticleVO(
+                                                            id: DateTime.now()
+                                                                .microsecondsSinceEpoch
+                                                                .toString(),
+                                                            studentId:
+                                                                loggedInUser
+                                                                    ?.id,
+                                                            facultyId:
+                                                                loggedInUser
+                                                                    ?.facultyId,
+                                                            title: controller
+                                                                .text,
+                                                            wordBytes:
+                                                                await WordFileManager
+                                                                    .convertFileToUnit8List(
+                                                                        wordFile!),
+                                                            imgBytes: await WordFileManager
+                                                                .convertFileToUnit8List(
+                                                                    imageFile!),
+                                                            date: DateTime.now()
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 10));
 
-                            saveArticle(doc);
-                            var user = getAllUsers();
-                            final coordinator = user?.firstWhere(
-                              (user) =>
-                                  user?.facultyId == loggedInUser?.facultyId &&
-                                  user?.role == "Coordinator",
-                              orElse: () => UserVO(
-                                  id: "",
-                                  name: "",
-                                  email: "",
-                                  facultyId: "",
-                                  role: ""),
-                            );
-                            sendEmail(
-                                name: loggedInUser?.name ?? "",
-                                email: loggedInUser?.email ?? "",
-                                subject: "Article Submission",
-                                message: "Article Submitted",
-                                toEmail: coordinator?.email ?? "");
-                            Fluttertoast.showToast(
-                                msg: "Article Submitted Successfully");
-                            Get.to(() => MySubmissionsPage());
-                          } else {
-                            Fluttertoast.showToast(msg: "Fields Required!");
-                          }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "  Submission deadline has passed.");
-                        }
+                                                        saveArticle(doc);
+                                                        var user =
+                                                            getAllUsers();
+                                                        final coordinator =
+                                                            user?.firstWhere(
+                                                          (user) =>
+                                                              user?.facultyId ==
+                                                                  loggedInUser
+                                                                      ?.facultyId &&
+                                                              user?.role ==
+                                                                  "Coordinator",
+                                                          orElse: () => UserVO(
+                                                              id: "",
+                                                              name: "",
+                                                              email: "",
+                                                              facultyId: "",
+                                                              role: ""),
+                                                        );
+                                                        sendEmail(
+                                                            name: loggedInUser
+                                                                    ?.name ??
+                                                                "",
+                                                            email: loggedInUser
+                                                                    ?.email ??
+                                                                "",
+                                                            subject:
+                                                                "Article Submission",
+                                                            message:
+                                                                "Article Submitted",
+                                                            toEmail: coordinator
+                                                                    ?.email ??
+                                                                "");
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Article Submitted Successfully");
+                                                        Get.to(() =>
+                                                            MySubmissionsPage());
+                                                      } else {
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Fields Required!");
+                                                      }
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "  Submission deadline has passed.");
+                                                    }
+                                                  }
+                                                },
+                                                child: Text("Agree")),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
                       },
                       child: Text(
                         "Submit",
@@ -450,5 +513,36 @@ class _SubmitPageState extends State<SubmitPage>
     if (firstDate == null) return true;
 
     return today.isAfter(firstDate);
+  }
+}
+
+class TermsAndConditionCheck extends StatefulWidget {
+  final Function(bool) onCheck;
+  const TermsAndConditionCheck({
+    super.key,
+    required this.onCheck,
+  });
+
+  @override
+  State<TermsAndConditionCheck> createState() => _TermsAndConditionCheckState();
+}
+
+class _TermsAndConditionCheckState extends State<TermsAndConditionCheck> {
+  bool v = false;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          value: v,
+          onChanged: (nv) {
+            v = nv ?? false;
+            widget.onCheck(v);
+            setState(() {});
+          },
+        ),
+        Text("Agree"),
+      ],
+    );
   }
 }

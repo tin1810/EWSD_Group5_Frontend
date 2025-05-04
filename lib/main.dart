@@ -18,9 +18,12 @@ import 'package:university_magazine_project/hive/dao/deadline_dao.dart';
 import 'package:university_magazine_project/hive/dao/faculty_dao.dart';
 import 'package:university_magazine_project/hive/dao/user_dao.dart';
 import 'package:university_magazine_project/hive/hive_constants.dart';
+import 'package:university_magazine_project/presentation/admin/view/admin_homepage.dart';
 import 'package:university_magazine_project/presentation/faculty_coordinator_side/view/home/faculty_coordinator_homepage.dart';
 import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
-
+import 'package:university_magazine_project/presentation/manager_side/view/home/manager_homepage.dart';
+import 'package:university_magazine_project/presentation/portal/view/login/login_page.dart';
+import 'package:university_magazine_project/presentation/student_portal_side/view/home/student_home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +47,9 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with UserDao, ArticleDao, FacultyDao ,DeadlineDao{
+class _MyAppState extends State<MyApp>
+    with UserDao, ArticleDao, FacultyDao, DeadlineDao {
+  String? role;
   @override
   void initState() {
     for (UserVO user in populatedUsers) {
@@ -57,6 +62,12 @@ class _MyAppState extends State<MyApp> with UserDao, ArticleDao, FacultyDao ,Dea
     //   saveArticle(art);
     // }
     saveDeadline(populatedDL);
+
+    try {
+      var loggedInUser =
+          getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
+      role = loggedInUser?.role;
+    } catch (e) {}
     super.initState();
   }
 
@@ -67,14 +78,21 @@ class _MyAppState extends State<MyApp> with UserDao, ArticleDao, FacultyDao ,Dea
         title: 'University Magazine',
         debugShowCheckedModeBanner: false,
         initialBinding: AppBindings(),
-
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:
-
-        HomePage(),
+        home: (role == "Guest")
+            ? HomePage()
+            : (role == "Student")
+                ? StudentHomePage()
+                : (role == "Coordinator")
+                    ? FacultyCoordinatorHomepage()
+                    : (role == "Manager")
+                        ? ManagerHomepage()
+                        : (role == "Admin")
+                            ? AdminHomePage()
+                            : LoginPage(),
       ),
     );
   }

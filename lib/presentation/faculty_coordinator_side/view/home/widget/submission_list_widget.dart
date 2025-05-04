@@ -29,8 +29,9 @@ class _SubmissionListWidgetState extends State<SubmissionListWidget>
   void initState() {
     try {
       loggedInUser = getAllUsers()?.firstWhere((e) => e?.isLoggedIn ?? false);
-      var facID = loggedInUser?.facultyId;
-      articleList = getAllArticles()?.where((e) => e?.facultyId == facID).toList();
+      articleList = getAllArticles()
+          ?.where((e) => e?.facultyId == loggedInUser?.facultyId)
+          .toList();
       setState(() {});
     } catch (e) {
       print(e.toString());

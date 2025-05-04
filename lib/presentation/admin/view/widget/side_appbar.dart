@@ -4,6 +4,7 @@ import 'package:university_magazine_project/app/config/app_color.dart';
 import 'package:university_magazine_project/app/config/app_textstyle.dart';
 import 'package:university_magazine_project/presentation/admin/controller/admin_controller.dart';
 import 'package:university_magazine_project/presentation/admin/view/widget/sidebar_item.dart';
+import 'package:university_magazine_project/presentation/guest_side/view/home/home_page.dart';
 
 class SideAppBar extends StatelessWidget {
   final Function onClicked;
@@ -28,6 +29,18 @@ class SideAppBar extends StatelessWidget {
               style:
                   AppTextStyle.h1iterBold.copyWith(color: AppColor.whiteColor)),
           SizedBox(height: 50),
+          // SideBarItem(
+          //   title: 'Home',
+          //   icon: Icons.home,
+          //   section: AdminSection.home,
+          //   onTap: () {
+          //     onClicked(AdminSection.home);
+          //
+          //   },
+          // ),
+          // SizedBox(
+          //   height: 15,
+          // ),
           SideBarItem(
             title: 'System Settings',
             icon: Icons.settings,

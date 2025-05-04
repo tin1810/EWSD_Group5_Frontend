@@ -55,6 +55,12 @@ class _RecentContributionSectionState extends State<RecentContributionSection>
                 AppTextStyle.h5iterRegular.copyWith(color: AppColor.blackColor),
           ),
           const SizedBox(height: 50),
+          if(publishedList?.length == 0)
+            Text(
+              "There is no published articles. Once a coordinator has published one, you'll see in here!",
+              style: AppTextStyle.h4iterRegular
+                  .copyWith(color: AppColor.blackColor, fontSize: 30),
+            ),
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
