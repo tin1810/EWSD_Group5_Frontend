@@ -24,13 +24,11 @@ import '../../../../../app/config/app_textstyle.dart';
 class HoverAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? portal;
   final UserVO? userVO;
-  final BuildContext? rContext;
 
   const HoverAppBar({
     super.key,
     this.portal,
     required this.userVO,
-    this.rContext,
   });
 
   @override
@@ -41,7 +39,6 @@ class HoverAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _HoverAppBarState extends State<HoverAppBar> with UserDao, FacultyDao {
-  //final HomeController controller = Get.find<HomeController>();
   var backgroundColor = AppColor.primaryColor;
   final List<String> imageUrlsForBanners = [
     "https://images.unsplash.com/photo-1568792923760-d70635a89fdc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -240,7 +237,7 @@ class _HoverAppBarState extends State<HoverAppBar> with UserDao, FacultyDao {
             child: Text("Cancel", style: TextStyle(color: Colors.red)),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (selectedFaculty != null &&
                   nameController.text != "" &&
                   emailController.text != "" &&
@@ -264,7 +261,7 @@ class _HoverAppBarState extends State<HoverAppBar> with UserDao, FacultyDao {
                   orElse: () => UserVO(
                       id: "", name: "", email: "", facultyId: "", role: ""),
                 );
-                sendEmail(
+                await sendEmail(
                     name: nameController.text,
                     email: emailController.text,
                     subject: "Guest Registration",
@@ -272,6 +269,8 @@ class _HoverAppBarState extends State<HoverAppBar> with UserDao, FacultyDao {
                     toEmail: coordinator?.email ?? "");
                 Fluttertoast.showToast(msg: "Account Registered Successfully");
                 Get.back();
+              } else {
+                Fluttertoast.showToast(msg: "Field Required!");
               }
             },
             child: Text("Create"),

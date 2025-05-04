@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -239,6 +240,8 @@ class AdminController extends GetxController
                 update;
                 _fetchAllUsers();
                 Get.back();
+              } else {
+                Fluttertoast.showToast(msg: "Fields required!");
               }
             },
             child: Text("Create"),
@@ -287,16 +290,21 @@ class AdminController extends GetxController
           ),
           ElevatedButton(
             onPressed: () {
-              var faculty = FacultyVO();
-              faculty.name = facultynameController.text;
-              faculty.description = descriptionController.text;
-              if (fac == null) {
-                faculty.id = DateTime.now().microsecondsSinceEpoch.toString();
+              if (facultynameController.text != "" &&
+                  descriptionController.text != "") {
+                var faculty = FacultyVO();
+                faculty.name = facultynameController.text;
+                faculty.description = descriptionController.text;
+                if (fac == null) {
+                  faculty.id = DateTime.now().microsecondsSinceEpoch.toString();
+                } else {
+                  faculty.id = fac.id;
+                }
+                saveFaculty(faculty);
+                Get.back();
               } else {
-                faculty.id = fac.id;
+                Fluttertoast.showToast(msg: "Field Required!");
               }
-              saveFaculty(faculty);
-              Get.back();
             },
             child: Text(fac != null ? "Edit" : "Create"),
           ),
